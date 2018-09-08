@@ -1,0 +1,71 @@
+﻿@using MvcPaging
+@using Prototype.Code
+
+@model IPagedList<Dispatch.Employee_HistoryEntity>
+
+<table class="table table-hover table-bordered">
+    <thead>
+        <tr>
+            <th>
+                Họ và tên
+            </th>
+            <th>Phòng làm việc</th>
+            <th>Thời gian vào</th>
+            <th>Thời gian nghỉ</th>
+            <th>Note</th>
+            <th>Action</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            if (item.Id > 0)
+            {
+                <tr class="viewProfile" data-id="@item.Id">
+
+                    <td>@item.FirstName @item.LastName</td>
+                    <td>
+                        @item.DepartmentName
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.TimeIn, new { @type = "date" })
+                    </td>
+                    <td>
+                        @if (item.TimeOut != DateTime.MinValue)
+                        {
+                            @Html.DisplayFor(modelItem => item.TimeOut, new { @type = "date" })
+                        }
+                        else
+                        {
+                            <i> Chưa có thông tin</i>
+                        }
+                    </td>
+                    <td>
+                    @Html.Raw(item.Note)
+                    </td>
+                    <td>
+
+                        @Html.ActionLink("Sửa", "EditEmployee_History", new { id = item.Id })
+
+
+                    </td>
+
+                </tr>
+            }
+        }
+    </tbody>
+</table>
+@Html.Pager(Model.PageSize, Model.PageNumber - 1, Model.TotalItemCount, new AjaxOptions { UpdateTargetId = "Employee_HistoryList", OnSuccess = "backend.onSuccessAjax" }).Options(o => o
+            .Action("Index")
+            .DisplayTemplate("Bootstrap3Pagination")
+            .MaxNrOfPages(5)
+            .AlwaysAddFirstPageNumber()
+            .DisplayFirstAndLastPage()
+            .SetFirstPageText("First")
+            .SetLastPageText("Last")
+            .HidePreviousAndNextPage()
+            .AddRouteValue("searchString", Request.QueryString["searchString"])
+        )
+
+
+

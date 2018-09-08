@@ -1,0 +1,77 @@
+﻿@using MvcPaging
+@using Prototype.Code
+
+@model IPagedList<Dispatch.EmployeeEntity>
+
+<table class="table table-hover table-bordered">
+    <thead>
+        <tr>
+            <th>
+                First Name
+            </th>
+            <th>
+                Last Name
+            </th>
+            <th>
+                Địa chỉ
+            </th>
+            <th>Điện thoại</th>
+            <th>User Name</th>
+            <th>Kích hoạt</th>
+            <th>Phòng ban</th>
+            <th>Actions</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            if (item.Id > 1)
+            {
+        <tr class="viewProfile" data-id="@item.Id">
+            <td>
+                @Html.DisplayFor(modelItem => item.FirstName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.LastName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Address)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Phone)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.UserName)
+            </td>
+
+            <td>@Html.CheckBoxFor(modelItem => item.IsActive, new { @class = "flat activeUser", module = item.Id })</td>
+            <td>
+                @Html.DisplayFor(modelItem => item.DepartmentName)
+            </td>
+            <td>
+                <a href="" class="reset_pass" data-id="@item.UserId" onclick="return confirm('Bạn có chắc sẽ reset mật khẩu cho nhân viên này?')">Reset password</a> |
+                @Html.ActionLink("Sửa", "EditEmployee", new { id = item.Id }) |
+                <a href="/Roles/Index/@item.UserId">Phân quyền</a> |
+                <a href="/Employee/Delete/@item.Id" onclick="return confirm('Bạn có muốn xóa nhân viên này không?')">Xóa</a> |
+                @*@Html.ActionLink("Xóa", "Delete", new { id = item.Id }, new { onclick = "return confirm('Bạn có muốn xóa nhân viên này không?')" }) |*@
+                @if (item.UserId <= 0)
+                {
+                    <a href="/User/Index/@item.Id">Tạo tài khoản</a>
+                }
+            </td>
+        </tr>
+            }
+        }
+    </tbody>
+</table>
+@Html.Pager(Model.PageSize, Model.PageNumber - 1, Model.TotalItemCount, new AjaxOptions { UpdateTargetId = "employeeList", OnSuccess = "backend.onSuccessAjax" }).Options(o => o
+            .Action("Index")
+            .DisplayTemplate("Bootstrap3Pagination")
+            .MaxNrOfPages(5)
+            .AlwaysAddFirstPageNumber()
+            .DisplayFirstAndLastPage()
+            .SetFirstPageText("First")
+            .SetLastPageText("Last")
+            .HidePreviousAndNextPage()
+            .AddRouteValue("searchString", Request.QueryString["searchString"])
+        )

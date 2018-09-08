@@ -1,0 +1,37 @@
+﻿@using MvcPaging
+@using Prototype.Code
+
+@model List<Dispatch.DispatchWorkEntity>
+
+<table id="tree-table" class="table table-hover table-bordered">
+    <thead>
+        <tr>
+            <th>Tên công việc</th>
+            <th>Loại công việc</th>
+            <th>Mã công việc</th>
+            <th>Hệ số lương</th>
+            <th>Actions</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            if (item.ID > 0)
+            {
+                <tr data-id="@item.ID" data-parent="@item.ParentID" data-level="@item.Title" data-name="@Html.Raw(item.WorkName)">
+                    <td data-column="name">@Html.Raw(item.Title)</td>
+                    <td>@item.WorkType</td>
+                    <td>@item.WorkCode</td>
+                    <td>@item.CoefficientsSalary</td>
+                    <td>
+                        @Html.ActionLink("Sửa", "EditDispatchWork", new { id = item.ID }) |
+                        <a href="/DispatchWork/Delete/@item.ID" onclick="return confirm('Khi bạn xóa công việc đồng nghĩa các công việc nhỏ trong đó sẽ bị xóa. Bạn có muốn xóa công việc này không?')">Xóa</a>
+                    </td>
+                </tr>
+            }
+        }
+    </tbody>
+</table>
+
+
+

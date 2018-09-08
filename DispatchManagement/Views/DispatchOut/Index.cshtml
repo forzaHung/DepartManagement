@@ -1,0 +1,96 @@
+﻿@using MvcPaging
+@using DispatchManagement.Code
+@model IPagedList<Dispatch.DispatchOutEntity>
+@{
+    ViewBag.Title = "Công văn đi";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+@Html.Hidden("DepartmentId", (object)ViewBag.DepartmentId)
+@Html.Hidden("Type", (object)ViewBag.Type)
+@Html.Hidden("Status", (object)ViewBag.Status)
+@Html.Hidden("Priority", (object)ViewBag.Priority)
+<div class="row">
+    <div class="x_panel">
+        <div class="x_title">
+            <h2>@ViewBag.Title</h2>
+            <ul class="nav navbar-right panel_toolbox">
+                @*<li>@Html.ActionLink("Add Product", "CreateOrEdit", null, new { @id = "createNew", @class = "btn btn-default" })</li>*@
+
+                <li>
+                    <a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
+                </li>
+                <li class="dropdown">
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false"><i class="fa fa-wrench"></i></a>
+                    <ul class="dropdown-menu" role="menu">
+                        <li>
+                            @*<a href="/DispatchOut/Index">tạo mới công văn đến</a>*@
+                            @Html.ActionLink("Tạo công văn đi", "CreateDispatchOut")
+                        </li>
+                        <li>
+                            <a href="#">Export công văn đi</a>
+                        </li>
+                    </ul>
+                </li>
+                @*<li>
+                        <a class="close-link"><i class="fa fa-close"></i></a>
+                    </li>*@
+            </ul>
+            <div class="clearfix"></div>
+        </div>
+        <div class="x_content">
+            <div class="form-inline">
+                <div class="form-group col-lg-4">
+                    <label class="control-label" for="SearchString">Số công văn:</label>
+                    <input id="searchCode" name="searchCode" type="text" value="@ViewBag.Keyword" class="form-control boxsearch" style="width: 233px;" />
+                </div>
+                <div class="form-group col-lg-4">
+                    <label class="control-label" for="SearchString">Tên CV:</label>
+                    <input id="searchName" name="searchName" type="text" value="@ViewBag.Keyword" class="form-control boxsearch" style="width: 203px;" />
+                </div>
+                <div class="form-group col-lg-4">
+                    <label class="control-label" for="SearchString">Loại CV:</label>
+                    <select id="ddlType" name="ddlType" class="form-control boxsearch">
+                        <option value="0">=== chọn loại công văn ===</option>
+                        @foreach (var item in (List<Dispatch.DispatchTypeEntity>)ViewData["dispatchtypeAll"])
+                        {
+                            <option value="@item.Id">@item.Name</option>
+                        }
+                    </select>
+                </div>
+                <div class="form-group col-lg-4">
+                    <label class="control-label" for="SearchString">Phòng ban:</label>
+                    <select id="ddlDepartment" name="ddlDepartment" class="form-control boxsearch">
+                        <option value="0">=== Chọn phòng ban gửi ===</option>
+                        @foreach (var item in (List<Dispatch.DepartmentEntity>)ViewData["departmentAll"])
+                        {
+                            <option value="@item.Id">@item.Name</option>
+                        }
+                    </select>
+                </div>
+                <div class="form-group col-lg-4">
+                    <label class="control-label" for="SearchString">Tình trạng:</label>
+                    <select id="ddlStatus" name="ddlStatus" class="form-control boxsearch">
+                        <option value="0">=== Chọn tình trạng ===</option>
+                        @foreach (var item in (List<Dispatch.DispatchStatusEntity>)ViewData["dispatchstatusAll"])
+                        {
+                            <option value="@item.Id">@item.Name</option>
+                        }
+                    </select>
+                </div>
+                <div class="form-group col-lg-4">
+                    <label class="control-label" for="SearchString">Ngày CV:</label>
+                    <input id="dateWrite" type="date" min="2017-01-01" class="form-control boxsearch" style="width: 223px;" />
+
+                </div>
+                <div class="form-group col-lg-4" style="margin-bottom: 10px;">
+                    <input type="button" value="Tìm kiếm" id="btnSearch" class="btn btn-default" style="margin-bottom: 0" />
+                </div>
+            </div>
+            <hr />
+            <div id="DispatchOutList">
+                @Html.Partial("_DispatchOutList", Model)
+            </div>
+        </div>
+    </div>
+</div>
+

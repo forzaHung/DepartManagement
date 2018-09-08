@@ -1,0 +1,93 @@
+﻿@model Dispatch.DispatchWorkEntity
+@{
+    ViewBag.Title = "Cập nhật thông tin Công việc";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="row">
+
+    <div class="x_panel">
+        <div class="x_title">
+            <h2>@ViewBag.Title</h2>
+            <ul class="nav navbar-right panel_toolbox">
+                <li>
+                    <button type="button" class="btn btn-primary" onclick="$('#frmEmp').submit();"><i class="fa fa-save"></i> Lưu</button>
+                </li>
+                <li>
+                    @Html.ActionLink("Danh sách Công việc", "Index", null, new { @id = "createNew", @class = "btn btn-default" })
+                </li>
+
+                <li>
+                    <a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
+                </li>
+            </ul>
+            <div class="clearfix"></div>
+        </div>
+        <div class="x_content">
+            <div>
+                @using (Html.BeginForm("Save", "DispatchWork", FormMethod.Post, new { enctype = "multipart/form-data", @class = "form-horizontal", role = "form", id = "frmEmp" }))
+            {
+                    @Html.AntiForgeryToken()
+                    <h4>@ViewBag.SubTitle</h4>
+                    <p class="red">Vui lòng nhập dữ liệu cho những trường bắt buộc *</p>
+                    <div class="form-group">
+                        <label class="col-md-2 control-label" for="Name">Thuộc công việc</label>
+                        <div class="col-md-10">
+                            <select id="ParentId" name="ParentId" class="form-control">
+                                <option value="0">Cấp cao nhất</option>
+                                @foreach (var item in (List<Dispatch.DispatchWorkEntity>)ViewData["ParentID"])
+                                {
+                                    if (Model != null)
+                                    {
+                                        if (item.ID == Model.ParentID)
+                                        {
+                                            <option value="@item.ID" selected>@item.Title</option>
+                                        }
+                                        else
+                                        {
+                                            <option value="@item.ID">@item.Title</option>
+                                        }
+                                    }
+                                }
+                            </select>
+                            @Html.ValidationMessageFor(model => model.ParentID, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-md-2 control-label" for="Name">Tên công việc</label>
+                        <div class="col-md-10">
+                            @Html.TextBoxFor(m => m.WorkName, new { @class = "form-control", @maxlength = "50" })
+                            @Html.ValidationMessageFor(model => model.WorkName, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-md-2 control-label" for="Name">Loại công việc</label>
+                        <div class="col-md-10">
+                            @Html.TextBoxFor(m => m.WorkType, new { @class = "form-control", @maxlength = "50" })
+                            @Html.ValidationMessageFor(model => model.WorkType, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-md-2 control-label" for="Name">Mã công việc</label>
+                        <div class="col-md-10">
+                            @Html.TextBoxFor(m => m.WorkCode, new { @class = "form-control" })
+                            @Html.ValidationMessageFor(model => model.WorkCode, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-md-2 control-label" for="Name">Hệ số lương</label>
+                        <div class="col-md-10">
+                            @Html.TextBoxFor(m => m.CoefficientsSalary, new { @class = "form-control", @maxlength = "50" })
+                            @Html.ValidationMessageFor(model => model.CoefficientsSalary, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="col-md-offset-2 col-md-10">
+                            <input type="hidden" class="form-control" id="Id" name="Id" value="@Model.ID" />
+                        </div>
+                    </div>
+                }
+            </div>
+        </div>
+    </div>
+</div>

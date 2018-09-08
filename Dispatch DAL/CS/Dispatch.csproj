@@ -1,0 +1,164 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>8.0.50727</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{4E7AB94A-CA89-4730-988B-F56347FED07B}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>Dispatch</RootNamespace>
+    <AssemblyName>Dispatch</AssemblyName>
+    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <SccProjectName>SAK</SccProjectName>
+    <SccLocalPath>SAK</SccLocalPath>
+    <SccAuxPath>SAK</SccAuxPath>
+    <SccProvider>SAK</SccProvider>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="DocumentFormat.OpenXml, Version=2.5.5631.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL" />
+    <Reference Include="System" />
+    <Reference Include="System.ComponentModel.DataAnnotations" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Transactions" />
+    <Reference Include="System.Web" />
+    <Reference Include="System.Xml" />
+    <Reference Include="Framework, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>Lib\SharpCore\Framework.dll</HintPath>
+    </Reference>
+    <!--<Reference Include="Dapper, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+			<SpecificVersion>False</SpecificVersion>
+			<HintPath>Lib\SharpCore\Dapper.dll</HintPath>
+		</Reference>-->
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="AttendanceTracking\AttendanceTrackingEntity.cs" />
+    <Compile Include="AttendanceTracking\IAttendanceTracking.cs" />
+    <Compile Include="AttendanceTracking\IplAttendanceTracking.cs" />
+    <Compile Include="DispatchOut\DispatchOutEntity.cs" />
+    <Compile Include="DispatchOut\DispatchOutEntity_Ext.cs" />
+    <Compile Include="DispatchOut\DispatchOutMetadata.cs" />
+    <Compile Include="DispatchOut\IDispatchOut.cs" />
+    <Compile Include="DispatchOut\IplDispatchOut.cs" />
+    <Compile Include="DispatchIn\DispatchInEntity_Ext.cs" />
+    <Compile Include="DispatchPriority\DispatchPriorityEntity.cs" />
+    <Compile Include="DispatchPriority\DispatchPriorityMetadata.cs" />
+    <Compile Include="DispatchPriority\IDispatchPriority.cs" />
+    <Compile Include="DispatchPriority\IplDispatchPriority.cs" />
+    <Compile Include="DispatchIn\DispatchInEntity.cs" />
+    <Compile Include="DispatchIn\DispatchInMetadata.cs" />
+    <Compile Include="DispatchIn\IDispatchIn.cs" />
+    <Compile Include="DispatchIn\IplDispatchIn.cs" />
+    <Compile Include="DispatchType\DispatchTypeEntity.cs" />
+    <Compile Include="DispatchType\DispatchTypeMetadata.cs" />
+    <Compile Include="DispatchType\IDispatchType.cs" />
+    <Compile Include="DispatchType\IplDispatchType.cs" />
+    <Compile Include="DispatchStatus\DispatchStatusEntity.cs" />
+    <Compile Include="DispatchStatus\DispatchStatusMetadata.cs" />
+    <Compile Include="DispatchStatus\IDispatchStatus.cs" />
+    <Compile Include="DispatchStatus\IplDispatchStatus.cs" />
+    <Compile Include="Department\DepartmentEntity_Ext.cs" />
+    <Compile Include="Department\DepartmentMetadata.cs" />
+    <Compile Include="DispatchWork\DispatchWorkEntity.cs" />
+    <Compile Include="DispatchWork\IDispatchWork.cs" />
+    <Compile Include="DispatchWork\IplDispatchWork.cs" />
+    <Compile Include="Employee\EmployeeEntity_Ext.cs" />
+    <Compile Include="Employee\EmployeeMetadata.cs" />
+    <Compile Include="Employee\Employee_Department.cs" />
+    <Compile Include="Employee\Employee_DispatchWork.cs" />
+    <Compile Include="Employee_History\Employee_HistoryEntity.cs" />
+    <Compile Include="Employee_History\Employee_HistoryEntity_Ext.cs" />
+    <Compile Include="Employee_History\Employee_HistoryMetadata.cs" />
+    <Compile Include="Employee_History\IEmployee_History.cs" />
+    <Compile Include="Employee_History\IplEmployee_History.cs" />
+    <Compile Include="Files\FileEntity_Ext.cs" />
+    <Compile Include="Position\PositionEntity.cs" />
+    <Compile Include="Position\Position_Ext.cs" />
+    <Compile Include="Position\PositionMetadata.cs" />
+    <Compile Include="Position\IPosition.cs" />
+    <Compile Include="Position\IplPosition.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Depart_Module\Depart_ModuleEntity.cs" />
+    <Compile Include="Depart_Module\IDepart_Module.cs" />
+    <Compile Include="Depart_Module\IplDepart_Module.cs" />
+    <Compile Include="Department\DepartmentEntity.cs" />
+    <Compile Include="Department\IDepartment.cs" />
+    <Compile Include="Department\IplDepartment.cs" />
+    <Compile Include="Employee\EmployeeEntity.cs" />
+    <Compile Include="Employee\IEmployee.cs" />
+    <Compile Include="Employee\IplEmployee.cs" />
+    <Compile Include="Files\FileEntity.cs" />
+    <Compile Include="Files\IFile.cs" />
+    <Compile Include="Files\IplFile.cs" />
+    <Compile Include="Module\ModuleEntity.cs" />
+    <Compile Include="Module\IModule.cs" />
+    <Compile Include="Module\IplModule.cs" />
+    <Compile Include="Permission\PermissionEntity.cs" />
+    <Compile Include="Permission\IPermission.cs" />
+    <Compile Include="Permission\IplPermission.cs" />
+    <Compile Include="RegulationTime\IplRegulationTime.cs" />
+    <Compile Include="RegulationTime\IRegulationTime.cs" />
+    <Compile Include="RegulationTime\RegulationTimeEntity.cs" />
+    <Compile Include="Role\RoleEntity.cs" />
+    <Compile Include="Role\IRole.cs" />
+    <Compile Include="Role\IplRole.cs" />
+    <Compile Include="Role\RoleEntity_Ex.cs" />
+    <Compile Include="Role_Group\Role_GroupEntity.cs" />
+    <Compile Include="Role_Group\IRole_Group.cs" />
+    <Compile Include="Role_Group\IplRole_Group.cs" />
+    <Compile Include="TransactionLogs\ITransactionLogs.cs" />
+    <Compile Include="TransactionLogs\IplTransactionLogs.cs" />
+    <Compile Include="TransactionLogs\TransactionLogsEntity.cs" />
+    <Compile Include="Users\UserMetadata.cs" />
+    <Compile Include="Users\UserEntity.cs" />
+    <Compile Include="Users\IUser.cs" />
+    <Compile Include="Users\IplUser.cs" />
+    <Compile Include="BaseIpl.cs" />
+    <Compile Include="Users\UserEntity_ex.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Lib\SharpCore\Framework.dll" />
+    <!--<EmbeddedResource Include="Lib\SharpCore\Dapper.dll" />-->
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Lib\SharpCore\Autofac.dll" />
+    <Content Include="Lib\SharpCore\Autofac.Extras.Multitenant.dll" />
+    <Content Include="Lib\SharpCore\Autofac.Integration.Mvc.dll" />
+    <Content Include="Lib\SharpCore\AutoMapper.dll" />
+    <Content Include="Lib\SharpCore\BCrypt.Net.dll" />
+    <Content Include="Lib\SharpCore\ClosedXML.dll" />
+    <Content Include="Lib\SharpCore\DocumentFormat.OpenXml.dll" />
+    <Content Include="Lib\SharpCore\EntityFramework.dll" />
+    <Content Include="Lib\SharpCore\Enyim.Caching.dll" />
+    <Content Include="Lib\SharpCore\log4net.dll" />
+    <Content Include="Lib\SharpCore\Microsoft.QualityTools.Testing.Fakes.dll" />
+    <Content Include="Lib\SharpCore\MiniProfiler.dll" />
+    <Content Include="Lib\SharpCore\MongoDB.Driver.dll" />
+    <Content Include="Lib\SharpCore\Newtonsoft.Json.dll" />
+    <Content Include="Lib\SharpCore\SRVTextToImage.dll" />
+    <Content Include="Lib\SharpCore\System.Web.Mvc.dll" />
+  </ItemGroup>
+  <ItemGroup />
+  <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
+</Project>

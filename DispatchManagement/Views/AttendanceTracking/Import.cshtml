@@ -1,0 +1,144 @@
+﻿@using Dispatch;
+@model List<AttendanceTrackingEntity>
+
+@{
+    ViewBag.Title = "Nhập dữ liệu chấm công";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@section css {
+    <link href="~/Assets/plugins/bootstrap-table/css/bootstrap-table.css" rel="stylesheet" />
+    <link href="~/Assets/plugins/bootstrap-table/css/bootstrap-editable.css" rel="stylesheet" />
+    <link href="~/Assets/plugins/toastrjs/toastr.css" rel="stylesheet" />
+    <style>
+        .input-disable {
+            background-color: #ddd;
+            cursor: pointer;
+        }
+    </style>
+}
+
+<div class="row">
+    <div class="x_panel">
+        <div class="x_title">
+            <h2>@ViewBag.Title</h2>
+            <ul class="nav navbar-right panel_toolbox">
+                <li>@Html.ActionLink("Back", "Index", null, new { @id = "back", @class = "btn btn-default" })</li>
+
+                <li>
+                    <a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
+                </li>
+                <li>
+                    <a class="close-link"><i class="fa fa-close"></i></a>
+                </li>
+            </ul>
+            <div class="clearfix"></div>
+        </div>
+        <div class="x_content" id="tblShowDemo">
+            <div class="form-inline">
+                @using (Html.BeginForm("Import", "AttendanceTracking", FormMethod.Post, new { enctype = "multipart/form-data" }))
+                {
+                    <h4 class="text-danger">@Html.Raw(ViewBag.Msg)</h4>
+                    <div class="form-group">
+                        <label class="control-label" for="SearchString">Select File:</label>
+                        <input type="file" name="file" class="form-control" />
+                    </div>
+
+                    <div class="form-group">
+                        <input type="submit" value="Import" class="btn btn-default" style="margin-bottom: 0" />
+                    </div>
+                }
+                <hr />
+                <div class="form-group">
+                    <p> Bạn có thể download mẫu file tại <a href="/AttendanceTracking/Download"><strong>đây</strong></a></p>
+                    <img src="~/Assets/images/AttendanceTrackingTemplate.png"style="width:100%" />
+                </div>
+
+            </div>
+            @if (Model != null && Model.Count > 0)
+            {
+                <div>
+                    <br />
+                    <h3>Danh sách sản phẩm</h3>
+                    <form method="post" action="/AttendanceTracking/SaveImport" id="frmDemo">
+                        <table class="table table-hover table-bordered" id="tblDemo" data-pagination="true" data-maintain-selected="true">
+                            <thead>
+                                <tr>
+                                    <th class="tblDemo" data-checkbox="true" data-field="state"></th>
+                                    <th data-field="Id">Id</th>
+                                    <th data-field="DateCheck">Ngày chấm công</th>
+                                    <th data-field="CheckIn">Giờ vào</th>
+                                    <th data-field="CheckOut">Giờ ra</th>
+                                    <th data-field="IdEmployee">Mã nhân viên</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @for (int i = 0; i < Model.Count; i++)
+                                {
+                                    var item = Model[i] as AttendanceTrackingEntity;
+                                    <tr>
+                                        <td></td>
+                                        <td>@item.Id</td>
+                                        <td>@item.DateCheck</td>
+                                        <td>@item.CheckIn</td>
+                                        <td>@item.CheckOut</td>
+                                        <td>@item.IdEmployee</td>
+                                    </tr>
+                                }
+                            </tbody>
+                        </table>
+                        <button type="button" id="btnSaveProduct">Lưu</button>
+                    </form>
+                </div>
+            }
+        </div>
+    </div>
+</div>
+
+@section scripts {
+    <script src="~/Assets/plugins/bootstrap-table/js/bootstrap-table.js"></script>
+    <script src="~/Assets/plugins/bootstrap-table/js/bootstrap-editable.js"></script>
+    <script src="~/Assets/plugins/bootstrap-table/js/bootstrap-table-editable.js"></script>
+    <script src="~/Assets/plugins/toastrjs/toastr.min.js"></script>
+}
+<script>
+    $(document).ready(function () {
+        toastr.options = {
+            "closeButton": false,
+            "debug": false,
+            "newestOnTop": false,
+            "progressBar": false,
+            "positionClass": "toast-top-right",
+            "preventDuplicates": false,
+            "onclick": null,
+            "showDuration": "300",
+            "hideDuration": "1000",
+            "timeOut": "5000",
+            "extendedTimeOut": "1000",
+            "showEasing": "swing",
+            "hideEasing": "linear",
+            "showMethod": "fadeIn",
+            "hideMethod": "fadeOut"
+        }
+        $('#tblDemo').bootstrapTable();
+        $('#tblDemo').bootstrapTable('togglePagination').bootstrapTable('checkAll').bootstrapTable('togglePagination');
+        $('#btnSaveProduct').on('click', function (e) {
+            e.preventDefault();
+            var _lstCode = $('#tblDemo').bootstrapTable('getSelections');
+            $.ajax({
+                url: '/AttendanceTracking/SaveImport',
+                data: { lstInserted: _lstCode },
+                type: 'post',
+                success: function (res) {
+                    if (res.status) {
+                        toastr["success"]("Import Thành Công.");
+                        $('#tblDemo').bootstrapTable('removeAll');
+                    } else {
+                        toastr["error"]("Có lỗi trong quá trình Import");
+                    }   
+                    
+                }
+            })
+        }); 
+    })
+</script>

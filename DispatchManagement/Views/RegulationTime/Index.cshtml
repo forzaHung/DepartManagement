@@ -1,0 +1,66 @@
+﻿@{
+    ViewBag.Title = "Danh sách quy định ra vào công ty";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<link href="~/Assets/css/select/select2.min.css" rel="stylesheet" />
+<div class="row">
+    <div class="x_panel">
+        <div class="x_title">
+            <h2>@ViewBag.Title</h2>
+            <ul class="nav navbar-right panel_toolbox">
+                <li>
+                    <a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
+                </li>
+                <li class="dropdown">
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false"><i class="fa fa-wrench"></i></a>
+                    <ul class="dropdown-menu" role="menu">
+                        <li>
+                            @Html.ActionLink("Thêm quy định", "CreateRegulationTime", null, new { @id = "createNew" })
+                        </li>
+                        <li>
+                            <a href="#">Export excel</a>
+                        </li>
+                    </ul>
+                </li>
+            </ul>
+            <div class="clearfix"></div>
+        </div>
+        <div class="x_content">
+            <div class="form-inline">
+                    <p>
+                        <div class="form-inline">
+                            <div class="form-group">
+                                <label class="control-label" for="SearchString">Tìm theo phòng:</label>
+                                <input id="SearchString" name="SearchString" type="text" style="width: 200px" class="form-control" />
+                            </div>
+                            <div class="form-group">
+                                <input type="button" id="searchRegulation" value="Lọc" class="btn btn-default" style="margin-bottom: 0" />
+                            </div>
+                        </div>
+                    </p>
+            </div>
+            <hr />
+            <div id="DepartmentList">
+                <table id="tbl-regulation" class="table table-bordered table-hover fixed-table-header" data-height="600"></table>
+            </div>
+        </div>
+        <div class="modal fade" id="myModal" role="dialog" >
+            <div class="modal-dialog modal-sm">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal">&times;</button>
+                        <h4 class="modal-title">Xóa quy định</h4>
+                    </div>
+                    <div class="modal-body">
+                        <p>Bạn có thực sự muốn xóa quy định này?</p>
+                    </div>
+                    <div class="modal-footer">
+                        <button class="btn btn-danger delete deleteRegulation" style="margin-bottom:0px" value="">Delete</button>
+                        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script src="~/Assets/plugins/select/select2.full.js"></script>

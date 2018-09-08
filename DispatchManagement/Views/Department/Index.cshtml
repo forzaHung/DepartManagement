@@ -1,0 +1,118 @@
+﻿@using MvcPaging
+@using DispatchManagement.Code
+@model List<Dispatch.DepartmentEntity>
+@{
+    ViewBag.Title = "Danh sách phòng ban";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="row">
+    <div class="x_panel">
+        <div class="x_title">
+            <h2>@ViewBag.Title</h2>
+            <ul class="nav navbar-right panel_toolbox">
+                <li>
+                    <a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
+                </li>
+                <li class="dropdown">
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false"><i class="fa fa-wrench"></i></a>
+                    <ul class="dropdown-menu" role="menu">
+                        <li>
+                            @Html.ActionLink("Thêm Phòng ban", "CreateDepartment", null, new { @id = "createNew" })
+                        </li>
+                        <li>
+                            <a href="#">Export excel</a>
+                        </li>
+                    </ul>
+                </li>
+            </ul>
+            <div class="clearfix"></div>
+        </div>
+        <div class="x_content">
+            <div class="form-inline">
+                @*<div class="form-group">
+                        <label class="control-label" for="SearchString">Tìm theo tên phòng:</label>
+                        <input id="searchString" name="searchString" type="text" value="@ViewBag.Keyword" style="width: 300px" class="form-control" />
+                    </div>*@
+                @*<div class="form-group">
+                        <label class="control-label" for="SearchString">product name:</label>
+                        <input id="searchName" name="searchName" type="text" value="@ViewBag.Keyword" style="width: 300px" class="form-control" />
+                    </div>*@
+                @*<div class="form-group">
+                        <label class="control-label" for="SearchString">maker name:</label>
+                        <select id="ddlRole" name="ddlRole" class="form-control">
+                            <option value="0">=== Select Role ===</option>
+                            @foreach (var item in (List<marketplace.Role_GroupEntity>)ViewData["role"])
+                            {
+                                <option value="@item.ID">@item.Name</option>
+                            }
+                        </select>
+                    </div>*@
+                @*<div class="form-group">
+                        <input type="button" value="Search" id="btnSearch" class="btn btn-default" style="margin-bottom: 0" />
+                    </div>*@
+                <form id="search-category">
+                    <p>
+                        <div class="form-inline">
+                            <div class="form-group">
+                                <label class="control-label" for="SearchString">Tìm theo tên phòng:</label>
+                                <input id="SearchString" name="SearchString" type="text" style="width: 200px" class="form-control" />
+                            </div>
+                            <div class="form-group">
+                                <input type="submit" value="Lọc" class="btn btn-default" style="margin-bottom: 0" />
+                            </div>
+                        </div>
+                    </p>
+                </form>
+            </div>
+            <hr />
+            <div id="DepartmentList">
+                @Html.Partial("_DepartmentList", Model)
+            </div>
+        </div>
+    </div>
+</div>
+<script src="~/Assets/plugins/TreeTable/treescript.js"></script>
+<script>
+    $(document).ready(function () {
+        $("#SearchString").keyup(function () {
+            $('#search-category').submit();
+        })
+        $('#search-category').submit(function (e) {
+            e.stopPropagation();
+            e.preventDefault();
+            var search = ($("input[name='SearchString'").val() || '').toUpperCase().trim();
+
+            var _run = function (id) {
+                var isSearch = false;
+
+                var rows = $('#tree-table  tbody tr[data-parent="' + id + '"]');
+                for (var i = 0; i < rows.length; i++) {
+                    var row = $(rows[i]);
+                    var id = row.attr("data-id");
+                    var name = (row.attr("data-name") || '').toUpperCase();
+                    isSearch = _run(id);
+
+                    var temp = name.indexOf(search) != -1;
+                    if (temp) {
+                        isSearch = temp
+                    }
+
+                    row.removeClass("hide");
+                    if (isSearch) {
+                        var child = row.find('.glyphicon');
+                        if (!$('#tree-table  tbody tr[data-parent="' + id + '"]').is(':visible')) {
+                            child.click();
+                        }
+                    }
+                    else {
+                        row.addClass("hide");
+                    }
+                };
+
+                return isSearch;
+            }
+            _run(0);
+        })
+    });
+</script>

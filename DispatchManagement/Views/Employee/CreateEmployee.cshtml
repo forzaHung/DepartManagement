@@ -1,0 +1,274 @@
+﻿@model Dispatch.EmployeeEntity
+@{
+    ViewBag.Title = "Cập nhật thông tin nhân viên";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    var imgPath = Framework.Configuration.Config.GetConfigByKey("AvatarPath");
+    var listItems = new List<SelectListItem>();
+}
+
+<div class="row">
+    <div class="x_panel">
+        <div class="x_title">
+            <h2>@ViewBag.Title</h2>
+            <ul class="nav navbar-right panel_toolbox">
+                <li>
+                    <button type="button" class="btn btn-primary" onclick="$('#frmEmp').submit();"><i class="fa fa-save"></i> Lưu</button>
+                </li>
+                <li>
+                    @Html.ActionLink("Danh sách nhân viên", "Index", null, new { @id = "createNew", @class = "btn btn-default" })
+                </li>
+                <li>
+                    <a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
+                </li>
+            </ul>
+            <div class="clearfix"></div>
+        </div>
+        <div class="x_content">
+            <div>
+                @using (Html.BeginForm("Save", "Employee", FormMethod.Post, new { enctype = "multipart/form-data", @class = "form-horizontal", role = "form", id = "frmEmp" }))
+            {
+                    @Html.AntiForgeryToken()
+                    <h4>@ViewBag.SubTitle</h4>
+                    <p class="red">Vui lòng nhập dữ liệu cho những trường bắt buộc *</p>
+                    <div class="form-group">
+                        <label class="col-md-2 control-label"> Phòng ban <i class="fa fa-asterisk red" style="font-size:10px"></i></label>
+                        <div class="col-md-10">
+                            <select id="DepartmentId" name="DepartmentId" class="form-control" select2Search multiple="multiple">
+                                @foreach (var item in (List<Dispatch.DepartmentEntity>)ViewData["Department"])
+                                {
+                                    <option value="@item.Id">@item.Title</option>
+                                }
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-md-2 control-label"> Chức vụ <i class="fa fa-asterisk red" style="font-size:10px"></i></label>
+                        <div class="col-md-10">
+                            <select id="Position" name="Position" class="js-example-events form-control" multiple="multiple">
+                                @foreach (var item in (List<Dispatch.PositionEntity>)ViewData["Position"])
+                                {
+                                    <option value="@item.Id">@item.Name</option>
+                                }
+                            </select>
+                            <label class="text-danger" @(ViewBag.ErrPosition == null ? "hidden" : "")>@ViewBag.ErrPosition</label>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-md-2 control-label"></label>
+                        <div class="col-md-10">
+                            <ul class="nav nav-tabs" id="myTab" role="tablist" style="border-bottom: 0px"></ul>
+                            <div class="tab-content" id="myTabContent">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-md-2 control-label">Công việc <i class="fa fa-asterisk red" style="font-size:10px"></i></label>
+                        <div class="col-md-10">
+                            <select id="DispatchWork" name="DispatchWork" class="form-control" select2Search multiple="multiple">
+                                @foreach (var item in (List<Dispatch.DispatchWorkEntity>)ViewData["DispatchWork"])
+                                {
+                                    if (Model != null)
+                                    {
+                                        <option value="@item.ID">@item.Title</option>
+                                    }
+                                }
+                            </select>
+                            <label class="text-danger" @(ViewBag.ErrDispatchWork == null ? "hidden" : "")>@ViewBag.ErrDispatchWork</label>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-md-2 control-label">Họ và Tên đêm <i class="fa fa-asterisk red" style="font-size:10px"></i> </label>
+                        <div class="col-md-10">
+                            @Html.TextBoxFor(m => m.FirstName, new { @class = "form-control", @maxlength = "50" })
+                            @Html.ValidationMessageFor(model => model.FirstName, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-md-2 control-label"> Tên <i class="fa fa-asterisk red" style="font-size:10px"></i></label>
+                        <div class="col-md-10">
+                            @Html.TextBoxFor(m => m.LastName, new { @class = "form-control", @maxlength = "50" })
+                            @Html.ValidationMessageFor(model => model.LastName, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        @Html.LabelFor(m => m.AcademicLevel, new { @class = "col-md-2 control-label" })
+                        <div class="col-md-10">
+                            @Html.TextBoxFor(m => m.AcademicLevel, new { @class = "form-control" })
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-md-2 control-label"> Điện thoại <i class="fa fa-asterisk red" style="font-size:10px"></i></label>
+                        <div class="col-md-10">
+                            @Html.TextBoxFor(m => m.Phone, new { @class = "form-control" })
+                            @Html.ValidationMessageFor(model => model.Phone, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        @Html.LabelFor(m => m.Address, new { @class = "col-md-2 control-label" })
+                        <div class="col-md-10">
+                            @Html.TextBoxFor(m => m.Address, new { @class = "form-control" })
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        @Html.LabelFor(m => m.Birthday, new { @class = "col-md-2 control-label" })
+                        <div class="col-md-4">
+                            @Html.TextBoxFor(m => m.Birthday, new { @class = "form-control", type = "date", @Value = Model.Birthday.ToString("yyyy-MM-dd") == "0001-01-01" ? DateTime.Now.ToString("yyyy-MM-dd") : Model.Birthday.ToString("yyyy-MM-dd") })
+                        </div>
+                        @Html.LabelFor(m => m.IsActive, new { @class = "col-md-2 control-label" })
+                        <div class="col-md-4">
+                            @Html.CheckBoxFor(m => m.IsActive, new { @class = "flat" })
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-md-2 control-label"> Giới tính</label>
+                        <div class="col-md-10">
+                            <select name="Gender" class="form-control">
+                                <option value="False" @(Model.Gender == false ? "selected" : "")>Nam</option>
+                                <option value="True" @(Model.Gender == true ? "selected" : "")>Nữ</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-md-2 control-label"> Ảnh đại diện</label>
+                        <div class="col-md-10">
+                            <input type="file" class="form-control" id="file" name="file" />
+                            <br />
+                            <div id="upload">
+                                <img id="imageUpload" src="@imgPath@Model.PicturePath" style="height:111px;width:185px;" />
+                            </div>
+                            @ViewBag.msgUpload
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="col-md-offset-2 col-md-10">
+                            <input type="hidden" class="form-control" id="Id" name="Id" value="@Model.Id" />
+                        </div>
+                    </div>
+                }
+            </div>
+        </div>
+    </div>
+</div>
+<script type="text/javascript">
+    $(document).ready(function () {
+        $('#DepartmentId').select2().on('select2:select' , function () {
+            if ($(".checkRemove").length != 0) $(".checkRemove").remove();
+            if ($("#DepartmentId").val().length == $("#Position").val().length) {
+                $.ajax({
+                    url: '/Employee/NoteDepartment_Position',
+                    data: {
+                        IdEmployee: $("#Id").val(),
+                        arrDepartment: $("#DepartmentId").val(),
+                        arrPosition: $("#Position").val()},
+                    type: "Post",
+                    success: function (rs) {
+                        $.each(rs.data, function (key, value) {
+                            $("#myTab").append("<li class='checkRemove nav-item'><a class='nav-link' id='" + value.IdDepartment + "-tab' data-toggle='tab' href='#" + value.IdDepartment + "' role='tab' aria-controls='" + value.IdDepartment + "' aria-selected='true'>Ghi chú " + value.NameDepartment + "</a></li>");
+                            $("#myTabContent").append(" <div class='checkRemove tab-pane fade' id='" + value.IdDepartment + "' role='tabpanel' aria-labelledby='profile-tab'><textarea class='form-control' cols='20' id='Department" + value.IdDepartment + "' name='Department" + value.IdDepartment + "' rows='2' style='height:100px' > " + value.Note + " </textarea></div>");
+                            //var editor = CKEDITOR.replace("Department" + value.IdDepartment, {
+                        })
+                      },
+                });
+            }
+        }).on('select2:unselect', function () {
+            if ($(".checkRemove").length != 0) $(".checkRemove").remove();
+            if ($("#DepartmentId").val().length == $("#Position").val().length) {
+                $.ajax({
+                    url: '/Employee/NoteDepartment_Position',
+                    data: {
+                        IdEmployee: $("#Id").val(),
+                        arrDepartment: $("#DepartmentId").val(),
+                        arrPosition: $("#Position").val()
+                    },
+                    type: "Post",
+                    success: function (rs) {
+                        $.each(rs.data, function (key, value) {
+                            $("#myTab").append("<li class='checkRemove nav-item'><a class='nav-link' id='" + value.IdDepartment + "-tab' data-toggle='tab' href='#" + value.IdDepartment + "' role='tab' aria-controls='" + value.IdDepartment + "' aria-selected='true'>Ghi chú " + value.NameDepartment + "</a></li>");
+                            $("#myTabContent").append(" <div class='checkRemove tab-pane fade' id='" + value.IdDepartment + "' role='tabpanel' aria-labelledby='profile-tab'><textarea class='form-control' cols='20' id='Department" + value.IdDepartment + "' name='Department" + value.IdDepartment + "' rows='2' style='height:100px' > " + value.Note + " </textarea></div>");
+                        })
+                    },
+                });
+            }
+        });
+       
+        var number = @Html.Raw(Json.Encode(ViewData["arrDepartment"]));
+        $("#DepartmentId").val(null).trigger("change");
+        $('#DepartmentId').val(number).trigger("change");
+        $('#DispatchWork').select2();
+        var Work = @Html.Raw(Json.Encode(ViewData["arrDispatchWork"]));
+        $("#DispatchWork").val(null).trigger("change");
+        $('#DispatchWork').val(Work).trigger("change");
+
+        var $eventSelect = $("#Position");
+
+        $eventSelect.on("select2:select", function (e) {
+            var element = e.params.data.element;
+            var $element = $(element);
+            $element.detach();
+            $(this).append($element);
+            $(this).trigger("change");
+            $eventSelect.append('<option value="' + e.params.data.id + '">' + e.params.data.text + '</option>');
+        });
+        $eventSelect.on("select2:unselect", function (e) {
+            e.params.data.element.remove();
+        });
+
+        function formatResultData(data) {
+            if (!data.id) return data.text;
+            if (data.element.selected) return
+            return data.text;
+        };
+
+        $eventSelect.select2({
+            templateResult: formatResultData,
+            tags: true
+        }).on('select2:select', function () {
+            if ($(".checkRemove").length != 0) $(".checkRemove").remove();
+            if ($("#DepartmentId").val().length == $("#Position").val().length) {
+                $.ajax({
+                    url: '/Employee/NoteDepartment_Position',
+                    data: {
+                        IdEmployee: $("#Id").val(),
+                        arrDepartment: $("#DepartmentId").val(),
+                        arrPosition: $("#Position").val()
+                    },
+                    type: "Post",
+                    success: function (rs) {
+                        $.each(rs.data, function (key, value) {
+                            $("#myTab").append("<li class='checkRemove nav-item'><a class='nav-link' id='" + value.IdDepartment + "-tab' data-toggle='tab' href='#" + value.IdDepartment + "' role='tab' aria-controls='" + value.IdDepartment + "' aria-selected='true'>Ghi chú " + value.NameDepartment +"</a></li>");
+                            $("#myTabContent").append(" <div class='checkRemove tab-pane fade' id='" + value.IdDepartment + "' role='tabpanel' aria-labelledby='profile-tab'><textarea class='form-control' cols='20' id='Department" + value.IdDepartment + "' name='Department" + value.IdDepartment + "' rows='2' style='height:100px' >" + value.Note + "</textarea></div>");
+                        })
+                    },
+                });
+            }
+            }).on('select2:unselect', function () {
+                if ($(".checkRemove").length != 0) $(".checkRemove").remove();
+                if ($("#DepartmentId").val().length == $("#Position").val().length) {
+                    $.ajax({
+                        url: '/Employee/NoteDepartment_Position',
+                        data: {
+                            IdEmployee: $("#Id").val(),
+                            arrDepartment: $("#DepartmentId").val(),
+                            arrPosition: $("#Position").val()
+                        },
+                        type: "Post",
+                        success: function (rs) {
+                            $.each(rs.data, function (key, value) {
+                                $("#myTab").append("<li class='checkRemove nav-item'><a class='nav-link' id='" + value.IdDepartment + "-tab' data-toggle='tab' href='#" + value.IdDepartment + "' role='tab' aria-controls='" + value.IdDepartment + "' aria-selected='true'>Ghi chú " + value.NameDepartment + "</a></li>");
+                                $("#myTabContent").append(" <div class='checkRemove tab-pane fade' id='" + value.IdDepartment + "' role='tabpanel' aria-labelledby='profile-tab'><textarea class='form-control' cols='20' id='Department" + value.IdDepartment + "' name='Department" + value.IdDepartment + "' rows='2' style='height:100px' >" + value.Note + "</textarea></div>");
+                            })
+                        },
+                    });
+                }
+            });
+
+        var Position = @Html.Raw(Json.Encode(ViewData["arrPosition"]));
+        $eventSelect.val(null).trigger("change");
+        $.each(Position, function (key, value) {
+            var option = new Option(value.NamePosition, value.IdPosition);
+            option.selected = true;
+            $eventSelect.append(option);
+            $eventSelect.trigger("change");
+        })
+    });
+</script>

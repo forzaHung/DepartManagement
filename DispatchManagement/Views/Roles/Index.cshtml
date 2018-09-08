@@ -1,0 +1,108 @@
+﻿@model Dispatch.UserEntity
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    //var employeeInfo = (marketplace.EmployeeEntity)ViewData["EmpInfo"];
+    var imgPath = Framework.Configuration.Config.GetConfigByKey("AvatarPath");
+}
+
+@section scripts{
+    <!-- image cropping -->
+    <script src="~/Assets/backend/js/cropping/cropper.min.js"></script>
+    <script src="~/Assets/backend/js/cropping/main.js"></script>
+}
+<div class="row">
+    <div class="col-md-12 col-sm-12 col-xs-12">
+        <div class="x_panel">
+            <div class="x_title">
+                <h2>Thông tin nhân viên <small>phân quyền hệ thống</small></h2>
+                <div class="clearfix"></div>
+            </div>
+            <div class="x_content">
+                <div class="col-md-3 col-sm-3 col-xs-12 profile_left">
+                    <div class="profile_img">
+                        <!-- end of image cropping -->
+                        <div id="crop-avatar">
+                            <!-- Current avatar -->
+                            <img class="img-responsive avatar-view" src="@imgPath@Model.PicturePath" alt="Avatar" title="Change the avatar" width="226" height="226">
+                            <!-- Cropping modal -->
+                        </div>
+                        <!-- end of image cropping -->
+                    </div>
+                    <h3>@Model.FirstName @Model.LastName</h3>
+                    <ul class="list-unstyled user_data">
+                        <li>
+                            <i class="fa fa-map-marker user-profile-icon"></i> @Model.Address
+                        </li>
+                        <li>
+                            <i class="fa fa-briefcase user-profile-icon"></i> @Model.Phone
+                        </li>
+                        <li class="m-top-xs">
+
+                            @if (Model.IsActive)
+                            {
+                                <i class="fa fa-check-square-o"></i>
+                                @Html.Raw("Đã Kích hoạt");
+                            }
+                            else
+                            {
+                                <i class="fa fa-circle-o"></i>
+                                @Html.Raw("Chưa Kích hoạt");
+                            }
+
+                        </li>
+                    </ul>
+                </div>
+                <div class="col-md-9 col-sm-9 col-xs-12">
+                    <div class="profile_title">
+                        <div class="col-md-6">
+                            <h2>Phân quyền hệ thống</h2>
+                        </div>
+                    </div>
+                    <input type="hidden" id="userId" value="@ViewBag.UserId" />
+                    <table class="table table-hover table-bordered">
+                        <thead>
+                            <tr>
+                                <td width="10%">Module</td>
+                                <td width="10%">Tạo mới</td>
+                                <td width="5%">Sửa</td>
+                                <td width="5%">Xóa</td>
+                                <td width="10%">Chỉ Xem</td>
+                                <td width="10%">Upload</td>
+                                <td width="10%">Lưu Dữ liệu</td>
+                                <td width="10%">Import</td>
+                                <td width="10%">Export</td>
+                                <td width="10%">Report</td>
+                                <td width="10%">Print</td>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var item in (List<Dispatch.RoleEntity>)ViewData["ListRole"])
+                            {
+                                <tr>
+                                    <td class="moduleName"><a href="javascript:void(0)" class="edit" data-module="@item.ModuleId">@item.Name</a></td>
+                                    <td>
+                                        @Html.CheckBoxFor(m => item.Add, new { @class = "flat roles", module = item.mId, action="Add" })
+                                    </td>
+                                    <td>@Html.CheckBoxFor(m => item.Edit, new { @class = "flat roles", module = item.mId, action = "Edit" })</td>
+                                    <td>@Html.CheckBoxFor(m => item.Delete, new { @class = "flat roles", module = item.mId, action = "Delete" })</td>
+                                    <td>@Html.CheckBoxFor(m => item.View, new { @class = "flat roles", module = item.mId, action = "View" })</td>
+                                    <td>@Html.CheckBoxFor(m => item.Upload, new { @class = "flat roles", module = item.mId, action = "Upload" })</td>
+                                    <td>@Html.CheckBoxFor(m => item.Publish, new { @class = "flat roles", module = item.mId, action = "Publish" })</td>
+                                    <td>@Html.CheckBoxFor(m => item.Import, new { @class = "flat roles", module = item.mId, action = "Import" })</td>
+                                    <td>@Html.CheckBoxFor(m => item.Export, new { @class = "flat roles", module = item.mId, action = "Export" })</td>
+                                    <td>@Html.CheckBoxFor(m => item.Report, new { @class = "flat roles", module = item.mId, action = "Report" })</td>
+                                    <td>@Html.CheckBoxFor(m => item.Print, new { @class = "flat roles", module = item.mId, action = "Print" })</td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                    <script id="result-Permission" type="x-tmpl-mustache">
+
+                    </script>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+

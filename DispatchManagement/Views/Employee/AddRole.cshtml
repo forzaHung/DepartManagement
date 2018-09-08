@@ -1,0 +1,66 @@
+﻿@model Dispatch.RoleEntity
+@{
+    ViewBag.Title = "Add Role";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="row">
+
+    <div class="x_panel">
+        <div class="x_title">
+            <h2>@ViewBag.Title</h2>
+            <ul class="nav navbar-right panel_toolbox">
+                <li>
+                    <input type="button" value="Save" class="btn btn-default" onclick="$('#frmEmp').submit();" />
+                </li>
+                <li>
+                    @Html.ActionLink("Back to product list", "Index", null, new { @id = "createNew", @class = "btn btn-default" })
+                </li>
+
+                <li>
+                    <a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
+                </li>
+            </ul>
+            <div class="clearfix"></div>
+        </div>
+        <div class="x_content">
+            <table class="table table-hover table-bordered">
+                <thead>
+                    <tr>
+                        <td width="20%">Module</td>
+                        <td width="10%">Tạo mới</td>
+                        <td width="10%">Sửa</td>
+                        <td width="10%">Xóa</td>
+                        <td width="10%">Xem</td>
+                        <td width="10%">Upload</td>
+                        <td width="10%">Publish</td>
+                        <td width="10%">Report</td>
+                        <td width="10%">Print</td>
+                    </tr>
+                </thead>
+                <tbody>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+<script id="result-Module" type="x-tmpl-mustache">
+    <option value="{{ID}}">{{Name}}</option>
+</script>
+<script id="result-Permission" type="x-tmpl-mustache">
+    <tr>
+        <td class="moduleName"><a href="javascript:void(0)" class="edit" data-module="{{ModuleID}}">{{Module}}</a></td>
+        <td>
+            <a class="btn btn-small {{Add}}" data-module="{{ModuleID}}" data-action="Add" data-access="{{access_add}}">
+                <i class="btn-icon-only {{iAdd}}"></i>
+            </a>
+        </td>
+        <td><a class="btn btn-small {{Edit}}" data-module="{{ModuleID}}" data-action="Edit" data-access="{{access_edit}}"><i class="btn-icon-only {{iEdit}}"></i></a></td>
+        <td><a class="btn btn-small {{Del}}" data-module="{{ModuleID}}" data-action="Delete" data-access="{{access_del}}"><i class="btn-icon-only {{iDel}}"></i></a></td>
+        <td><a class="btn btn-small {{View}}" data-module="{{ModuleID}}" data-action="View" data-access="{{access_view}}"><i class="btn-icon-only {{iView}}"></i></a></td>
+        <td><a class="btn btn-small {{upload}}" data-module="{{ModuleID}}" data-action="Upload" data-access="{{access_upload}}"><i class="btn-icon-only {{iUpload}}"></i></a></td>
+        <td><a class="btn btn-small {{publish}}" data-module="{{ModuleID}}" data-action="Publish" data-access="{{access_pub}}"><i class="btn-icon-only {{iPublish}}"></i></a></td>
+    </tr>
+</script>
+
+

@@ -1,0 +1,151 @@
+﻿@model Dispatch.EmployeeEntity
+@{
+    ViewBag.Title = "Profile";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    var imgPath = Framework.Configuration.Config.GetConfigByKey("AvatarPath");
+    var listItems = new List<SelectListItem>();
+}
+
+<div class="row">
+    <div class="col-md-12 col-sm-12 col-xs-12">
+        <div class="x_panel">
+            <div class="x_title">
+                <h2>@ViewBag.Title</h2>
+                <ul class="nav navbar-right panel_toolbox">
+                    <li>
+                        <input type="button" value="Save" class="btn btn-default" onclick="$('#frmProfile').submit();" />
+                    </li>
+                    @*<li>
+                        <input type="button" value="Save" class="btn btn-default" onclick="$('#frmEmp').submit();" />
+                    </li>
+                    <li>
+                        @Html.ActionLink("Back to product list", "Index", null, new { @id = "createNew", @class = "btn btn-default" })
+                    </li>*@
+
+                    <li>
+                        <a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
+                    </li>
+                </ul>
+                <div class="clearfix"></div>
+            </div>
+            <div class="x_content">
+                @using (Html.BeginForm("Save", "Profile", FormMethod.Post, new { enctype = "multipart/form-data", @class = "form-horizontal", role = "form", id = "frmProfile" }))
+                {
+                    <div class="col-md-3 col-sm-3 col-xs-12 profile_left">
+                        <div class="profile_img">
+                            <img class="img-responsive avatar-view" src="@imgPath@Model.PicturePath" id="imageUpload" width="226" height="226" />
+                            <br />
+                            <input type="file" class="form-control" id="file" name="file" />
+                        </div>
+                        <h3>@Model.FirstName @Model.LastName</h3>
+                        <ul class="list-unstyled user_data">
+                            <li>
+                                <i class="fa fa-map-marker user-profile-icon"></i> @Model.Address
+                            </li>
+                            <li>
+                                <i class="fa fa-phone user-profile-icon"></i> @Model.Phone
+                            </li>
+                        </ul>
+                        <!-- start skills -->
+                        <h4><i class="fa fa-graduation-cap user-profile-icon"></i> <strong>Trình độ học vấn</strong> </h4>
+                        <ul class="list-unstyled user_data">
+                            <li>
+                                <i class="fa fa-graduation-cap user-profile-icon"></i> @Model.AcademicLevel
+                            </li>
+                            
+                        </ul>
+                        <!-- start skills -->
+                        <h4><i class="fa fa-cubes user-profile-icon"></i> <strong> Kỹ năng</strong></h4>
+                        <ul class="list-unstyled user_data">
+                            <li>
+                                <p>Web Applications</p>
+                                <div class="progress progress_sm">
+                                    <div class="progress-bar bg-green" role="progressbar" data-transitiongoal="50"></div>
+                                </div>
+                            </li>
+                            <li>
+                                <p>Website Design</p>
+                                <div class="progress progress_sm">
+                                    <div class="progress-bar bg-green" role="progressbar" data-transitiongoal="70"></div>
+                                </div>
+                            </li>
+                            <li>
+                                <p>Automation & Testing</p>
+                                <div class="progress progress_sm">
+                                    <div class="progress-bar bg-green" role="progressbar" data-transitiongoal="30"></div>
+                                </div>
+                            </li>
+                            <li>
+                                <p>UI / UX</p>
+                                <div class="progress progress_sm">
+                                    <div class="progress-bar bg-green" role="progressbar" data-transitiongoal="50"></div>
+                                </div>
+                            </li>
+                        </ul>
+                        <!-- end of skills -->
+
+                    </div>
+                    <div class="col-md-9 col-sm-9 col-xs-9">
+                        <div class="x_content nav-tabs-custom">
+                            <div class="form-group">
+                                @Html.LabelFor(m => m.DepartmentId, new { @class = "col-md-2 control-label" })
+                                <div class="col-md-10">
+                                    <select id="DepartmentId" name="DepartmentId" class="form-control">
+                                        @foreach (var item in (List<Dispatch.DepartmentEntity>)ViewData["Department"])
+                                        {
+                                            if (item.Id == Model.DepartmentId)
+                                            {
+                                                <option value="@item.Id" selected="selected">@item.Name</option>
+                                            }
+                                            else
+                                            {
+                                                <option value="@item.Id">@item.Name</option>
+                                            }
+                                        }
+                                    </select>
+                                </div>
+
+
+                            </div>
+                            <div class="form-group">
+                                @Html.LabelFor(m => m.FirstName, new { @class = "col-md-2 control-label" })
+                                <div class="col-md-10">
+                                    @Html.TextBoxFor(m => m.FirstName, new { @class = "form-control" })
+                                    @Html.ValidationMessageFor(model => model.FirstName, "", new { @class = "text-danger" })
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                @Html.LabelFor(m => m.LastName, new { @class = "col-md-2 control-label" })
+                                <div class="col-md-10">
+                                    @Html.TextBoxFor(m => m.LastName, new { @class = "form-control" })
+                                    @Html.ValidationMessageFor(model => model.LastName, "", new { @class = "text-danger" })
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                @Html.LabelFor(m => m.Address, new { @class = "col-md-2 control-label" })
+                                <div class="col-md-10">
+                                    @Html.TextBoxFor(m => m.Address, new { @class = "form-control" })
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                @Html.LabelFor(m => m.Phone, new { @class = "col-md-2 control-label" })
+                                <div class="col-md-10">
+                                    @Html.TextBoxFor(m => m.Phone, new { @class = "form-control" })
+                                    @Html.ValidationMessageFor(model => model.Phone, "", new { @class = "text-danger" })
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                @Html.LabelFor(m => m.AcademicLevel, new { @class = "col-md-2 control-label" })
+                                <div class="col-md-10">
+                                    @Html.TextBoxFor(m => m.AcademicLevel, new { @class = "form-control" })
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <input type="hidden" class="form-control" id="Id" name="Id" value="@Model.Id" />
+                }                
+            </div>
+        </div>
+    </div>
+</div>
+

@@ -1,0 +1,197 @@
+﻿<div id="sidebar-menu" class="main_menu_side hidden-print main_menu">
+    <div class="menu_section">
+        <h3>Hệ thống quản lý công văn</h3>
+        <ul class="nav side-menu">
+            <li>
+                <a><i class="fa fa-home"></i> Chức năng <span class="fa fa-chevron-down"></span></a>
+                <ul class="nav child_menu" style="display: none">
+                    <li>
+                        <a href="/Department">Quản lý Phòng ban</a>
+                    </li>
+                </ul>
+            </li>
+
+            <li >
+                <a><i class="fa fa-share"></i> Quản lý công văn đến <span class="fa fa-chevron-down"></span></a>
+                <ul class="nav child_menu" style="display: none" >
+                    <li id="navdispatchIn_Department_Left">
+                        <a class="test" href="#">Phòng ban nhận <span id="fa fa-chevron-down"></span> <span class="fa fa-chevron-down"></span></a>
+                        <ul class="nav child_menu " style="display: none">
+                            @Html.Action("_MenuDepartMent", "Count")
+                        </ul>
+                    </li>
+                    <li id="navdispatchIn_Type_Left">
+                        <a  href="#"><strong> Loại công văn</strong><span class="fa fa-chevron-down"></span></a>
+                        <ul class="nav child_menu" style="display: none">
+                            @Html.Action("_MenuTypeDisIn", "Count")
+                        </ul>
+                    </li>
+                    <li id="navdispatchIn_Status_Left">
+                        <a  href="#"><strong> Tình trạng</strong><span class="fa fa-chevron-down"></span></a>
+                        <ul class="nav child_menu" style="display: none">
+                            @Html.Action("_MenuStatusDisIn", "Count")
+                        </ul>
+                    </li>
+                    <li>
+                        @Html.ActionLink("Tạo công văn đến", "CreateDispatchIn", "DispatchIn")
+                    </li>
+                </ul>
+            </li>
+            <li>
+                <a><i class="fa fa-reply"></i> Quản lý công văn đi <span class="fa fa-chevron-down"></span></a>
+                <ul class="nav child_menu" style="display: none">
+                    <li id="navdispatchOut_Department_Left">
+                        <a href="#"><strong> Phòng ban hành</strong><span class="fa fa-chevron-down"></span></a>
+                        <ul class="nav child_menu" style="display: none">
+                            @Html.Action("_MenuDepartMentOut", "Count")
+                        </ul>
+                    </li>
+                    <li id="navdispatchOut_Type_Left">
+                        <a href="#"><strong> Loại công văn</strong><span class="fa fa-chevron-down"></span></a>
+                        <ul class="nav child_menu" style="display: none">
+                            @Html.Action("_MenuTypeDisOut", "Count")
+                        </ul>
+                    </li>
+                    <li id="navdispatchOut_Status_Left">
+                        <a href="#"><strong> Tình trạng</strong><span class="fa fa-chevron-down"></span></a>
+                        <ul class="nav child_menu" style="display: none">
+                            @Html.Action("_MenuStatusDisOut", "Count")
+                        </ul>
+                    </li>
+                    <li>
+                        @Html.ActionLink("Tạo công văn đi", "CreateDispatchOut", "DispatchOut")
+                    </li>
+                </ul>
+            </li>
+            <li>
+                <a><i class="fa fa-user-plus"></i> Quản lý nhân viên <span class="fa fa-chevron-down"></span></a>
+                <ul class="nav child_menu" style="display: none">
+                    <li>
+                        @Html.ActionLink("Danh sách nhân viên", "Index", "Employee")
+                    </li>
+                    @*<li>
+                            @Html.ActionLink("All Roles", "Index", "RoleManager")
+                        </li>*@
+                    <li>
+
+                        @Html.ActionLink("Tạo mới", "CreateEmployee", "Employee")
+                    </li>
+                    <li>
+                        @Html.ActionLink("Lịch sử làm việc của nhân sự", "Index", "Employee_History")
+                    </li>
+                    <li>
+                        @Html.ActionLink("Theo dõi chấm công", "Index", "AttendanceTracking_History")
+                    </li>
+                    <li>
+                        @Html.ActionLink("Nhập dữ liệu chấm công bằng file", "Import", "AttendanceTracking")
+                    </li>
+                    <li>
+                        @Html.ActionLink("Quy định ra vào công ty", "Index", "RegulationTime")
+                    </li>
+                    <li>
+                        @Html.ActionLink("Bảng lương", "Index", "Employee_History")
+                    </li>
+                    
+                </ul>
+            </li>
+
+            <li>
+                <a><i class="fa fa-picture-o"></i> Quản lý files <span class="fa fa-chevron-down"></span></a>
+                <ul class="nav child_menu" style="display: none;">
+                    <li>
+                        @Html.ActionLink("Danh sách files", "Index", "Files")
+                    </li>
+                </ul>
+            </li>
+            <li>
+                <a><i class="fa fa-info"></i> Cài đặt <span class="fa fa-chevron-down"></span></a>
+                <ul class="nav child_menu" style="display: none">
+                    <li>
+                        @Html.ActionLink("Mức độ ưu tiên", "Index", "DispatchPriority")
+                    </li>
+                    <li>
+                        @Html.ActionLink("Tình trạng công văn", "Index", "DispatchStatus")
+                    </li>
+                    <li>
+                        @Html.ActionLink("Loại công văn", "Index", "DispatchType")
+                    </li>
+                    <li>
+                        @Html.ActionLink("Công Việc", "Index", "DispatchWork")
+                    </li>
+                </ul>
+            </li>
+        </ul>
+    </div>
+    @*<div class="menu_section">
+            <h3>Live On</h3>
+            <ul class="nav side-menu">
+                <li>
+                    <a><i class="fa fa-bug"></i> Additional Pages <span class="fa fa-chevron-down"></span></a>
+                    <ul class="nav child_menu" style="display: none">
+                        <li>
+                            <a href="e_commerce.html">E-commerce</a>
+                        </li>
+                        <li>
+                            <a href="projects.html">Projects</a>
+                        </li>
+                        <li>
+                            <a href="project_detail.html">Project Detail</a>
+                        </li>
+                        <li>
+                            <a href="contacts.html">Contacts</a>
+                        </li>
+                        <li>
+                            <a href="profile.html">Profile</a>
+                        </li>
+                    </ul>
+                </li>
+                <li>
+                    <a><i class="fa fa-windows"></i> Extras <span class="fa fa-chevron-down"></span></a>
+                    <ul class="nav child_menu" style="display: none">
+                        <li>
+                            <a href="page_404.html">404 Error</a>
+                        </li>
+                        <li>
+                            <a href="page_500.html">500 Error</a>
+                        </li>
+                        <li>
+                            <a href="plain_page.html">Plain Page</a>
+                        </li>
+                        <li>
+                            <a href="login.html">Login Page</a>
+                        </li>
+                        <li>
+                            <a href="pricing_tables.html">Pricing Tables</a>
+                        </li>
+                    </ul>
+                </li>
+                <li>
+                    <a><i class="fa fa-sitemap"></i> Multilevel Menu <span class="fa fa-chevron-down"></span></a>
+                    <ul class="nav child_menu" style="display: none">
+                        <li><a href="#level1_1">Level One</a>
+                        <li>
+                            <a>Level One<span class="fa fa-chevron-down"></span></a>
+                            <ul class="nav child_menu" style="display: none">
+                                <li class="sub_menu">
+                                    <a href="level2.html">Level Two</a>
+                                </li>
+                                <li>
+                                    <a href="#level2_1">Level Two</a>
+                                </li>
+                                <li>
+                                    <a href="#level2_2">Level Two</a>
+                                </li>
+                            </ul>
+                        </li>
+                        <li>
+                            <a href="#level1_2">Level One</a>
+                        </li>
+                    </ul>
+                </li>
+                <li>
+                    <a href="javascript:void(0)"><i class="fa fa-laptop"></i> Landing Page <span class="label label-success pull-right">Coming Soon</span></a>
+                </li>
+            </ul>
+        </div>*@
+</div>
+

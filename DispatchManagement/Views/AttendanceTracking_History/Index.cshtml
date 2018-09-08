@@ -1,0 +1,58 @@
+﻿@{
+    ViewBag.Title = "Theo dõi chấm công";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<link href="~/Assets/plugins/toastrjs/toastr.css" rel="stylesheet" />
+<h2>@ViewBag.Title</h2>
+<div class="row">
+    <div class="col-lg-3">
+        <p>Từ ngày</p>
+        <input id="fromDate" type="date" min="2017-01-01" value="@ViewBag.FromDate" class="form-control boxsearch" style="width: 100%;" />
+    </div>
+    <div class="col-lg-3">
+        <p>Đến ngày</p>
+        <input id="toDate" type="date" min="2017-01-01" value="@ViewBag.ToDate" class="form-control boxsearch" style="width: 100%;" />
+    </div>
+    <div class="col-lg-3">
+        <p>Tìm theo tên nhân viên</p>
+        <select class="form-control" id="employee"/>
+        <input type="hidden" id="employeeId"/>
+    </div>
+    <div class="col-lg-1" style="padding-top:29px">
+        <button class="btn btn-danger pull-right" type="button" id="btnSearch"><i class="fa fa-search-plus"></i> Lọc</button>
+    </div>
+    <div class="col-lg-1" style="padding-top:29px;margin-left:2%">
+        <button class="btn btn-default pull-right" type="button" id="btnExport"><i class="fa fa-download"></i> Xuất Excel</button>
+    </div>
+    </div>
+<div class="row dasboard">
+    <div class="col-lg-3">
+        <label id="totalTimesLate" name="totalTimesLate"></label>
+    </div>
+    <div class="col-lg-3">
+        <label id="totalTimeLate"name="totalTimeLate"></label>
+    </div>
+    <div class="col-lg-3">
+        <label id="totalTimesEarly"name="totalTimesEarly"></label>
+    </div>
+    <div class="col-lg-3">
+        <label id="totalTimeEarly"name="totalTimeEarly"></label>
+    </div>
+    <div class="col-lg-3">
+        <label id="totalAbsent"name="totalAbsent"></label>
+    </div>
+    <div class="col-lg-3">
+        <label id="forgetTracking"name="forgetTracking"></label>
+    </div>
+    <div class="col-lg-3">
+        <label id="totalMinutesOverTime"name="totalMinutesOverTime"></label>
+    </div>
+    <div class="col-lg-3">
+        <label id="work"></label>
+    </div>
+</div>
+
+<div id="DepartmentList">
+    <table id="tbl-AttendanceTrackingHistory" class="table table-bordered table-hover fixed-table-header" data-height="600"></table>
+</div>
+<script src="~/Assets/plugins/toastrjs/toastr.min.js"></script>

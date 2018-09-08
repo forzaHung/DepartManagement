@@ -1,0 +1,111 @@
+﻿@using MvcPaging
+@using Prototype.Code
+
+@model IPagedList<Dispatch.DispatchInEntity>
+
+<table class="table table-hover table-bordered">
+    <thead>
+        <tr>
+            <th>Số công văn</th>
+            <th>
+                Tên công văn
+            </th>
+            <th>
+                Tình trạng
+            </th>
+            <th>
+                Ngày CV đến
+            </th>
+
+            <th>Ngày phát hành</th>
+            <th>
+                Người ký
+            </th>
+            <th>
+                Nơi gửi
+            </th>
+
+            <th>Người nhận</th>
+            <th>Độ ưu tiên</th>
+            <th>Tác vụ</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            if (item.Id > 0)
+            {
+                <tr class="viewProfile" data-id="@item.Id">
+                    <td>@Html.DisplayFor(modelItem => item.DispatchNo)</td>
+                    <td>
+                        <p>@Html.DisplayFor(modelItem => item.DispatchName)</p>
+                        <p><a href="@ViewBag.FilePatch@Html.DisplayFor(modelItem=>item.FileName)">Download File CV</a></p>
+
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.DispatchSatusName)
+                    </td>
+                    <td>
+                        @if (item.DateFrom != DateTime.MinValue)
+                        {
+                            @DateTime.Parse(item.DateFrom.ToString()).ToString("dd/MM/yyyy")                           
+                        }
+                        else
+                        {
+                            <i> Chưa có thông tin</i>
+                        }
+                    </td>
+
+                    <td>
+                        @if (item.DatePublish != DateTime.MinValue)
+                        {                            
+                            @DateTime.Parse(item.DatePublish.ToString()).ToString("dd/MM/yyyy")
+                        }
+                        else
+                        {
+                            <i> Chưa có thông tin</i>
+                        }
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Signer)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.FromDepartment)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.EmployFirtName)
+                        @Html.DisplayFor(modelItem => item.EmployLastName)
+                    </td>
+                    <td>@Html.DisplayFor(modelItem => item.PriorityName)</td>
+                    <td>
+
+                        @Html.ActionLink("Sửa", "EditDispatchIn", new { id = item.Id }) |
+
+                        <a  onclick="deleteDispatch(@item.Id);">Xóa</a>
+                        @*@Html.ActionLink("Xóa", "Delete", new { id = item.Id }, new { onclick = "return confirm('Bạn có muốn xóa nhân viên này không?')" }) |*@
+                        @*@if (item.Id <= 0)
+                            {
+                                    <a href="/Department/Index/@item.Id">Tạo tài khoản</a>
+                                }*@
+                    </td>
+                </tr>
+            }
+        }
+    </tbody>
+</table>
+@Html.Pager(Model.PageSize, Model.PageNumber - 1, Model.TotalItemCount, new AjaxOptions { UpdateTargetId = "DispatchInList", OnSuccess = "backend.onSuccessAjax" }).Options(o => o
+            .Action("Index")
+            .DisplayTemplate("Bootstrap3Pagination")
+            .MaxNrOfPages(5)
+            .AlwaysAddFirstPageNumber()
+            .DisplayFirstAndLastPage()
+            .SetFirstPageText("First")
+            .SetLastPageText("Last")
+            .HidePreviousAndNextPage()
+            .AddRouteValue("searchString", Request.QueryString["searchString"])
+            .AddRouteValue("AddressToId", Request.QueryString["AddressToId"])
+            .AddRouteValue("Type", Request.QueryString["Type"])
+            .AddRouteValue("Style", Request.QueryString["Style"])
+        )
+
+

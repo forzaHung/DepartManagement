@@ -1,0 +1,161 @@
+﻿@model Dispatch.UserEntity
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    var employeeInfo = (Dispatch.EmployeeEntity)ViewData["EmpInfo"];
+    var imgPath = Framework.Configuration.Config.GetConfigByKey("AvatarPath");
+}
+
+@section scripts{
+    <!-- image cropping -->
+    <script src="~/Assets/backend/js/cropping/cropper.min.js"></script>
+    <script src="~/Assets/backend/js/cropping/main.js"></script>
+}
+<div class="row">
+    <div class="col-md-12 col-sm-12 col-xs-12">
+        <div class="x_panel">
+            <div class="x_title">
+                <h2>Thông tin nhân viên <small>quản lý tài khoản</small></h2>
+                <div class="clearfix"></div>
+            </div>
+            <div class="x_content">
+                <div class="col-md-3 col-sm-3 col-xs-12 profile_left">
+                    <div class="profile_img">
+                        <!-- end of image cropping -->
+                        <div id="crop-avatar">
+                            <!-- Current avatar -->
+                            <img class="img-responsive avatar-view" src="@imgPath@employeeInfo.PicturePath" alt="Avatar" title="Change the avatar" width="226" height="226">
+                            <!-- Cropping modal -->
+                            <div class="modal fade" id="avatar-modal" aria-hidden="true" aria-labelledby="avatar-modal-label" role="dialog" tabindex="-1">
+                                <div class="modal-dialog modal-lg">
+                                    <div class="modal-content">
+                                        <form class="avatar-form" action="crop.php" enctype="multipart/form-data" method="post">
+                                            <div class="modal-header">
+                                                <button class="close" data-dismiss="modal" type="button">&times;</button>
+                                                <h4 class="modal-title" id="avatar-modal-label">Change Avatar</h4>
+                                            </div>
+                                            <div class="modal-body">
+                                                <div class="avatar-body">
+                                                    <!-- Upload image and data -->
+                                                    <div class="avatar-upload">
+                                                        <input class="avatar-src" name="avatar_src" type="hidden">
+                                                        <input class="avatar-data" name="avatar_data" type="hidden">
+                                                        <label for="avatarInput">Local upload</label>
+                                                        <input class="avatar-input" id="avatarInput" name="avatar_file" type="file">
+                                                    </div>
+                                                    <!-- Crop and preview -->
+                                                </div>
+                                            </div>
+                                            <!-- <div class="modal-footer">
+                                                              <button class="btn btn-default" data-dismiss="modal" type="button">Close</button>
+                                                            </div> -->
+                                        </form>
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- /.modal -->
+                            <!-- Loading state -->
+                            <div class="loading" aria-label="Loading" role="img" tabindex="-1"></div>
+                        </div>
+                        <!-- end of image cropping -->
+                    </div>
+                    <h3>@employeeInfo.FirstName @employeeInfo.LastName</h3>
+                    <ul class="list-unstyled user_data">
+                        <li>
+                            <i class="fa fa-map-marker user-profile-icon"></i> @employeeInfo.Address
+                        </li>
+                        <li>
+                            <i class="fa fa-briefcase user-profile-icon"></i> @employeeInfo.Phone
+                        </li>
+                        <li>
+                            <i class="fa fa-briefcase user-profile-icon"></i> @employeeInfo.DepartmentName
+                        </li>
+                        <li class="m-top-xs">
+
+                            @if (employeeInfo.IsActive)
+                            {
+                                <i class="fa fa-check-square-o"></i>
+                                @Html.Raw("Đã Kích hoạt");
+                            }
+                            else
+                            {
+                                <i class="fa fa-circle-o"></i>
+                                @Html.Raw("Chưa Kích hoạt");
+                            }
+
+                        </li>
+                    </ul>
+                    <a class="btn btn-success"><i class="fa fa-edit m-right-xs"></i>Sửa thông tin nhân viên</a>
+                    <br />
+                    <!-- start skills -->
+                    @*<h4>Skills</h4>
+                        <ul class="list-unstyled user_data">
+                            <li>
+                                <p>Web Applications</p>
+                                <div class="progress progress_sm">
+                                    <div class="progress-bar bg-green" role="progressbar" data-transitiongoal="50"></div>
+                                </div>
+                            </li>
+                            <li>
+                                <p>Website Design</p>
+                                <div class="progress progress_sm">
+                                    <div class="progress-bar bg-green" role="progressbar" data-transitiongoal="70"></div>
+                                </div>
+                            </li>
+                            <li>
+                                <p>Automation & Testing</p>
+                                <div class="progress progress_sm">
+                                    <div class="progress-bar bg-green" role="progressbar" data-transitiongoal="30"></div>
+                                </div>
+                            </li>
+                            <li>
+                                <p>UI / UX</p>
+                                <div class="progress progress_sm">
+                                    <div class="progress-bar bg-green" role="progressbar" data-transitiongoal="50"></div>
+                                </div>
+                            </li>
+                        </ul>*@
+                    <!-- end of skills -->
+                </div>
+                <div class="col-md-9 col-sm-9 col-xs-12">
+                    <div class="profile_title">
+                        <div class="col-md-6">
+                            <h2>Quản lý tài khoản</h2>
+                        </div>
+                    </div>
+                    @using (Html.BeginForm("Save", "User", FormMethod.Post, new { @class = "form-horizontal", role = "form", id = "frmEmp" }))
+            {
+                        @Html.AntiForgeryToken()
+                        <p class="text-danger">@ViewBag.Msg</p>
+                        <input type="hidden" id="EmployeeId" name="EmployeeId" value="@employeeInfo.Id" />
+                        <div class="form-group">
+                            @Html.LabelFor(m => m.UserName, new { @class = "col-md-2 control-label" })
+                            <div class="col-md-10">
+                                @Html.TextBoxFor(m => m.UserName, new { @class = "form-control", @maxlength = "50" })
+                                @Html.ValidationMessageFor(model => model.UserName, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            @Html.LabelFor(m => m.Password, new { @class = "col-md-2 control-label" })
+                            <div class="col-md-10">
+                                @Html.PasswordFor(m => m.Password, new { @class = "form-control", @maxlength = "50" })
+                                @Html.ValidationMessageFor(model => model.Password, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-md-2 control-label"> Kích hoạt tài khoản</label>
+                            <div class="col-md-10">
+                                @Html.CheckBoxFor(m => m.IsActive, new { @class = "form-control flat" })
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <div class="col-md-10">
+                                <button type="submit" class="btn btn-primary">Lưu</button>
+                            </div>
+                        </div>
+                    }
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

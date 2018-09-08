@@ -1,0 +1,19 @@
+﻿@model List<Dispatch.DispatchStatusEntity>
+@{
+    Layout = null;
+}
+
+
+    @foreach (var item in Model)
+    {
+        @*<li>@Html.ActionLink(item.Name, "Index", "DispatchIn", new { Status = item.Id }, null)</li>*@
+        <li>
+            <a href="@Url.RouteUrl( new { controller = "DispatchIn", action = "Index", Status = item.Id })">
+
+                @Html.Raw(item.Name)
+                @*@Html.Action("_count", new DispatchManagement.Models.CountList { searchType = 0, searchStatus = @item.Id, DepartmentId = 0 })*@
+                <span class="badge bg-green ShowCountStatus_@item.Id" ></span>
+            </a>
+        </li>
+    }
+

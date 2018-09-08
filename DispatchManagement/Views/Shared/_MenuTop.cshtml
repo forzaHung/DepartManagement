@@ -1,0 +1,42 @@
+﻿<ul class="nav navbar-nav hidden-xs ">
+    <li>
+        <a href="#">Trang chủ</a>
+
+    </li>
+    <li>
+        <a href="/Department">Phòng ban</a>
+
+    </li>   
+    <li class="dropdown-submenu" >
+        <a  href="/DispatchIn?Status=1">Công văn đến</a>
+       
+    </li>
+    <li class="dropdown-submenu">
+        <a href="/DispatchOut?Status=1">Công văn đi</a>
+      
+    </li>
+    <li class="dropdown-submenu">
+
+        <a href="/Employee">Quản lý nhân viên</a>
+       
+    </li>
+    <li>
+        
+        @Html.ActionLink("Quản lý file", "Index", "Files")
+    </li>
+    <li class="dropdown-submenu">
+        <a class="test" tabindex="-1" href="#">Tiện ích<span class="caret"></span></a>
+
+        <ul class="dropdown-menu">
+            <li class="dropdown-submenu">
+                @Html.ActionLink("Mức độ ưu tiên", "Index", "DispatchPriority")
+            </li>
+            <li class="dropdown-submenu">
+                @Html.ActionLink("Tình trạng công văn", "Index", "DispatchStatus")
+            </li>
+            <li class="dropdown-submenu">
+                @Html.ActionLink("Loại công văn", "Index", "DispatchType")
+            </li>
+        </ul>
+    </li>
+</ul>

@@ -1,0 +1,20 @@
+﻿@model List<Dispatch.DepartmentEntity>
+@{
+
+    Layout = null;
+}
+
+    @foreach (var item in Model)
+    {
+        
+        <li>
+            <a href="@Url.RouteUrl( new { controller = "DispatchOut", action = "Index", DepartmentId = item.Id })">
+
+                @Html.Raw(item.Name)
+                @*@Html.Action("_countOut", new DispatchManagement.Models.CountList { searchType = 0, searchStatus = 0, DepartmentId = @item.Id })*@
+                <span class="badge bg-green ShowCountOut_@item.Id" ></span>
+            </a>
+        </li>
+    }
+
+

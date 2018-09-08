@@ -1,0 +1,47 @@
+﻿<div id="pager" class="pagination pagination-right">
+    <ul id="paginationUL"></ul>
+</div>
+<table class="table table-hover table-bordered">
+    <thead>
+        <tr>
+            <th>
+                Select
+            </th>
+            <th>
+                Images
+            </th>
+            <th>
+                MimiType
+            </th>
+            @*<th>
+                PicType
+            </th>*@
+            <th>Album</th>
+            @*<th>Actions</th>*@
+        </tr>
+    </thead>
+    <tbody id="tblPic"></tbody>
+</table>
+
+<script id="tmp-pic" type="x-tmpl-mustache">
+    <tr>
+        <td>
+            <input type="checkbox" data-id="{{id}}" name="chkpic" class="flat chkpic" value="{{picturePath}}" />
+        </td>
+        <td>
+            <img src="{{picturePath}}" width="80" height="80" />
+        </td>
+        <td>
+            {{MimeType}}
+        </td>
+        @*<td>
+            {{PicType}}
+        </td>*@
+
+        <td>{{Album}}</td>
+        @*<td>
+            <a href="javascript:void(0)" class="delete">Delete</a> |
+            <a href="javascript:void(0)" class="selectImg" data-id="{{id}}" data-value="{{picturePath}}">Selected</a>
+        </td>*@
+    </tr>
+</script>

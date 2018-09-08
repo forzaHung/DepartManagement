@@ -1,0 +1,56 @@
+﻿@model DispatchManagement.Models.ChangePasswordModel    
+@{
+    ViewBag.Title = "Change Password";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="row">
+    <div class="col-md-12 col-sm-12 col-xs-12">
+        <div class="x_panel">
+            <div class="x_title">
+                <h2>Change Password</h2>
+                <ul class="nav navbar-right panel_toolbox">
+                    <li>
+                        <input type="button" value="Save" class="btn btn-default" onclick="$('#frmChangePass').submit();" />
+                    </li>
+                    <li>
+                        <a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
+                    </li>
+                </ul>
+                <div class="clearfix"></div>
+            </div>
+            <div class="x_content">
+                @using (Html.BeginForm("Change", "ChangePassword", FormMethod.Post, new { enctype = "multipart/form-data", @class = "form-horizontal", role = "form", id = "frmChangePass" }))
+                {
+                    <div class="col-md-12">
+                        <div class="x_content nav-tabs-custom">
+                            <div class="form-group">
+                                @Html.LabelFor(m => m.OldPassword, new { @class = "col-md-2 control-label" })
+                                <div class="col-md-10">
+                                    @Html.PasswordFor(m => m.OldPassword, new { @class = "form-control", require = "" })
+                                    @Html.ValidationMessageFor(m => m.OldPassword, "", new { @class = "text-danger" })
+                                    <span class="text-danger">@ViewBag.MsgOldPass</span>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                @Html.LabelFor(m => m.NewPassword, new { @class = "col-md-2 control-label" })
+                                <div class="col-md-10">
+                                    @Html.PasswordFor(m => m.NewPassword, new { @class = "form-control", required = "" })
+                                    @Html.ValidationMessageFor(m => m.NewPassword, "", new { @class = "text-danger" })
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                @Html.LabelFor(m => m.RetypePassword, new { @class = "col-md-2 control-label" })
+                                <div class="col-md-10">
+                                    @Html.PasswordFor(m => m.RetypePassword, new { @class = "form-control", required = "" })
+                                    @Html.ValidationMessageFor(m => m.RetypePassword, "", new { @class = "text-danger" })
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                }
+            </div>
+        </div>
+    </div>
+</div>
+

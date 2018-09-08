@@ -1,0 +1,154 @@
+﻿@model Dispatch.DepartmentEntity
+@{
+    ViewBag.Title = "Cập nhật thông tin phòng";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="row">
+
+    <div class="x_panel">
+        <div class="x_title">
+            <h2>@ViewBag.Title</h2>
+            <ul class="nav navbar-right panel_toolbox">
+                <li>
+                    <button type="button" class="btn btn-primary" onclick="$('#frmEmp').submit();"><i class="fa fa-save"></i> Lưu</button>
+                </li>
+                <li>
+                    @Html.ActionLink("Danh sách Phòng ban", "Index", null, new { @id = "createNew", @class = "btn btn-default" })
+                </li>
+
+                <li>
+                    <a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
+                </li>
+            </ul>
+            <div class="clearfix"></div>
+        </div>
+        <div class="x_content">
+            <div>
+                @using (Html.BeginForm("Save", "Department", FormMethod.Post, new { enctype = "multipart/form-data", @class = "form-horizontal", role = "form", id = "frmEmp" }))
+            {
+                    @Html.AntiForgeryToken()
+                    <h4>@ViewBag.SubTitle</h4>
+                    <p class="red">Vui lòng nhập dữ liệu cho những trường bắt buộc *</p>
+                    <div class="form-group">
+                        <label class="col-md-2 control-label" for="Name">Thuộc phòng</label>
+                        <div class="col-md-10">
+                            <select id="ParentId" name="ParentId" class="form-control">
+                                <option value="0">Cấp cao nhất</option>
+                                @foreach (var item in (List<Dispatch.DepartmentEntity>)ViewData["ParentID"])
+                                {
+                                    if (Model != null)
+                                    {
+                                        if (item.Id == Model.ParentId)
+                                        {
+                                            <option value="@item.Id" selected>@item.Title</option>
+                                        }
+                                        else
+                                        {
+                                            <option value="@item.Id">@item.Title</option>
+                                        }
+                                    }
+                                }
+                            </select>
+                            @Html.ValidationMessageFor(model => model.ParentId, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        @Html.LabelFor(m => m.Name, new { @class = "col-md-2 control-label" })
+                        <div class="col-md-10">
+                            @Html.TextBoxFor(m => m.Name, new { @class = "form-control", @maxlength = "150" })
+                            @Html.ValidationMessageFor(model => model.Name, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        @Html.LabelFor(m => m.Location, new { @class = "col-md-2 control-label" })
+                        <div class="col-md-10">
+                            @Html.TextBoxFor(m => m.Location, new { @class = "form-control", @maxlength = "250" })
+                            @Html.ValidationMessageFor(model => model.Location, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+                    // add SumEmployeeExpected
+                    <div class="form-group">
+                        @Html.LabelFor(m => m.SumEmployeesExpected, new { @class = "col-md-2 control-label"})
+                        <div class="col-md-10">
+                            @Html.TextBoxFor(m => m.SumEmployeesExpected, new { @class = "form-control"})
+                            @Html.ValidationMessageFor(m => m.SumEmployeesExpected, "", new { @class = "text-danger"})
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        @*@Html.LabelFor(m => m.EmployeeId, new { @class = "col-md-2 control-label" })*@
+                        <label class="col-md-2 control-label">Trưởng phòng</label>
+                        <div class="col-md-10">
+                            <select id="EmployeeManagerId" name="EmployeeManagerId" class="form-control">
+                                <option value="0" selected="selected">---Chọn trưởng phòng---</option>
+                                @foreach (var item in (List<Dispatch.EmployeeEntity>)ViewData["EmployeeManager"])
+                                {
+                                    if (item.Id == Model.EmployeeManagerId)
+                                    {
+                                        <option value="@item.Id" selected="selected">@item.FirstName @item.LastName</option>
+                                    }
+                                    else
+                                    {
+                                        <option value="@item.Id">@item.FirstName @item.LastName</option>
+                                    }
+                                }
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        @*@Html.LabelFor(m => m.EmployeeId, new { @class = "col-md-2 control-label" })*@
+                        <label class="col-md-2 control-label">Phó trưởng phòng</label>
+                        <div class="col-md-10">
+                            <select id="EmployeeDebutyManagerId" name="EmployeeDebutyManagerId" class="form-control">
+                                <option value="0" selected="selected">---Chọn phó trưởng phòng---</option>
+                                @foreach (var item in (List<Dispatch.EmployeeEntity>)ViewData["EmployeeDeputyManager"])
+                                {
+                                    if (item.Id == Model.EmployeeDebutyManagerId)
+                                    {
+                                        <option value="@item.Id" selected="selected">@item.FirstName @item.LastName</option>
+                                    }
+                                    else
+                                    {
+                                        <option value="@item.Id">@item.FirstName @item.LastName</option>
+                                    }
+                                }
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        @*@Html.LabelFor(m => m.EmployeeId, new { @class = "col-md-2 control-label" })*@
+                        <label class="col-md-2 control-label">Chánh văn phòng</label>
+                        <div class="col-md-10">
+                            <select id="EmployeeChiefOfTheOfficeId" name="EmployeeChiefOfTheOfficeId" class="form-control">
+                                <option value="0" selected="selected">---Chọn chánh văn phòng---</option>
+                                @foreach (var item in (List<Dispatch.EmployeeEntity>)ViewData["EmployeeChiefOfTheOffice"])
+                                {
+                                    if (item.Id == Model.EmployeeChiefOfTheOfficeId)
+                                    {
+                                        <option value="@item.Id" selected="selected">@item.FirstName @item.LastName</option>
+                                    }
+                                    else
+                                    {
+                                        <option value="@item.Id">@item.FirstName @item.LastName</option>
+                                    }
+                                }
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        @Html.LabelFor(m => m.CreatedDate, new { @class = "col-md-2 control-label" })
+                        <div class="col-md-10">
+                            @Html.TextBoxFor(m => m.CreatedDate, new { @class = "form-control", @type = "date", @Value = Model.CreatedDate.ToString("yyyy-MM-dd"), @style = "max-width:200px" })
+                            @Html.ValidationMessageFor(model => model.CreatedDate, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="col-md-offset-2 col-md-10">
+                            <input type="hidden" class="form-control" id="Id" name="Id" value="@Model.Id" />
+                        </div>
+                    </div>
+                }
+            </div>
+        </div>
+    </div>
+</div>

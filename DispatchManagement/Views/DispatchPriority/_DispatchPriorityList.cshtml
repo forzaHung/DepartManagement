@@ -1,0 +1,53 @@
+﻿@using MvcPaging
+@using Prototype.Code
+
+@model IPagedList<Dispatch.DispatchPriorityEntity>
+
+<table class="table table-hover table-bordered">
+    <thead>
+        <tr>
+            <th>
+                Tình trạng
+            </th>
+            <th>Ngày tạo</th>
+            <th>Actions</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            if (item.Id > 0)
+            {
+                <tr class="viewProfile" data-id="@item.Id">
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Name)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.CreateDate)
+                    </td>
+
+                    <td>
+
+                        @Html.ActionLink("Sửa", "EditDispatchPriority", new { id = item.Id })
+
+                        @*<a href="/Dispatch/Delete/@item.Id" onclick="return confirm('Bạn có muốn xóa phòng này không?')">Xóa</a> |*@
+
+                    </td>
+                </tr>
+            }
+        }
+    </tbody>
+</table>
+@Html.Pager(Model.PageSize, Model.PageNumber - 1, Model.TotalItemCount, new AjaxOptions { UpdateTargetId = "DispatchPriorityList", OnSuccess = "backend.onSuccessAjax" }).Options(o => o
+            .Action("Index")
+            .DisplayTemplate("Bootstrap3Pagination")
+            .MaxNrOfPages(5)
+            .AlwaysAddFirstPageNumber()
+            .DisplayFirstAndLastPage()
+            .SetFirstPageText("First")
+            .SetLastPageText("Last")
+            .HidePreviousAndNextPage()
+            .AddRouteValue("searchString", Request.QueryString["searchString"])
+        )
+
+

@@ -1,0 +1,57 @@
+﻿@using MvcPaging
+@using DispatchManagement.Code
+@model IPagedList<Dispatch.FileEntity>
+@{
+    ViewBag.Title = "Danh sách file";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="row">
+    <div class="x_panel">
+        <div class="x_title">
+            <h2>@ViewBag.Title</h2>
+            <ul class="nav navbar-right panel_toolbox">
+                <li>
+                    <a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
+                </li>
+                <li class="dropdown">
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false"><i class="fa fa-wrench"></i></a>
+                    <ul class="dropdown-menu" role="menu">
+                        @*<li>
+                            <a href="/DispatchIn/CreateDispatchIn">tạo mới công văn đến</a>
+                        </li>*@
+                        <li>
+                            <a href="#">Export excel</a>
+                        </li>
+                    </ul>
+                </li>
+            </ul>
+            <div class="clearfix"></div>
+        </div>
+        <div class="x_content">
+            <div class="form-inline">
+                <div class="form-group col-lg-3">
+                    <label class="control-label" for="SearchString">Số công văn:</label>
+                    <input id="searchCode" name="searchCode" type="text" value="@ViewBag.Keyword" class="form-control boxsearch" style="width: 150px;" />
+                </div>
+                <div class="form-group col-lg-3">
+                    <label class="control-label" for="SearchString">Tên File:</label>
+                    <input id="searchName" name="searchName" type="text" value="@ViewBag.Keyword" class="form-control boxsearch" style="width: 180px;" />
+                </div>
+                <div class="form-group col-lg-4">
+                    <label class="control-label" for="SearchString">Ngày Upload:</label>
+                    <input id="dateUpload" type="date" min="2017-01-01" class="form-control boxsearch" style="width: 223px;" />
+                </div>
+                <div class="form-group col-lg-2" style="margin-bottom: 10px;">
+                    <input type="button" value="Tìm kiếm" id="btnSearch" class="btn btn-default" style="margin-bottom: 0" />
+                </div>
+                
+            </div>
+            <hr />
+            <div id="FileList">
+                @Html.Partial("_FileList", Model)
+            </div>
+        </div>
+    </div>
+</div>
+

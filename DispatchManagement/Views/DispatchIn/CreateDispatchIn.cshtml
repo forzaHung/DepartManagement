@@ -1,0 +1,484 @@
+﻿@model Dispatch.DispatchInEntity
+@{
+    ViewBag.Title = "Cập nhập thông tin công văn đến";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+
+}
+<div class="row">
+
+    <div class="x_panel">
+        <div class="x_title">
+            <h2>@ViewBag.Title</h2>
+            <ul class="nav navbar-right panel_toolbox">
+                <li>
+                    <button type="button" id="btnsubmit" class="btn btn-primary" onclick="$('#frmdispatchIn').submit();"><i class="fa fa-floppy-o"></i> Lưu </button>
+                    @*<button type="button" id="btnsubmit" class="btn btn-primary" ><i class="fa fa-floppy-o"></i> Lưu </button>*@
+                </li>
+                <li>
+                    <button type="button" class="btn btn-primary" onClick="window.location.reload()"><i class="fa fa-undo"></i> Hủy bỏ </button>
+                </li>
+
+                <li>
+                    <a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
+                </li>
+
+            </ul>
+            <div class="clearfix"></div>
+        </div>
+
+      
+
+        <div class="x_content nav-tabs-custom">
+            
+            
+            @using (Html.BeginForm("Save", "DispatchIn", FormMethod.Post, new { enctype = "multipart/form-data", @class = "form-horizontal", role = "form", id = "frmdispatchIn" }))
+            {
+                @Html.AntiForgeryToken()
+                <p class="red">Vui lòng nhập dữ liệu cho tất cả</p>
+                <div class="tab-content">
+                    <div class="tab-pane active" id="tab-info">
+                        <div class="raw clearfix">
+                            <div class="col-md-7">
+                                <div class="panel-group">
+                                    <div class="panel panel-default">
+                                        <div class="panel-heading">
+
+                                        </div>
+                                        <div class="panel-body">
+                                            <div class="form-group">
+                                                
+                                                <label class="col-md-3 control-label">Số công văn <i class="fa fa-asterisk red" style="font-size:10px"></i> </label>
+                                                <div class="col-md-9">
+                                                    @Html.TextBoxFor(m => m.DispatchNo, new {@id= "disNo", @class = "form-control", @maxlength = "150", @onkeyup = "UpperCase('disNo',this)" })
+                                                    @Html.ValidationMessageFor(model => model.DispatchNo, "", new { @class = "text-danger" })
+                                                </div>
+                                            </div>
+                                            <div class="form-group">
+                                                
+                                                <label class="col-md-3 control-label">Công văn <i class="fa fa-asterisk red" style="font-size:10px"></i> </label>
+                                                <div class="col-md-9">
+                                                    @Html.TextBoxFor(m => m.DispatchName, new { @class = "form-control", @maxlength = "150" })
+                                                    @Html.ValidationMessageFor(model => model.DispatchName, "", new { @class = "text-danger" })
+                                                </div>
+                                            </div>
+                                            <div class="form-group">
+                                                
+                                                <label class="col-md-3 control-label">Loại công văn <i class="fa fa-asterisk red" style="font-size:10px"></i> </label>
+                                                <div class="col-md-9">
+                                                    <select id="DispatchType" name="DispatchType" class="form-control">
+                                                        <option value="0">---Chọn loại công văn---</option>
+                                                        @foreach (var item in (List<Dispatch.DispatchTypeEntity>)ViewData["dispatchtypeAll"])
+                                                        {
+                                                            if (item.Id == Model.DispatchType)
+                                                            {
+                                                                <option value="@item.Id" selected="selected">@item.Name</option>
+                                                            }
+                                                            else
+                                                            {
+                                                                <option value="@item.Id">@item.Name</option>
+                                                            }
+                                                        }
+                                                    </select>
+                                                    @Html.ValidationMessageFor(model => model.DispatchType, "", new { @class = "text-danger" })
+                                                </div>
+                                            </div>
+                                            <div class="form-group">
+                                                
+                                                <label class="col-md-3 control-label">Độ ưu tiên <i class="fa fa-asterisk red" style="font-size:10px"></i> </label>
+                                                <div class="col-md-9">
+                                                    <select id="Priority" name="Priority" class="form-control">
+                                                        <option value="0">---Chọn độ ưu tiên---</option>
+                                                        @foreach (var item in (List<Dispatch.DispatchPriorityEntity>)ViewData["dispatchpriorityAll"])
+                                                        {
+                                                            if (item.Id == Model.Priority)
+                                                            {
+                                                                <option value="@item.Id" selected="selected">@item.Name</option>
+                                                            }
+                                                            else
+                                                            {
+                                                                <option value="@item.Id">@item.Name</option>
+                                                            }
+                                                        }
+                                                    </select>
+                                                    @Html.ValidationMessageFor(model => model.Priority, "", new { @class = "text-danger" })
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="panel-group">
+                                    <div class="panel panel-default">
+                                        <div class="panel-heading">
+                                            @*Giá sản phẩm*@
+                                        </div>
+                                        <div class="panel-body">
+                                            <div class="form-group">
+                                                
+                                                <label class="col-md-3 control-label">Ngày công văn đến <i class="fa fa-asterisk red" style="font-size:10px"></i> </label>
+                                                <div class="col-md-9">
+                                                    @if (Model.Id > 0)
+                                                    {
+                                                        @Html.TextBoxFor(m => m.DateFrom, new { @class = "form-control", @type = "date", @Value = Model.DateFrom.ToString("yyyy-MM-dd") })
+                                                    }
+                                                    else
+                                                    {
+                                                        @Html.TextBoxFor(m => m.DateFrom, new { @class = "form-control", @type = "date" })
+                                                    }
+                                                    @Html.ValidationMessageFor(model => model.DateFrom, "", new { @class = "text-danger" })
+                                                </div>
+                                            </div>
+                                            <div class="form-group">
+                                                
+                                                <label class="col-md-3 control-label">Ngày phát hành<i class="fa fa-asterisk red" style="font-size:10px"></i> </label>
+                                                <div class="col-md-9">
+                                                    @if (Model.Id > 0)
+                                                    {
+                                                        @Html.TextBoxFor(m => m.DatePublish, new { @class = "form-control", @type = "date", @Value = Model.DatePublish.ToString("yyyy-MM-dd") })
+                                                    }
+                                                    else
+                                                    {
+                                                        @Html.TextBoxFor(m => m.DatePublish, new { @class = "form-control", @type = "date" })
+                                                    }
+                                                    @Html.ValidationMessageFor(model => model.DateFrom, "", new { @class = "text-danger" })
+                                                </div>
+                                            </div>
+                                            <div class="form-group">
+                                                
+                                                <label class="col-md-3 control-label">Người ký <i class="fa fa-asterisk red" style="font-size:10px"></i> </label>
+                                                <div class="col-md-9">
+                                                    @Html.TextBoxFor(m => m.Signer, new { @class = "form-control", @maxlength = "150" })
+                                                    @Html.ValidationMessageFor(model => model.Signer, "", new { @class = "text-danger" })
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-5">
+                                <div class="panel-group">
+                                    <div class="panel panel-default">
+                                        <div class="panel-heading">
+
+                                        </div>
+                                        <div class="panel-body">
+                                            <div class="form-group">
+                                                
+                                                <label class="col-md-3 control-label">Tình trạng <i class="fa fa-asterisk red" style="font-size:10px"></i> </label>
+                                                <div class="col-md-9">
+                                                    <select id="DispatchStatus" name="DispatchStatus" class="form-control">
+                                                        <option value="0">---Chọn tình trạng---</option>
+                                                        @foreach (var item in (List<Dispatch.DispatchStatusEntity>)ViewData["dispatchstatusAll"])
+                                                        {
+                                                            if (item.Id == Model.DispatchStatus)
+                                                            {
+                                                                <option value="@item.Id" selected="selected">@item.Name</option>
+                                                            }
+                                                            else
+                                                            {
+                                                                <option value="@item.Id">@item.Name</option>
+                                                            }
+                                                        }
+                                                    </select>
+                                                    @Html.ValidationMessageFor(model => model.DispatchStatus, "", new { @class = "text-danger" })
+                                                </div>
+                                            </div>
+                                            <div class="form-group">
+                                                
+                                                <label class="col-md-3 control-label">Nơi gửi <i class="fa fa-asterisk red" style="font-size:10px"></i> </label>
+                                                <div class="col-md-9">
+                                                    <select id="AddressFromId" name="AddressFromId" class="form-control">
+                                                        <option value="0">---Chọn nơi gửi---</option>
+                                                        @foreach (var item in (List<Dispatch.DepartmentEntity>)ViewData["departmentAll"])
+                                                        {
+                                                            if (item.Id == Model.AddressFromId)
+                                                            {
+                                                                <option value="@item.Id" selected="selected">@item.Title</option>
+                                                            }
+                                                            else
+                                                            {
+                                                                <option value="@item.Id">@item.Title</option>
+                                                            }
+                                                        }
+                                                    </select>
+                                                    @Html.ValidationMessageFor(model => model.AddressFromId, "", new { @class = "text-danger" })
+                                                </div>
+                                            </div>
+                                            <div class="form-group">
+                                                
+                                                <label class="col-md-3 control-label">Nơi nhận <i class="fa fa-asterisk red" style="font-size:10px"></i> </label>
+                                                <div class="col-md-9">
+                                                    <select id="AddressToId" name="AddressToId" class="form-control">
+                                                        <option value="0">---Chọn nơi nhận---</option>
+                                                        @foreach (var item in (List<Dispatch.DepartmentEntity>)ViewData["departmentAll"])
+                                                        {
+                                                            if (item.Id == Model.AddressToId)
+                                                            {
+                                                                <option value="@item.Id" selected="selected">@item.Title</option>
+                                                            }
+                                                            else
+                                                            {
+                                                                <option value="@item.Id">@item.Title</option>
+                                                            }
+                                                        }
+                                                    </select>
+                                                    @Html.ValidationMessageFor(model => model.AddressToId, "", new { @class = "text-danger" })
+                                                </div>
+                                            </div>
+                                            <div class="form-group">
+                                                
+                                                <label class="col-md-3 control-label">Người nhận <i class="fa fa-asterisk red" style="font-size:10px"></i> </label>
+                                                <div class="col-md-9">
+                                                    <select id="ReceiverId" name="ReceiverId" class="form-control">
+                                                        <option value="0">---Chọn người nhận---</option>
+                                                        @foreach (var item in (List<Dispatch.EmployeeEntity>)ViewData["employeeAll"])
+                                                        {
+                                                            if (item.Id == Model.ReceiverId)
+                                                            {
+                                                                <option value="@item.Id" selected="selected">@item.FirstName @item.LastName</option>
+                                                            }
+                                                            else
+                                                            {
+                                                                <option value="@item.Id">@item.FirstName @item.LastName</option>
+                                                            }
+                                                        }
+                                                    </select>
+                                                    @Html.ValidationMessageFor(model => model.ReceiverId, "", new { @class = "text-danger" })
+                                                </div>
+                                            </div>
+                                            <div class="form-group">
+                                                
+                                                <label class="col-md-3 control-label">Chánh văn phòng <i class="fa fa-asterisk red" style="font-size:10px"></i> </label>
+                                                <div class="col-md-9">
+                                                    <select id="ChiefOfStaffId" name="ChiefOfStaffId" class="form-control">
+                                                        <option value="0">---Chọn Chánh Văn Phòng---</option>
+                                                        @foreach (var item in (List<Dispatch.EmployeeEntity>)ViewData["employeeChief"])
+                                                        {
+                                                            if (item.Id == Model.ChiefOfStaffId)
+                                                            {
+                                                                <option value="@item.Id" selected="selected">@item.FirstName @item.LastName</option>
+                                                            }
+                                                            else
+                                                            {
+                                                                <option value="@item.Id">@item.FirstName @item.LastName</option>
+                                                            }
+                                                        }
+                                                    </select>
+                                                    @Html.ValidationMessageFor(model => model.ChiefOfStaffId, "", new { @class = "text-danger" })
+                                                </div>
+                                            </div>
+                                            <div class="form-group">
+                                                @Html.LabelFor(m => m.Note, new { @class = "col-md-3 control-label" })
+                                                <div class="col-md-9">
+                                                    @Html.TextBoxFor(m => m.Note, new { @class = "form-control", @maxlength = "150" })
+                                                    @Html.ValidationMessageFor(model => model.Note, "", new { @class = "text-danger" })
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-12">
+                                <div class="panel-group">
+                                    <div class="panel panel-default">
+                                        <div class="panel-heading">Files công văn</div>
+
+                                        <div class="panel-body">
+                                            <div class="form-group">
+                                                @if (Model.Id > 0 && Model.FileId>0)
+                                                {
+                                                    <label id="filename">@ViewBag.FileName</label>
+                                                    <input type="text" style="display:none" value="@ViewBag.FileId" id="FileId" name="FileId"/>
+                                                    @Html.TextBoxFor(m => m.File, new {@id="UploadFile", @type = "file", @class = "form-control",@style="display:none",
+                                                   @accept ="application/msword, application/vnd.ms-excel, application/vnd.ms-powerpoint,text / plain" })
+                                                    <div id="upload">
+                                                        <a href="javascript:void(0)" id="FileRemove">Remove</a>
+                                                    </div>
+                                                }
+                                                else
+                                                {
+                                                    @Html.TextBoxFor(m => m.File, new { @type = "file", @class = "form-control", @accept = "application/msword, application/vnd.ms-excel, application/vnd.ms-powerpoint,text / plain" })
+                                                }
+                                               @Html.ValidationMessageFor(model => model.File, "", new { @class = "text-danger" })
+                                               
+                                            </div>
+                                            <div class="form-group">
+                                                <div class="col-md-offset-2 col-md-10">
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="panel-group">
+                                    <div class="panel panel-default">
+                                        <div class="panel-heading">
+                                            <label>Nội dung <i class="fa fa-asterisk red" style="font-size:10px"></i> </label>
+                                        </div>
+                                        @Html.ValidationMessageFor(model => model.Description, "", new { @class = "text-danger" })
+                                        <div class="panel-body">
+                                            <div class="form-group">
+                                                @*<textarea class="form-control" style="height:250px" id="TxtDescription">Căn cứ công văn đến ...</textarea>*@
+                                                @Html.TextAreaFor(m => m.Description, new { @id = "TxtDescription", @class = "form-control", @style = "height:100px" })
+                                            </div>
+                                            <div class="form-group">
+                                                <div class="col-md-offset-2 col-md-10">
+                                                  
+                                                    <input type="hidden" class="form-control" id="Id" name="Id" value="@Model.Id" />
+                                                 
+
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                            </div>
+
+                        </div>
+                    </div>
+                    <div class="tab-pane" id="tab-seo">
+                        <div class="raw clearfix">
+
+                        </div>
+
+                    </div>
+                </div>
+            }
+
+        </div>
+
+        <div class="x_title">
+        
+            <ul class="nav navbar-right panel_toolbox">
+                <li>
+                    <button type="button" id="btnsubmit" class="btn btn-primary" onclick="$('#frmdispatchIn').submit();"><i class="fa fa-floppy-o"></i> Lưu </button>
+                    @*<button type="button" id="btnsubmit" class="btn btn-primary" ><i class="fa fa-floppy-o"></i> Lưu </button>*@
+                </li>
+                <li>
+                    <button type="button" class="btn btn-primary"><i class="fa fa-undo"></i> Hủy bỏ </button>
+                </li>
+
+                <li>
+                    <a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
+                </li>
+
+            </ul>
+            <div class="clearfix"></div>
+        </div>
+    </div>
+</div>
+@section Scripts {
+    <script>
+
+        $('#FileRemove').on('click', function (e) {
+            $('#UploadFile').show(200);
+            $('#filename').hide(200);
+            $("#upload").hide(200);
+        });
+    </script>
+
+    <script src="~/Assets/plugins/ckeditor/ckeditor.js"></script>
+    <script type="text/javascript">
+        var editor = CKEDITOR.replace("TxtDescription", {
+            height: 200,
+            allowedContent: true,
+            removePlugins: 'showblocks',
+            filebrowserBrowseUrl: '/Assets/plugins/ckfinder/ckfinder.html',
+            filebrowserImageBrowseUrl: '/Assets/plugins/ckfinder/ckfinder.html?type=Images',
+            filebrowserFlashBrowseUrl: '/Assets/plugins/ckfinder/ckfinder.html?type=Flash',
+            filebrowserUploadUrl: '/Assets/plugins/ckfinder/core/connector/aspx/connector.aspx?command=QuickUpload&type=Files',
+            filebrowserImageUploadUrl: '/Assets/plugins/ckfinder/core/connector/aspx/connector.aspx?command=QuickUpload&type=Images',
+            filebrowserFlashUploadUrl: '/Assets/plugins/ckfinder/core/connector/aspx/connector.aspx?command=QuickUpload&type=Flash',
+            filebrowserWindowWidth: '1000',
+            filebrowserWindowHeight: '200',
+
+        });
+        editor.on('instanceReady', function (ev) {
+            var editor = ev.editor,
+                dataProcessor = editor.dataProcessor,
+                htmlFilter = dataProcessor && dataProcessor.htmlFilter;
+            htmlFilter.addRules({
+                elements: {
+                    img: function (element) {
+
+                        var src = element.attributes.src;
+                        var imgsrc = src;
+                        var tmpSrc = src.split('/Uploads');
+                        var domain = "";
+                        if (tmpSrc[0] != domain) {
+                            $.ajax({
+                                type: "POST",
+                                url: "/Backend/Handler/DownloadImageFromUrl",
+                                data: { imageUrl: src },
+                                async: false,
+                                beforeSend: function () {
+                                    commonBase.startLoading();
+                                },
+                                success: function (r) {
+                                    commonBase.stopLoading();
+                                    imgsrc = r.fileName;
+                                },
+                                error: function () {
+                                    commonBase.stopLoading();
+                                }
+                            });
+                            imgsrc = imgsrc.replace(/\\/g, '/');
+                            element.attributes.src = imgsrc;
+                            element.attributes['data-cke-saved-src'] = domain + imgsrc;
+                            element.attributes.rel = domain + imgsrc;
+                        }
+                    }
+                }
+            });
+        });
+    </script>
+    <script type="text/javascript">
+
+        ////File Upload response from the server
+        //Dropzone.options.dropzoneForm = {
+        //    maxFiles: 1,
+        //    autoProcessQueue: false,
+
+        //    init: function () {
+        //        var submitButton = document.querySelector("#btnsubmit");
+        //        var myDropzone = this; //closure
+        //        //this.on("maxfilesexceeded", function (data) {
+        //        //    var res = eval('(' + data.xhr.responseText + ')');
+
+        //        //});
+        //        submitButton.addEventListener("click", function () {
+                    
+        //            myDropzone.processQueue();
+        //            // Create the remove button
+        //            var removeButton = Dropzone.createElement("<button>Remove file</button>");
+
+
+        //            // Capture the Dropzone instance as closure.
+        //            var _this = this;
+
+        //            // Listen to the click event
+        //            removeButton.addEventListener("click", function (e) {
+        //                // Make sure the button click doesn't submit the form:
+        //                e.preventDefault();
+        //                e.stopPropagation();
+        //                // Remove the file preview.
+        //                _this.removeFile(file);
+        //                // If you want to the delete the file on the server as well,
+        //                // you can do the AJAX request here.
+        //            });
+
+        //            // Add the button to the file preview element.
+        //            file.previewElement.appendChild(removeButton);
+        //        });
+        //        myDropzone.on("addedfile", function (file) {
+
+
+        //        });
+        //        myDropzone.on("complete", function (file) {
+        //            myDropzone.removeFile(file);
+        //        });
+        //    }
+        //};
+
+        
+    </script>
+}

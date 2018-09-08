@@ -1,0 +1,53 @@
+﻿@model Dispatch.DispatchPriorityEntity
+@{
+    ViewBag.Title = "Cập nhật độ ưu tiên";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="row">
+
+    <div class="x_panel">
+        <div class="x_title">
+            <h2>@ViewBag.Title</h2>
+            <ul class="nav navbar-right panel_toolbox">
+                <li>
+                    <button type="button" class="btn btn-primary" onclick="$('#frmEmp').submit();"><i class="fa fa-save"></i> Lưu</button>
+                </li>
+                <li>
+                    @Html.ActionLink("Danh sách", "Index", null, new { @id = "createNew", @class = "btn btn-default" })
+                </li>
+
+                <li>
+                    <a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
+                </li>
+            </ul>
+            <div class="clearfix"></div>
+        </div>
+        <div class="x_content">
+            <div>
+                @using (Html.BeginForm("Save", "DispatchPriority", FormMethod.Post, new { enctype = "multipart/form-data", @class = "form-horizontal", role = "form", id = "frmEmp" }))
+            {
+                    @Html.AntiForgeryToken()
+                    <h4>@ViewBag.SubTitle</h4>
+                    <p class="red">Vui lòng nhập dữ liệu cho những trường bắt buộc *</p>
+                    <div class="form-group">
+                        @Html.LabelFor(m => m.Name, new { @class = "col-md-2 control-label" })
+                        <div class="col-md-10">
+                            @Html.TextBoxFor(m => m.Name, new { @class = "form-control", @maxlength = "150" })
+                            @Html.ValidationMessageFor(model => model.Name, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+
+
+                    <div class="form-group">
+                        <div class="col-md-offset-2 col-md-10">
+                            <input type="hidden" class="form-control" id="Id" name="Id" value="@Model.Id" />
+                            <input type="hidden" class="form-control" id="CreateDate" name="CreateDate" value="@Model.CreateDate" />
+                        </div>
+                    </div>
+                }
+            </div>
+        </div>
+    </div>
+</div>
+

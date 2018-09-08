@@ -1,0 +1,101 @@
+﻿@using MvcPaging
+@using Prototype.Code
+
+@model IPagedList<Dispatch.FileEntity>
+
+<table class="table table-hover table-bordered">
+    <thead>
+        <tr>
+            <th>Số công văn</th>
+            <th>
+                Tên
+            </th>
+            <th>
+               Người đăng
+            </th>
+            <th>
+                Dung lượng
+            </th>
+
+            <th>Ngày Upload</th>
+            <th>
+                Thuộc loại
+            </th>
+           
+          
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            if (item.Id > 0)
+            {
+                <tr class="viewProfile" data-id="@item.Id">
+                    <td>
+                    @if (item.disInNo != null)
+                    {
+                        @Html.DisplayFor(modelItem => item.disInNo)
+                    }
+                    else
+                    {
+                        @Html.DisplayFor(modelItem => item.disOutNo)
+                    }
+                   </td>
+                    <td>
+                        @if (item.DisInName != null)
+                        {
+                        <p>CV: @Html.DisplayFor(modelItem => item.DisInName)</p>
+                        <p>@Html.DisplayFor(modelItem => item.Name): <a href="@ViewBag.FilePatchIn@Html.DisplayFor(modelItem=>item.Name)"> Download</a></p>
+                        }
+                        else
+                        {
+                            <p>CV: @Html.DisplayFor(modelItem => item.DisOutName)</p>
+                            <p>@Html.DisplayFor(modelItem => item.Name):<a href="@ViewBag.FilePatchOut@Html.DisplayFor(modelItem=>item.Name)"> Download</a></p>
+                        }
+                       
+
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.UserName)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.FileSize)
+                    </td>
+                    <td>
+                        @if (item.UploadDate != DateTime.MinValue)
+                        {
+                            @DateTime.Parse(item.UploadDate.ToString()).ToString("dd/MM/yyyy")
+                        }
+                        else
+                        {
+                            <i> Chưa có thông tin</i>
+                        }
+                    </td>
+
+                    <td>
+                        @if (item.Type == false)
+                        {
+                            <p> Công văn Đến</p>
+                        }
+                        else {<p> Công văn đi </p >}
+                    </td>
+                 
+                   
+                </tr>
+            }
+        }
+    </tbody>
+</table>
+@Html.Pager(Model.PageSize, Model.PageNumber - 1, Model.TotalItemCount, new AjaxOptions { UpdateTargetId = "FileList", OnSuccess = "backend.onSuccessAjax" }).Options(o => o
+            .Action("Index")
+            .DisplayTemplate("Bootstrap3Pagination")
+            .MaxNrOfPages(5)
+            .AlwaysAddFirstPageNumber()
+            .DisplayFirstAndLastPage()
+            .SetFirstPageText("First")
+            .SetLastPageText("Last")
+            .HidePreviousAndNextPage()
+            .AddRouteValue("searchString", Request.QueryString["searchString"])
+        )
+
+
