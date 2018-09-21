@@ -1,6 +1,8 @@
+using System;
+
 namespace Dispatch
 {
-    public class PermissionEntity
+	public class PermissionEntity
 	{
 		#region Properties
 		/// <summary>

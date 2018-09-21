@@ -8,6 +8,25 @@ namespace DispatchManagement.Models
 {
     public static class Utils
     {
+        public static string GetShortReview(string str, int NumberOfWords)
+        {
+            string[] Words = str.Split(' ');
+            string sReturn = string.Empty;
+            string sTemp = string.Empty;
+            if (Words.Length <= NumberOfWords)
+            {
+                sReturn = str;
+            }
+            else
+            {
+                for (int i = 0; i < NumberOfWords; i++)
+                {
+                    sTemp += Words.GetValue(i).ToString() + " ";
+                }
+                sReturn = sTemp.ToString() + " ...";
+            }
+            return sReturn.ToString();
+        }
         public static string convertToUnSign2(string s)
         {
             string stFormD = s.Normalize(NormalizationForm.FormD);

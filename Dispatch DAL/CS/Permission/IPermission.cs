@@ -1,8 +1,9 @@
+using System;
 using System.Collections.Generic;
 
 namespace Dispatch
 {
-    public interface IPermission
+	public interface IPermission
 	{
 		int Insert(PermissionEntity permission);		bool Update(PermissionEntity permission);
 		bool Delete(int id);

@@ -1,8 +1,9 @@
+using System;
 using System.Collections.Generic;
 
 namespace Dispatch
 {
-    public interface IFile
+	public interface IFile
 	{
 		long Insert(FileEntity files);
         bool Update(FileEntity files);

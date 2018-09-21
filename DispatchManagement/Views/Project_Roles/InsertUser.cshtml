@@ -1,0 +1,45 @@
+﻿@model Dispatch.Project_RoleEntity
+@{
+    ViewBag.Title = "InsertUser";
+    Layout = null;
+}
+
+
+
+<div class="modal fade" id="AddEmployee" tabindex="-1" role="dialog" aria-labelledby="myModal-label">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title" id="myModal-label">Thêm nhân sự</h4>
+            </div>
+            <div class="modal-body">
+                @using (Html.BeginForm("InsertUser", "Project_Roles", FormMethod.Post, new { enctype = "multipart/form-data", @class = "form-horizontal", role = "form", id = "frmEmp" }))
+                {
+                    <span>Họ tên</span>
+                    @Html.ValidationMessageFor(model => model.SelectFullName, "", new { @class = "text-danger" })
+                    <select class="form-control input-large select2me" id="SelectFullName" name="SelectFullName">
+                        @foreach (var item in (List<Dispatch.EmployeeEntity>)ViewData["AllEmployee"])
+                        {
+                            <option value="@item.Id">@item.FirstName @item.LastName</option>
+                        }
+                    </select>
+
+                    <span>Vị trí</span>
+                    @Html.ValidationMessageFor(model => model.SelectPosition, "", new { @class = "text-danger" })
+                    <select class="form-control input-large select2me" id="SelectPosition" name="SelectPosition">
+                        @foreach (var item in (List<Dispatch.PositionEntity>)ViewData["Vitri"])
+                        {
+                            <option value="@item.Id">@item.Name</option>
+                        }
+                    </select>
+                }
+
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Đóng</button>
+                <button type="button" class="btn btn-primary" onclick="$('#frmEmp').submit();">Thêm</button>
+            </div>
+        </div>
+    </div>
+</div>

@@ -61,12 +61,12 @@ namespace DispatchManagement.Controllers
                     }
                     else
                     {
-                        ViewBag.MsgLogin = "Password invalid";
+                        ViewBag.MsgLogin = "Nhập sai tên đăng nhập hoặc mật khẩu.";
                     }
                 }
                 else
                 {
-                    ViewBag.MsgLogin = "UserName invalid";
+                    ViewBag.MsgLogin = "Nhập sai tên đăng nhập hoặc mật khẩu.";
                 }
                 return View("Index");
             }

@@ -1,0 +1,81 @@
+﻿@model Dispatch.Customer_TypeEntity
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="row">
+
+    <div class="x_panel">
+        <div class="x_title">
+            <h2>@ViewBag.Title</h2>
+            <ul class="nav navbar-right panel_toolbox">
+                <li>
+                    <input type="button" value="Save" class="btn btn-default" onclick="$('#frmCustomerType').submit();" />
+                </li>
+                <li>
+                    @Html.ActionLink("Back to list", "Index", null, new { @id = "createNew", @class = "btn btn-default" })
+                </li>
+
+                <li>
+                    <a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
+                </li>             
+            </ul>
+            <div class="clearfix"></div>
+        </div>
+        <div class="x_content">
+            <div>
+                @using (Html.BeginForm("CreateOrEdit", "CustomerType", FormMethod.Post, new { enctype = "multipart/form-data", @class = "form-horizontal", role = "form", id = "frmCustomerType" }))
+            {
+                    @*@Html.AntiForgeryToken()*@
+                    <h4>@ViewBag.SubTitle</h4>
+
+                    <div class="form-group">
+                        @Html.Label("Lĩnh vực/Loại khách hàng", new { @class = "col-md-2 control-label" })
+                        <div class="col-md-10">
+                            <select class="form-control" id="ParentId" name="ParentId">
+                                <option value="0">All Categories</option>
+                                @foreach (var item in (List<Dispatch.Customer_TypeEntity>)ViewData["AllCustomer"])
+                                {
+                                    if (Model != null)
+                                    {
+                                        if (Model.ParentId == item.Id)
+                                        {
+                                            <option value="@item.Id" selected="selected">@item.Title</option>
+                                        }
+                                        else
+                                        {
+                                            <option value="@item.Id">@item.Title</option>
+                                        }
+                                    }
+                                    else
+                                    {
+                                        <option value="@item.Id">@item.Title</option>
+                                    }
+                                }
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        @Html.Label("Tên loại khách hàng", new { @class = "col-md-2 control-label" })
+                        <div class="col-md-10">
+                            @Html.TextBoxFor(model => model.Name, new { @class = "form-control" })
+                            @Html.ValidationMessageFor(model => model.Name, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        @Html.Label("Kích hoạt", new { @class = "col-md-2 control-label" })
+                        <div class="col-md-10" style="padding-top:6px">
+                            @Html.CheckBoxFor(m => m.IsActive, new { @class = "flat" })
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="col-md-offset-2 col-md-10">
+                            <input type="hidden" class="form-control" id="Id" name="Id" value="@Model.Id" />
+                        </div>
+                    </div>
+                }
+            </div>
+        </div>
+    </div>
+</div>
+

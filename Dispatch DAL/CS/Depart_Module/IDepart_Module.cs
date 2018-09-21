@@ -1,8 +1,9 @@
+using System;
 using System.Collections.Generic;
 
 namespace Dispatch
 {
-    public interface IDepart_Module
+	public interface IDepart_Module
 	{
 		int Insert(Depart_ModuleEntity depart_Module);		bool Update(Depart_ModuleEntity depart_Module);
 		bool Delete(int id);

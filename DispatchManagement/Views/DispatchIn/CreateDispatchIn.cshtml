@@ -313,9 +313,9 @@
                                         <div class="panel-heading">
                                             <label>Nội dung <i class="fa fa-asterisk red" style="font-size:10px"></i> </label>
                                         </div>
-                                        @Html.ValidationMessageFor(model => model.Description, "", new { @class = "text-danger" })
                                         <div class="panel-body">
                                             <div class="form-group">
+                                                @Html.ValidationMessageFor(model => model.Description, "", new { @class = "text-danger" })
                                                 @*<textarea class="form-control" style="height:250px" id="TxtDescription">Căn cứ công văn đến ...</textarea>*@
                                                 @Html.TextAreaFor(m => m.Description, new { @id = "TxtDescription", @class = "form-control", @style = "height:100px" })
                                             </div>

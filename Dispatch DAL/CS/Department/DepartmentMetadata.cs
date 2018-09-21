@@ -33,10 +33,9 @@ namespace Dispatch
         [Required(ErrorMessage = "Nhập ngày thành lập")]
         //[MaxLength(250, ErrorMessage = "tên địa điểm quá dài, không được vượt quá 250 kí tự")]
         public string CreatedDate { get; set; }
-
-        // data annotitation
+      
         [Display(Name = "Số nhân viên dự kiến")]
-        [Range(1,100, ErrorMessage = "Nhập số nhân viên trong khoảng từ 1 đến 100")]
+        [Range(0,100, ErrorMessage = "Nhập số nhân viên trong khoảng từ 1 đến 100")]
         public int SumEmployeesExpected { get; set; }
     }
 }

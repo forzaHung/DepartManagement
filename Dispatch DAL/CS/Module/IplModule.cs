@@ -1,14 +1,15 @@
-using Framework;
-using Framework.Data;
-using Framework.Helper.Logging;
 using System;
 using System.Collections.Generic;
 using System.Data;
+using System.Data.SqlClient;
 using System.Linq;
+using Framework;
+using Framework.Data;
+using Framework.Helper.Logging;
 
 namespace Dispatch
 {
-    public class IplModule : BaseIpl<ADOProvider>, IModule
+	public class IplModule : BaseIpl<ADOProvider>, IModule
 	{
 
 
@@ -156,8 +157,23 @@ namespace Dispatch
 			p.Add("@Name", module.Name);
 			return p;
 		}
+        public ModuleEntity ViewDetailByName(string Name)
+        {
+            try
+            {
+                var p = new DynamicParameters();
+                p.Add("@Name", Name);
+                var data = unitOfWork.Procedure<ModuleEntity>("ptgroup_Module_ViewDetail_ByName", p).SingleOrDefault();
+                return data;
+            }
+            catch (Exception ex)
+            {
+                Logging.PutError(ex.Message, ex);
+                return null;
+            }
 
+        }
 
-		#endregion
-	}
+        #endregion
+    }
 }

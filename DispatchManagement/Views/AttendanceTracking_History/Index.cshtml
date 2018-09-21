@@ -6,12 +6,8 @@
 <h2>@ViewBag.Title</h2>
 <div class="row">
     <div class="col-lg-3">
-        <p>Từ ngày</p>
-        <input id="fromDate" type="date" min="2017-01-01" value="@ViewBag.FromDate" class="form-control boxsearch" style="width: 100%;" />
-    </div>
-    <div class="col-lg-3">
-        <p>Đến ngày</p>
-        <input id="toDate" type="date" min="2017-01-01" value="@ViewBag.ToDate" class="form-control boxsearch" style="width: 100%;" />
+        <p>Tháng</p>
+        <input type="text" readonly="readonly" id="fromDate" value="@ViewBag.FromDate" class="form-control boxsearch" style="width: 100%;" />
     </div>
     <div class="col-lg-3">
         <p>Tìm theo tên nhân viên</p>
@@ -19,10 +15,10 @@
         <input type="hidden" id="employeeId"/>
     </div>
     <div class="col-lg-1" style="padding-top:29px">
-        <button class="btn btn-danger pull-right" type="button" id="btnSearch"><i class="fa fa-search-plus"></i> Lọc</button>
+        <button class="btn btn-danger" type="button" id="btnSearch"><i class="fa fa-search-plus"></i> Lọc</button>
     </div>
     <div class="col-lg-1" style="padding-top:29px;margin-left:2%">
-        <button class="btn btn-default pull-right" type="button" id="btnExport"><i class="fa fa-download"></i> Xuất Excel</button>
+        <button class="btn btn-default" type="button" id="btnExport"><i class="fa fa-download"></i> Xuất Excel</button>
     </div>
     </div>
 <div class="row dasboard">

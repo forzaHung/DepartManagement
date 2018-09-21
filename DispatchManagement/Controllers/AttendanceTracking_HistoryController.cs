@@ -14,15 +14,17 @@ namespace DispatchManagement.Controllers
     {
         private IAttendanceTracking _iplAttendanceTracking;
         private IEmployee _iplEmployee;
+        private IHoliday _iplHoliday;
         public AttendanceTracking_HistoryController() {
             _iplAttendanceTracking = SingletonIpl.GetInstance<IplAttendanceTracking>();
             _iplEmployee = SingletonIpl.GetInstance<IplEmployee>();
+            _iplHoliday = SingletonIpl.GetInstance<IplHoliday>();
         }
         // GET: AttendanceTracking_History
         public ActionResult Index()
         {
-            ViewBag.FromDate = DateTime.Now.AddDays(-30).ToString("yyyy-MM-dd");
-            ViewBag.ToDate = DateTime.Now.ToString("yyyy-MM-dd");
+            ViewBag.FromDate = DateTime.Now.AddMonths(-1).ToString("MM/yyyy");
+            ViewBag.ToDate = DateTime.Now.ToString("MM/yyyy");
             return View();
         }
         public JsonResult GetAttendanceTrackingHistoryList()
@@ -43,17 +45,18 @@ namespace DispatchManagement.Controllers
             DateTime ToDate;
             if (string.IsNullOrWhiteSpace(fromDate))
             {
-                var a = DateTime.Now.AddDays(-30).ToString("yyyy-MM-dd");
-                FromDate = DateTime.ParseExact(a, "yyyy-MM-dd", System.Globalization.CultureInfo.InvariantCulture);
+                var a = DateTime.Now.AddDays(-30).ToString("dd/MM/yyyy");
+                FromDate = DateTime.ParseExact(a, "dd/MM/yyyy", System.Globalization.CultureInfo.InvariantCulture);
             }
             else
-                FromDate = DateTime.ParseExact(fromDate, "yyyy-MM-dd", System.Globalization.CultureInfo.InvariantCulture);
+                FromDate = DateTime.ParseExact(fromDate, "dd/MM/yyyy", System.Globalization.CultureInfo.InvariantCulture);
             if (string.IsNullOrWhiteSpace(toDate))
-                ToDate = DateTime.ParseExact(DateTime.Now.ToString("yyyy-MM-dd"), "yyyy-MM-dd", System.Globalization.CultureInfo.InvariantCulture);
+                ToDate = DateTime.ParseExact(DateTime.Now.ToString("dd/MM/yyyy"), "dd/MM/yyyy", System.Globalization.CultureInfo.InvariantCulture);
             else
-                ToDate = DateTime.ParseExact(toDate, "yyyy-MM-dd", System.Globalization.CultureInfo.InvariantCulture);
+                ToDate = DateTime.ParseExact(toDate, "dd/MM/yyyy", System.Globalization.CultureInfo.InvariantCulture);
             var page = GetPagingMessage(Request.QueryString);
             int result = DateTime.Compare(ToDate, FromDate);
+            //bool result = ToDate.Month < FromDate.Month;
             if (result < 0)
             {
                 return Json(new
@@ -63,8 +66,8 @@ namespace DispatchManagement.Controllers
                 }, JsonRequestBehavior.AllowGet);
             }
 
-            var regulationTime = _iplAttendanceTracking.ListAttendanceLastMonth(FromDate, ToDate, employeeId, page.PageIndex, page.PageSize, ref totalRow);
-            int totalAbsent = 0;
+            var regulationTime = _iplAttendanceTracking.ListAttendanceByMonth(FromDate, ToDate, employeeId, page.PageIndex, page.PageSize, ref totalRow);
+            double totalAbsent = 0;
             int totalTimeLate = 0;
             int totalTimesLate = 0;
             int totalTimeEarly = 0;
@@ -72,10 +75,13 @@ namespace DispatchManagement.Controllers
             int totalMinutesOverTime = 0;
             int forgetTracking = 0;
             double work = 0;
-            var attendanceTracking = AttendanceTracking(regulationTime, ref totalAbsent, ref totalTimeLate, ref totalTimesLate, ref totalTimeEarly, ref totalTimesEarly, ref totalMinutesOverTime, ref forgetTracking, ref work);
+            double NumberDaysOfficialSalary = 0;
+            double ProbationaryDate = 0;
+            double OfficialDate = 0;
+            var attendanceTracking = _iplAttendanceTracking.AttendanceTracking(regulationTime, ref totalAbsent, ref totalTimeLate, ref totalTimesLate, ref totalTimeEarly, ref totalTimesEarly, ref totalMinutesOverTime, ref forgetTracking, ref work, ref NumberDaysOfficialSalary, ref ProbationaryDate, ref OfficialDate);
 
-            ViewBag.FromDate = FromDate.ToString("yyyy-MM-dd");
-            ViewBag.ToDate = ToDate.ToString("yyyy-MM-dd");
+            ViewBag.FromDate = FromDate.ToString("dd/MM/yyyy");
+            ViewBag.ToDate = ToDate.ToString("dd/MM/yyyy");
 
             string TotalTimeLate = (totalTimeLate / 60).ToString() + "h:" + (totalTimeLate % 60).ToString() + "p";
             string TotalTimeEarly = (totalTimeEarly / 60).ToString() + "h:" + (totalTimeEarly % 60).ToString() + "p";
@@ -108,12 +114,20 @@ namespace DispatchManagement.Controllers
         {
             foreach (var item in regulationTime)
             {
+                var CheckHolidayDate = _iplHoliday.Detail(item.DateCheck);
                 item.DayOfWeek = item.DateCheck.DayOfWeek.ToString();
                 //không chấm công ngày chủ nhật
                 if (string.IsNullOrWhiteSpace(item.CheckIn) && item.DayOfWeek != "Sunday")
                 {
-                    item.Absent = "Vắng mặt";
-                    totalAbsent++;
+                    if (CheckHolidayDate == null)
+                    {
+                        item.Absent = "Vắng mặt";
+                        totalAbsent++;
+                    }
+                    else
+                    {
+                        item.Absent = CheckHolidayDate.Description;
+                    }
                 }
                 //có chấm công
                 if (!string.IsNullOrWhiteSpace(item.CheckIn))
@@ -203,7 +217,7 @@ namespace DispatchManagement.Controllers
             else
                 ToDate = DateTime.ParseExact(toDate, "yyyy-MM-dd", System.Globalization.CultureInfo.InvariantCulture);
             var lst1 = _iplAttendanceTracking.ListAll(FromDate, ToDate, idEmployee);
-            int totalAbsent = 0;
+            double totalAbsent = 0;
             int totalTimeLate = 0;
             int totalTimesLate = 0;
             int totalTimeEarly = 0;
@@ -211,7 +225,10 @@ namespace DispatchManagement.Controllers
             int totalMinutesOverTime = 0;
             int forgetTracking = 0;
             double work = 0;
-            var lst2 = AttendanceTracking(lst1, ref totalAbsent, ref totalTimeLate, ref totalTimesLate, ref totalTimeEarly, ref totalTimesEarly, ref totalMinutesOverTime, ref forgetTracking, ref work);
+            double NumberDaysOfficialSalary = 0;
+            double ProbationaryDate = 0;
+            double OfficialDate = 0;
+            var lst2 = _iplAttendanceTracking.AttendanceTracking(lst1, ref totalAbsent, ref totalTimeLate, ref totalTimesLate, ref totalTimeEarly, ref totalTimesEarly, ref totalMinutesOverTime, ref forgetTracking, ref work, ref NumberDaysOfficialSalary, ref ProbationaryDate, ref OfficialDate);
             if (lst2 == null || lst2.Count < 1)
             {
                 return Json(new
@@ -231,7 +248,7 @@ namespace DispatchManagement.Controllers
                 }, JsonRequestBehavior.AllowGet);
             }
         }
-        public string ExportExcel(List<AttendanceTrackingEntity> lst2,int totalAbsent, int totalTimeLate, int totalTimesLate, int totalTimeEarly, int totalTimesEarly, int totalMinutesOverTime, int forgetTracking, double work, string FromDate, string ToDate)
+        public string ExportExcel(List<AttendanceTrackingEntity> lst2,double totalAbsent, int totalTimeLate, int totalTimesLate, int totalTimeEarly, int totalTimesEarly, int totalMinutesOverTime, int forgetTracking, double work, string FromDate, string ToDate)
         {
             MemoryStream st = new MemoryStream();
             string UrlTemplate = ControllerContext.HttpContext.Server.MapPath(@"~/Template/AttendanceTrackingExportTemplate.xlsx");
@@ -261,7 +278,7 @@ namespace DispatchManagement.Controllers
                         GioRa = lst2[i].CheckOut,
                         DenTre = lst2[i].TimeLate <= 0 ? 0 : lst2[i].TimeLate,
                         VeSom = lst2[i].TimeEarly <= 0 ? 0 : lst2[i].TimeEarly,
-                        Cong = lst2[i].Work,
+                        Cong =  String.Format("{0:0.00}", lst2[i].Work),
                         TangCa = lst2[i].OverTime,
                         VangMat = lst2[i].Absent
                     });
@@ -275,7 +292,7 @@ namespace DispatchManagement.Controllers
                     SoLanVeSom = totalTimesEarly,
                     TongThoiGianTangCa = (totalMinutesOverTime / 60).ToString() + "h:" + (totalMinutesOverTime % 60).ToString() + "p",
                     SolanKhongChamCongKhiVe = forgetTracking,
-                    TongSoCong = work,
+                    TongSoCong = String.Format("{0:0.00}", work),
                     TuNgay = FromDate,
                     DenNgay = ToDate,
                     SoNgayVang = totalAbsent,

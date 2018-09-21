@@ -1,0 +1,35 @@
+﻿@using MvcPaging
+@model IPagedList<Dispatch.Project_StatusEntity>
+<table class="table table-hover table-bordered">
+    <thead>
+        <tr>
+            <th>Tên trạng thái</th>
+            <th>Kích hoạt</th>
+            <th>Chức năng</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Name)
+                </td>
+                <td>
+                    @Html.CheckBoxFor(modelItem => item.IsActive, new { @class = "flat roles", module = item.Id, action = "Active" })
+                </td>
+                <td>
+                    <a class="btn btn-info btn-xs" module="@item.Id" href="@Url.Action("CreateOrEdit",new { id = item.Id })">
+                        <i class="fa fa-pencil"></i>Sửa thông tin
+                    </a>
+                    @*<a class="btn btn-info btn-xs btnedit" module="@item.Id" data-toggle="modal" data-target="#modalUpdate">
+                        <i class="fa fa-pencil"></i>Sửa trạng thái
+                    </a>*@
+                    <a href="@Url.Action("Delete", new { id = item.Id })" class="btn btn-danger btn-xs" onclick="return confirm('Bạn có muốn xóa?')">
+                        <i class="fa fa-trash-o"></i> Xóa trạng thái
+                    </a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

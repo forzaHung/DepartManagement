@@ -52,6 +52,7 @@
                                 <label class="choice" for="Field">Keep me signed in</label>*@
                             @*<a class="reset_pass" href="#">Lost your password?</a>*@
                         </div>
+                        <div><label @(ViewBag.MsgLogin == null ? "hidden":"") style="color:red">@ViewBag.MsgLogin</label></div>
                         <div class="clearfix"></div>
                         <div class="separator">
                             @*<p class="change_link">

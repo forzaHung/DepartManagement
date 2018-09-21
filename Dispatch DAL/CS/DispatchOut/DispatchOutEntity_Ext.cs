@@ -1,8 +1,14 @@
-﻿using System.Web;
+﻿using System;
+using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using System.Web;
 
 namespace Dispatch
 {
-    public partial class DispatchOutEntity
+   public partial class DispatchOutEntity
     {
 
         public string FromDepartment { get; set; }

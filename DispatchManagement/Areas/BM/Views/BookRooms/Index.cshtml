@@ -1,0 +1,162 @@
+﻿@model IEnumerable<Dispatch.BookMeetingEntity>
+
+@{
+    ViewBag.Title = "Hệ thống đặt phòng họp";
+    Layout = "~/Areas/BM/Views/Shared/_Layout.cshtml";
+}
+<link href="~/Assets/plugins/toastrjs/toastr.css" rel="stylesheet" />
+<div class="row">
+    <div class="x_panel">
+        <div class="x_title">
+            <h3>@ViewBag.Title</h3>
+            <ul class="nav navbar-right panel_toolbox">
+                <li class="dropdown">
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false"><i class="fa fa-wrench"></i></a>
+                    <ul class="dropdown-menu" role="menu">
+                        <li>
+                            @Html.ActionLink("Đặt phòng họp", "Create")
+                        </li>
+                    </ul>
+                </li>
+            </ul>
+        </div>
+        <div class="x_content">
+            <div class="form-inline">
+                <div class="form-group">
+                    <label class="control-label" for="SearchString">Tìm theo tên phòng họp:</label>
+                    <input id="searchString" name="searchString" type="text" value="@ViewBag.Keyword" style="width: 300px" class="form-control" />
+                </div>
+                <div class="form-group">
+                    <input type="button" value="Search" id="btnSearch" class="btn btn-default" style="margin-bottom: 0" />
+                </div>
+
+                <label class="control-label">Tìm theo ngày:</label>
+                <input id="searchDate" type="date" class="form-control boxsearch" style="width: 223px;" />
+                @*<div class="form-group">
+                    <input type="button" value="Search" id="btnSearchTime" name="" class="btn btn-default" style="margin-bottom: 0" />
+                </div>*@
+            </div>
+            <hr />
+            <div id="bookroomsList">
+                <table id="tbl-Bookrooms" class="table table-hover table-bordered"></table>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section scripts{  
+    @*<script type="text/javascript">
+        $(document).ready(function () {
+            $('#btnSearchTime').on('click', function () {
+                $("#tbl-Bookrooms").bootstrapTable('refresh');
+                var searchUrlInventory = "/BookRooms/GetBookRooms";
+                $("#tbl-Bookrooms").bootstrapTable({
+                    method: 'get',
+                    url: searchUrlInventory,
+                    queryParams: function (p) {
+                        console.log(p);
+                        var param = $.extend(true, {                         
+                            searchDate: $("#searchDate").val()
+                        }, p);
+                        return param;
+                    },
+                    striped: true,
+                    sidePagination: 'server',
+                    pagination: true,
+                    paginationVAlign: 'both',
+                    limit: 10,
+                    pageSize: 10,
+                    pageList: [10, 20, 40, 80],
+                    search: false,
+                    showColumns: false,
+                    showRefresh: false,
+                    minimumCountColumns: 2,
+                    columns: [
+                        {
+                            field: 'STT',
+                            checkbox: true,
+                            align: 'center',
+                            valign: 'middle',
+                        },
+                        {
+                            field: 'NameEmployee',
+                            title: 'Nhân Viên',
+                            align: 'center',
+                            valign: 'middle',
+                        },
+                        {
+                            field: 'NameDepartment',
+                            title: 'Phòng Ban',
+                            align: 'center',
+                            valign: 'middle',
+                        },
+                        {
+                            field: 'NameRoom',
+                            title: 'Phòng Họp',
+                            align: 'center',
+                            valign: 'middle',
+                        },
+                        {
+                            field: 'CreateDate',
+                            title: 'Ngày Họp',
+                            align: 'center',
+                            valign: 'middle',
+                            formatter: function (value) {
+                                if (value != null && value.toString().indexOf('-') == -1) {
+                                    return bookrooms.smalldateFormatJsonDMY(value);
+                                }
+                                return "";
+                            }
+                        },
+                        {
+                            field: 'TimeStart',
+                            title: 'Thời Gian Bắt Đầu',
+                            align: 'center',
+                            valign: 'middle',
+                            formatter: function (value) {
+                                if (value != null && value.toString().indexOf('-') == -1) {
+                                    return bookrooms.smalltimeFormatJsonDMY(value);
+                                }
+                                return "";
+                            }
+                        },
+                        {
+                            field: 'TimeEnd',
+                            title: 'Thời Gian Kết Thúc',
+                            align: 'center',
+                            valign: 'middle',
+                            formatter: function (value) {
+                                if (value != null && value.toString().indexOf('-') == -1) {
+                                    return bookrooms.smalltimeFormatJsonDMY(value);
+                                }
+                                return "";
+                            }
+                        },
+                        {
+                            title: 'Chi tiết',
+                            align: 'center',
+                            valign: 'middle',
+                            searchable: false,
+                            formatter: function (value, row, index) {
+                                return [
+                                    '<a href="/BM/BookRooms/Edit/' + row.Id + '">Sửa</a>',
+                                    '<button class="btn-xs btn-danger delete deleteBookroomsDate" data-id="' + row.Id + '" data-toggle="modal" data-target="#myModal">',
+                                    'Xóa',
+                                    '</button>',
+                                ].join(' ');
+                            }
+                        }
+                    ],
+                    onLoadSuccess: function (data) {
+                        if (data.status) {
+
+                        } else {
+                            $("#tbl-Bookrooms").bootstrapTable('removeAll');
+                            toastr["error"](data.mess);
+                        }
+                    },
+                });
+            });
+        });
+    </script>*@
+}

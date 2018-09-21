@@ -24,12 +24,12 @@ namespace DispatchManagement.Controllers
             return View(department);
         }
         //[AuthorizeUser(ModuleName = "Department", AccessLevel = Constants.Add)]
-        public ActionResult CreateDispatchWork(DispatchWorkEntity entity)
+        public ActionResult CreateDispatchWork()
         {
+            var entity = new DispatchWorkEntity();
             ViewData["ParentID"] = _iplDispatchWork.ListAllByTreeView();
             return View(entity);
         }
-        
         public ActionResult EditDispatchWork(int? id)
         {
             List<DispatchWorkEntity> depart = _iplDispatchWork.ListAllByTreeView();

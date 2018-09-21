@@ -1,6 +1,8 @@
+using System;
+
 namespace Dispatch
 {
-    public class ModuleEntity
+	public class ModuleEntity
 	{
 		#region Properties
 		/// <summary>

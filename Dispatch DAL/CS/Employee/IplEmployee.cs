@@ -1,10 +1,11 @@
-﻿using Framework;
-using Framework.Data;
-using Framework.Helper.Logging;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Data;
+using System.Data.SqlClient;
 using System.Linq;
+using Framework;
+using Framework.Data;
+using Framework.Helper.Logging;
 
 namespace Dispatch
 {
@@ -282,6 +283,11 @@ namespace Dispatch
             p.Add("@Position", employee.Position);
             p.Add("@Birthday", employee.Birthday);
             p.Add("@Gender", employee.Gender);
+            p.Add("@WageAgreement", employee.WageAgreement);
+            p.Add("@ProbationaryFromDate", employee.ProbationaryFromDate);
+            p.Add("@ProbationaryToDate", employee.ProbationaryToDate);
+            p.Add("@WorkFromDate", employee.WorkFromDate);
+            p.Add("@WorkToDate", employee.WorkToDate);
             return p;
         }
         public List<EmployeeEntity> ListByName (string name)
@@ -291,6 +297,20 @@ namespace Dispatch
                 var p = new DynamicParameters();
                 p.Add("@Name", name);
                 var data = unitOfWork.Procedure<EmployeeEntity>("ptgroupEmployee_ListByName", p);
+                return data.ToList();
+            }
+            catch (Exception ex)
+            {
+                Logging.PutError(ex.Message, ex);
+                return null;
+            }
+        }
+        public List<EmployeeEntity> ListByIdDepart(int Id) {
+            try
+            {
+                var p = new DynamicParameters();
+                p.Add("@Id", Id);
+                var data = unitOfWork.Procedure<EmployeeEntity>("ptgroupEmployee_ListByIdDepart", p);
                 return data.ToList();
             }
             catch (Exception ex)

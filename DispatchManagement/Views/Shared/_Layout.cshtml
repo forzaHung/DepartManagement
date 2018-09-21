@@ -71,7 +71,7 @@
                             </div>
 
                         </div>
-                    <!-- /menu prile quick info -->
+                        <!-- /menu prile quick info -->
                         <br />
 
                     }
@@ -106,11 +106,11 @@
                             <a id="menu_toggle"><i class="fa fa-bars"></i></a>
                         </div>
 
-                      @Html.Partial("_MenuTop")
-                        
-                        <ul class="nav navbar-nav navbar-right">
+                        @Html.Partial("_MenuTop")
+
+                        <ul class="nav navbar-nav navbar-right"style="width: 20%;">
                             @if (sessUser != null)
-                                {
+                            {
 
                                 <li class="">
 
@@ -213,7 +213,7 @@
                                         </li>
                                     </ul>
                                 </li>
-                                }
+                            }
                         </ul>
                     </nav>
                 </div>
@@ -261,12 +261,12 @@
     <script type="text/javascript" src="~/Assets/plugins/notify/pnotify.core.js"></script>
     <script type="text/javascript" src="~/Assets/plugins/notify/pnotify.buttons.js"></script>
     <script type="text/javascript" src="~/Assets/plugins/notify/pnotify.nonblock.js"></script>
+    <script src="~/Assets/plugins/moment/moment.min.js"></script>
     <script src="~/Assets/handler/base/backend.js"></script>
     <script src="~/Assets/plugins/select/new/select2.min.js"></script>
     <script src="~/Assets/plugins/bootstrap-table/js/bootstrap-table.js"></script>
     <script src="~/Assets/plugins/bootstrap-table/js/bootstrap-editable.js"></script>
     <script src="~/Assets/plugins/bootstrap-table/js/bootstrap-table-editable.js"></script>
-    <script src="~/Assets/handler/base/backend.js"></script>
     <script src="~/Assets/handler/controller/@(controller).js"></script>
     <script src="~/Assets/handler/base/check.js"></script>
 
@@ -274,7 +274,7 @@
     <!-- /datepicker -->
     <!-- /footer content -->
 
-    
+
     <script>
         $(window).load(function () {
             $('img').each(function () {

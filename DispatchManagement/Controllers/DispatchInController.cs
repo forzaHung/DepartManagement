@@ -67,9 +67,9 @@ namespace DispatchManagement.Controllers
                DateFrom, AddressToId, page, pageSize, ref totalRow).ToPagedList(page, pageSize, totalRow);
             return PartialView("_DispatchInList", dispatchIn);
         }
-
-        public ActionResult CreateDispatchIn(DispatchInEntity entity)
+        public ActionResult CreateDispatchIn()
         {
+            var entity = new DispatchInEntity();
             ListDropdown();
             return View(entity);
         }
@@ -90,7 +90,6 @@ namespace DispatchManagement.Controllers
             }
             return View("CreateDispatchIn", entity);
         }
-
         [ValidateInput(false)]
         public ActionResult Save(DispatchInEntity model)
         {
@@ -166,7 +165,6 @@ namespace DispatchManagement.Controllers
             ViewBag.Msg = ConstantMsg.ErrorProgress;
             return View("CreateDispatchIn", model);
         }
-
         public PartialViewResult Delete(int id, string Code = "", string Name = "", int AddressToId = 0,
             int Type = 0, int Department = 0, int Status = 0, int Priority = 0, string DateFrom = "", int page = 1, int pageSize = 10)
         {
@@ -183,7 +181,6 @@ namespace DispatchManagement.Controllers
 
             return PartialView("_DispatchInList", dispatchIn);
         }
-
         public void SaveFile(int DispatchId, int UserId, DispatchInEntity model)
         {
             //bool isSavedSuccessfully = true;
@@ -247,7 +244,6 @@ namespace DispatchManagement.Controllers
             //    return Json(new { Message = "Lỗi khi upload file" });
             //}
         }
-
         public void ListDropdown()
         {
             #region load dropdownlist 

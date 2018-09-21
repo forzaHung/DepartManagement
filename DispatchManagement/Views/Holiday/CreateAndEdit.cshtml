@@ -1,0 +1,37 @@
+﻿@model Dispatch.HolidayEntity
+
+@{
+    ViewBag.Title = "Chỉnh sửa ngày nghỉ";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Chỉnh sửa ngày nghỉ</h2>
+
+@using (Html.BeginForm("Save", "Holiday", FormMethod.Post, new { enctype = "multipart/form-data", @class = "form-horizontal", role = "form", id = "frmEmp" }))
+{
+    @Html.AntiForgeryToken()
+    <div class="form-horizontal">
+        <hr />
+        <div class="form-group">
+            <input type="hidden" id="Id" name="Id" />
+            <label class="col-md-2" style="color:  red;">@ViewBag.Err</label>
+        </div>
+            <div class="form-group">
+                <label class="control-label col-md-2">Chọn ngày nghỉ</label>
+                <div class="col-md-4">
+                    <input class="form-control text-box single-line" id="HolidayDate" name="HolidayDate" type="date">
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="control-label col-md-2">Nội dung nghỉ</label>
+                <div class="col-md-4">
+                    <input class="form-control text-box single-line" id="Description" name="Description" type="text">
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="col-md-offset-2 col-md-10">
+                    <input type="submit" value="Lưu" class="btn btn-default" />
+                </div>
+            </div>
+        </div>
+}

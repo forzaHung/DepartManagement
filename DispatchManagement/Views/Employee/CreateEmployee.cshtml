@@ -5,6 +5,7 @@
     var imgPath = Framework.Configuration.Config.GetConfigByKey("AvatarPath");
     var listItems = new List<SelectListItem>();
 }
+<link href="~/Assets/plugins/toastrjs/toastr.css" rel="stylesheet" />
 
 <div class="row">
     <div class="x_panel">
@@ -26,7 +27,7 @@
         <div class="x_content">
             <div>
                 @using (Html.BeginForm("Save", "Employee", FormMethod.Post, new { enctype = "multipart/form-data", @class = "form-horizontal", role = "form", id = "frmEmp" }))
-            {
+                {
                     @Html.AntiForgeryToken()
                     <h4>@ViewBag.SubTitle</h4>
                     <p class="red">Vui lòng nhập dữ liệu cho những trường bắt buộc *</p>
@@ -77,7 +78,38 @@
                         </div>
                     </div>
                     <div class="form-group">
-                        <label class="col-md-2 control-label">Họ và Tên đêm <i class="fa fa-asterisk red" style="font-size:10px"></i> </label>
+                        <label class="col-md-2 control-label">Lương thỏa thuận <i class="fa fa-asterisk red" style="font-size:10px"></i> </label>
+                        <div class="col-md-10">
+                            @Html.TextBoxFor(m => m.WageAgreement, new { @id = "WageAgreement", @type = "number", @class = "form-control", @maxlength = "50" })
+                            @Html.ValidationMessageFor(model => model.WageAgreement, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-md-2 control-label">Thử việc từ ngày </label>
+                        <div class="col-md-10">
+                            @Html.TextBoxFor(m => m.ProbationaryFromDate, new { @id = "ProbationaryFromDate", @class = "form-control", type = "date", @Value = Model.ProbationaryFromDate.ToString("yyyy-MM-dd") == "0001-01-01" ? DateTime.Now.ToString("yyyy-MM-dd") : Model.ProbationaryFromDate.ToString("yyyy-MM-dd") })
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-md-2 control-label">Thử việc đến ngày </label>
+                        <div class="col-md-10">
+                            @Html.TextBoxFor(m => m.ProbationaryToDate, new { @id = "ProbationaryToDate", @class = "form-control", type = "date", @Value = Model.ProbationaryToDate.ToString("yyyy-MM-dd") == "0001-01-01" ? DateTime.Now.ToString("yyyy-MM-dd") : Model.ProbationaryToDate.ToString("yyyy-MM-dd") })
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-md-2 control-label">Ngày bắt đầu làm việc <i class="fa fa-asterisk red" style="font-size:10px"></i> </label>
+                        <div class="col-md-10">
+                            @Html.TextBoxFor(m => m.WorkFromDate, new { @id = "WorkFromDate", @class = "form-control", type = "date", @Value = Model.WorkFromDate.ToString("yyyy-MM-dd") == "0001-01-01" ? DateTime.Now.ToString("yyyy-MM-dd") : Model.WorkFromDate.ToString("yyyy-MM-dd") })
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-md-2 control-label">Ngày kết thúc làm việc </label>
+                        <div class="col-md-10">
+                            @Html.TextBoxFor(m => m.WorkToDate, new { @id = "WorkToDate", @class = "form-control", type = "date", @Value = Model.WorkToDate.ToString("yyyy-MM-dd") == "0001-01-01" ? "9999-12-31" : Model.WorkToDate.ToString("yyyy-MM-dd") })
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-md-2 control-label">Họ và Tên đệm <i class="fa fa-asterisk red" style="font-size:10px"></i> </label>
                         <div class="col-md-10">
                             @Html.TextBoxFor(m => m.FirstName, new { @class = "form-control", @maxlength = "50" })
                             @Html.ValidationMessageFor(model => model.FirstName, "", new { @class = "text-danger" })
@@ -114,10 +146,6 @@
                         <div class="col-md-4">
                             @Html.TextBoxFor(m => m.Birthday, new { @class = "form-control", type = "date", @Value = Model.Birthday.ToString("yyyy-MM-dd") == "0001-01-01" ? DateTime.Now.ToString("yyyy-MM-dd") : Model.Birthday.ToString("yyyy-MM-dd") })
                         </div>
-                        @Html.LabelFor(m => m.IsActive, new { @class = "col-md-2 control-label" })
-                        <div class="col-md-4">
-                            @Html.CheckBoxFor(m => m.IsActive, new { @class = "flat" })
-                        </div>
                     </div>
                     <div class="form-group">
                         <label class="col-md-2 control-label"> Giới tính</label>
@@ -149,6 +177,7 @@
         </div>
     </div>
 </div>
+<script src="~/Assets/plugins/toastrjs/toastr.min.js"></script>
 <script type="text/javascript">
     $(document).ready(function () {
         $('#DepartmentId').select2().on('select2:select' , function () {
@@ -190,7 +219,7 @@
                 });
             }
         });
-       
+
         var number = @Html.Raw(Json.Encode(ViewData["arrDepartment"]));
         $("#DepartmentId").val(null).trigger("change");
         $('#DepartmentId').val(number).trigger("change");
@@ -264,11 +293,13 @@
 
         var Position = @Html.Raw(Json.Encode(ViewData["arrPosition"]));
         $eventSelect.val(null).trigger("change");
-        $.each(Position, function (key, value) {
-            var option = new Option(value.NamePosition, value.IdPosition);
-            option.selected = true;
-            $eventSelect.append(option);
-            $eventSelect.trigger("change");
-        })
+        if (Position != null) {
+            $.each(Position, function (key, value) {
+                var option = new Option(value.NamePosition, value.IdPosition);
+                option.selected = true;
+                $eventSelect.append(option);
+                $eventSelect.trigger("change");
+            });
+        }
     });
 </script>

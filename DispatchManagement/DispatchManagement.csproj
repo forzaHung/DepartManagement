@@ -25,10 +25,14 @@
     <UseGlobalApplicationHostFile />
     <NuGetPackageImportStamp>
     </NuGetPackageImportStamp>
-    <SccProjectName>SAK</SccProjectName>
-    <SccLocalPath>SAK</SccLocalPath>
-    <SccAuxPath>SAK</SccAuxPath>
-    <SccProvider>SAK</SccProvider>
+    <SccProjectName>
+    </SccProjectName>
+    <SccLocalPath>
+    </SccLocalPath>
+    <SccAuxPath>
+    </SccAuxPath>
+    <SccProvider>
+    </SccProvider>
     <Use64BitIISExpress />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
@@ -220,6 +224,10 @@
     <Compile Include="App_Start\IdentityConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\Startup.Auth.cs" />
+    <Compile Include="Areas\BM\BMAreaRegistration.cs" />
+    <Compile Include="Areas\BM\Controllers\BookRoomsController.cs" />
+    <Compile Include="Areas\BM\Controllers\RoomsController.cs" />
+    <Compile Include="Areas\BM\FuntionInView.cs" />
     <Compile Include="Code\CodeExtensions.cs" />
     <Compile Include="Code\Constants.cs" />
     <Compile Include="Code\Culture.cs" />
@@ -239,6 +247,8 @@
     <Compile Include="Controllers\Base\HandlerController.cs" />
     <Compile Include="Controllers\ChangePasswordController.cs" />
     <Compile Include="Controllers\CountController.cs" />
+    <Compile Include="Controllers\CustomerController.cs" />
+    <Compile Include="Controllers\CustomerTypeController.cs" />
     <Compile Include="Controllers\DashboardController.cs" />
     <Compile Include="Controllers\DepartmentController.cs" />
     <Compile Include="Controllers\DispatchInController.cs" />
@@ -249,12 +259,18 @@
     <Compile Include="Controllers\DispatchWorkController.cs" />
     <Compile Include="Controllers\EmployeeController.cs" />
     <Compile Include="Controllers\Employee_HistoryController.cs" />
+    <Compile Include="Controllers\Employee_PayrollController.cs" />
     <Compile Include="Controllers\FilesController.cs" />
+    <Compile Include="Controllers\HolidayController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\LoginController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
     <Compile Include="Controllers\NotFoundController.cs" />
     <Compile Include="Controllers\ProfileController.cs" />
+    <Compile Include="Controllers\ProjectCommentController.cs" />
+    <Compile Include="Controllers\ProjectController.cs" />
+    <Compile Include="Controllers\ProjectStatusController.cs" />
+    <Compile Include="Controllers\Project_RolesController.cs" />
     <Compile Include="Controllers\RegulationTimeController.cs" />
     <Compile Include="Controllers\RolesController.cs" />
     <Compile Include="Controllers\UserController.cs" />
@@ -278,6 +294,7 @@
     <Compile Include="Models\AuthorizeUserAttribute.cs" />
     <Compile Include="Models\ChangePasswordModel.cs" />
     <Compile Include="Models\CountList.cs" />
+    <Compile Include="Models\ExtensionMethods.cs" />
     <Compile Include="Models\FilesViewModel.cs" />
     <Compile Include="Models\IdentityModels.cs" />
     <Compile Include="Models\LoginModel.cs" />
@@ -288,6 +305,40 @@
     <Compile Include="Startup.cs" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Areas\BM\Assets\dist\css\custom.css" />
+    <Content Include="Areas\BM\Assets\dist\css\sb-admin-2.css" />
+    <Content Include="Areas\BM\Assets\dist\css\sb-admin-2.min.css" />
+    <Content Include="Areas\BM\Assets\js\controllerjs\bookroomjs.js" />
+    <Content Include="Areas\BM\Assets\js\jsdatetime\css\bootstrap-datetimepicker.css" />
+    <Content Include="Areas\BM\Assets\js\jsdatetime\css\bootstrap-datetimepicker.min.css" />
+    <Content Include="Areas\BM\Assets\js\jsdatetime\js\bootstrap-datetimepicker.js" />
+    <Content Include="Areas\BM\Assets\js\jsdatetime\js\bootstrap-datetimepicker.min.js" />
+    <Content Include="Areas\BM\Assets\js\jsdatetime\sample in bootstrap v2\bootstrap\css\bootstrap.css" />
+    <Content Include="Areas\BM\Assets\js\jsdatetime\sample in bootstrap v2\bootstrap\css\bootstrap.min.css" />
+    <Content Include="Areas\BM\Assets\js\jsdatetime\sample in bootstrap v2\bootstrap\img\glyphicons-halflings-white.png" />
+    <Content Include="Areas\BM\Assets\js\jsdatetime\sample in bootstrap v2\bootstrap\img\glyphicons-halflings.png" />
+    <Content Include="Areas\BM\Assets\js\jsdatetime\sample in bootstrap v2\bootstrap\js\bootstrap.js" />
+    <Content Include="Areas\BM\Assets\js\jsdatetime\sample in bootstrap v2\bootstrap\js\bootstrap.min.js" />
+    <Content Include="Areas\BM\Assets\vendor\bootstrap\css\bootstrap.css" />
+    <Content Include="Areas\BM\Assets\vendor\bootstrap\css\bootstrap.min.css" />
+    <Content Include="Areas\BM\Assets\vendor\bootstrap\fonts\glyphicons-halflings-regular.svg" />
+    <Content Include="Areas\BM\Assets\vendor\bootstrap\js\bootstrap.js" />
+    <Content Include="Areas\BM\Assets\vendor\bootstrap\js\bootstrap.min.js" />
+    <Content Include="Areas\BM\Assets\vendor\font-awesome\css\font-awesome.css" />
+    <Content Include="Areas\BM\Assets\vendor\font-awesome\css\font-awesome.min.css" />
+    <Content Include="Areas\BM\Assets\vendor\font-awesome\fonts\fontawesome-webfont.svg" />
+    <Content Include="Areas\BM\Assets\vendor\jquery\jquery.js" />
+    <Content Include="Areas\BM\Assets\vendor\jquery\jquery.min.js" />
+    <Content Include="Areas\BM\Assets\vendor\metisMenu\metisMenu.css" />
+    <Content Include="Areas\BM\Assets\vendor\metisMenu\metisMenu.js" />
+    <Content Include="Areas\BM\Assets\vendor\metisMenu\metisMenu.min.css" />
+    <Content Include="Areas\BM\Assets\vendor\metisMenu\metisMenu.min.js" />
+    <Content Include="Areas\BM\Assets\vendor\morrisjs\morris.css" />
+    <Content Include="Areas\BM\Assets\vendor\morrisjs\morris.js" />
+    <Content Include="Areas\BM\Assets\vendor\morrisjs\morris.min.js" />
+    <Content Include="Areas\BM\Assets\vendor\raphael\raphael.js" />
+    <Content Include="Areas\BM\Assets\vendor\raphael\raphael.min.js" />
+    <Content Include="Assets\BM\controller\bookrooms.js" />
     <Content Include="Assets\css\animate.min.css" />
     <Content Include="Assets\css\bootstrap.min.css" />
     <Content Include="Assets\css\calendar\fullcalendar.css" />
@@ -376,6 +427,9 @@
     <Content Include="Assets\handler\controller\attendancetracking_history.js" />
     <Content Include="Assets\handler\controller\category.js" />
     <Content Include="Assets\handler\controller\changepassword.js" />
+    <Content Include="Assets\handler\controller\customer.js" />
+    <Content Include="Assets\handler\controller\customertype.js" />
+    <Content Include="Assets\handler\controller\employee_payroll.js" />
     <Content Include="Assets\handler\controller\Files.js" />
     <Content Include="Assets\handler\controller\dispatchOut.js" />
     <Content Include="Assets\handler\controller\dispatchIn.js" />
@@ -386,12 +440,17 @@
     <Content Include="Assets\handler\controller\department.js" />
     <Content Include="Assets\handler\controller\employee.js" />
     <Content Include="Assets\handler\controller\fileupload.js" />
+    <Content Include="Assets\handler\controller\holiday.js" />
     <Content Include="Assets\handler\controller\maker.js" />
     <Content Include="Assets\handler\controller\order.js" />
     <Content Include="Assets\handler\controller\picture.js" />
     <Content Include="Assets\handler\controller\product.js" />
     <Content Include="Assets\handler\controller\productattribute.js" />
     <Content Include="Assets\handler\controller\profile.js" />
+    <Content Include="Assets\handler\controller\project.js" />
+    <Content Include="Assets\handler\controller\projectcomment.js" />
+    <Content Include="Assets\handler\controller\projectstatus.js" />
+    <Content Include="Assets\handler\controller\project_roles.js" />
     <Content Include="Assets\handler\controller\regulationtime.js" />
     <Content Include="Assets\handler\controller\roles.js" />
     <Content Include="Assets\handler\controller\settings.js" />
@@ -1584,7 +1643,23 @@
     <Content Include="Handler\UploadHandler.ashx" />
     <Content Include="Scripts\dropzone\css\stylus\basic.styl" />
     <Content Include="Scripts\dropzone\css\stylus\dropzone.styl" />
+    <Content Include="Areas\BM\Views\web.config" />
+    <Content Include="Areas\BM\Assets\vendor\bootstrap\fonts\glyphicons-halflings-regular.eot" />
+    <Content Include="Areas\BM\Assets\vendor\bootstrap\fonts\glyphicons-halflings-regular.ttf" />
+    <Content Include="Areas\BM\Assets\vendor\bootstrap\fonts\glyphicons-halflings-regular.woff" />
+    <Content Include="Areas\BM\Assets\vendor\bootstrap\fonts\glyphicons-halflings-regular.woff2" />
+    <Content Include="Areas\BM\Assets\vendor\font-awesome\css\font-awesome.css.map" />
+    <Content Include="Areas\BM\Assets\vendor\font-awesome\fonts\fontawesome-webfont.eot" />
+    <Content Include="Areas\BM\Assets\vendor\font-awesome\fonts\fontawesome-webfont.ttf" />
+    <Content Include="Areas\BM\Assets\vendor\font-awesome\fonts\fontawesome-webfont.woff" />
+    <Content Include="Areas\BM\Assets\vendor\font-awesome\fonts\fontawesome-webfont.woff2" />
+    <Content Include="Areas\BM\Assets\vendor\font-awesome\fonts\FontAwesome.otf" />
+    <Content Include="Areas\BM\Views\Shared\_Layout.cshtml" />
+    <Content Include="Areas\BM\Views\BookRooms\Index.cshtml" />
+    <Content Include="Areas\BM\Views\BookRooms\Create.cshtml" />
+    <Content Include="Areas\BM\Views\Rooms\Index.cshtml" />
     <None Include="Properties\PublishProfiles\Dispatch.pubxml" />
+    <None Include="Properties\PublishProfiles\FolderProfile.pubxml" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <Content Include="Scripts\dropzone\css\basic.css" />
     <Content Include="Scripts\dropzone\css\dropzone.css" />
@@ -1704,9 +1779,32 @@
     <Content Include="Views\AttendanceTracking_History\Index.cshtml" />
     <Content Include="Template\AttendanceTrackingTemplate.xlsx" />
     <Content Include="Template\AttendanceTrackingExportTemplate.xlsx" />
+    <Content Include="Views\Holiday\Index.cshtml" />
+    <Content Include="Views\Holiday\CreateAndEdit.cshtml" />
+    <Content Include="Views\Employee_Payroll\Index.cshtml" />
+    <Content Include="Views\Employee_Payroll\ConfigPayroll.cshtml" />
+    <Content Include="Views\Customer\CreateOrEdit.cshtml" />
+    <Content Include="Views\Customer\Index.cshtml" />
+    <Content Include="Views\Customer\_CustomerList.cshtml" />
+    <Content Include="Views\CustomerType\CreateOrEdit.cshtml" />
+    <Content Include="Views\CustomerType\Index.cshtml" />
+    <Content Include="Views\CustomerType\_CustomerTypeList.cshtml" />
+    <Content Include="Views\Project\CreateOrEdit.cshtml" />
+    <Content Include="Views\Project\Index.cshtml" />
+    <Content Include="Views\Project\_ProjectComment.cshtml" />
+    <Content Include="Views\Project\_ProjectList.cshtml" />
+    <Content Include="Views\Project_Roles\Index.cshtml" />
+    <Content Include="Views\Project_Roles\InsertUser.cshtml" />
+    <Content Include="Views\ProjectComment\Index.cshtml" />
+    <Content Include="Views\ProjectComment\_ProjectCommentList.cshtml" />
+    <Content Include="Views\ProjectStatus\CreateOrEdit.cshtml" />
+    <Content Include="Views\ProjectStatus\CreatStatus.cshtml" />
+    <Content Include="Views\ProjectStatus\Index.cshtml" />
+    <Content Include="Views\ProjectStatus\_ProjectStatusList.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
+    <Folder Include="Areas\BM\Models\" />
     <Folder Include="Assets\plugins\ckfinder\bin\Debug\" />
     <Folder Include="Assets\plugins\ckfinder\bin\Release\" />
     <Folder Include="Assets\plugins\ckfinder\plugins\fileeditor\bin\Debug\" />

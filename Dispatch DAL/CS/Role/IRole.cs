@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 namespace Dispatch
 {
-    public interface IRole
+	public interface IRole
 	{
 		Int32 Insert(RoleEntity role);		bool Update(RoleEntity role);
 		bool Delete(int userId, int moduleId);

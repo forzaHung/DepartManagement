@@ -7,7 +7,7 @@
     <thead>
         <tr>
             <th>Name</th>
-            <th>Trưởng phòng</th> 
+            <th>Trưởng phòng</th>
             <th>Địa chỉ</th>
             <th>Số lượng nhân viên dự kiến</th>
             <th>Số lượng nhân viên thực tế</th>
@@ -19,30 +19,30 @@
         {
             if (item.Id > 0)
             {
-        <tr data-id="@item.Id" data-parent="@item.ParentId" data-level="@item.Title" data-name="@Html.Raw(item.Name)">
-            <td data-column="name">@Html.Raw(item.Title)</td>
-            <td>@item.FirstName @item.LastName</td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Location)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.SumEmployeesExpected)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.SoNhanVien)
-            </td>
-            <td>
+                <tr data-id="@item.Id" data-parent="@item.ParentId" data-level="@item.Title" data-name="@Html.Raw(item.Name)">
+                    <td data-column="name">@Html.Raw(item.Title)</td>
+                    <td>@item.FirstName @item.LastName</td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Location)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.SumEmployeesExpected)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.CountEmployee)
+                    </td>
+                    <td>
 
-                @Html.ActionLink("Sửa", "EditDepartment", new { id = item.Id }) |
+                        @Html.ActionLink("Sửa", "EditDepartment", new { id = item.Id }) |
 
-                <a href="/Department/Delete/@item.Id" onclick="return confirm('Khi bạn xóa phòng đồng nghĩa các phòng nhỏ trong đó sẽ bị xóa. Bạn có muốn xóa phòng này không?')">Xóa</a> |
-                @*@Html.ActionLink("Xóa", "Delete", new { id = item.Id }, new { onclick = "return confirm('Bạn có muốn xóa nhân viên này không?')" }) |*@
-                @*@if (item.Id <= 0)
-            {
-                    <a href="/Department/Index/@item.Id">Tạo tài khoản</a>
-                }*@
-            </td>
-        </tr>
+                        <a href="/Department/Delete/@item.Id" onclick="return confirm('Khi bạn xóa phòng đồng nghĩa các phòng nhỏ trong đó sẽ bị xóa. Bạn có muốn xóa phòng này không?')">Xóa</a> |
+                        @*@Html.ActionLink("Xóa", "Delete", new { id = item.Id }, new { onclick = "return confirm('Bạn có muốn xóa nhân viên này không?')" }) |*@
+                        @*@if (item.Id <= 0)
+                            {
+                                    <a href="/Department/Index/@item.Id">Tạo tài khoản</a>
+                                }*@
+                    </td>
+                </tr>
             }
         }
     </tbody>

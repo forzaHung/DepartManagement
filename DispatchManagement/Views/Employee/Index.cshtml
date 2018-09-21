@@ -8,10 +8,13 @@
 }
 
 <link href="~/Assets/css/select/select2.min.css" rel="stylesheet" />
+<link href="~/Assets/plugins/toastrjs/toastr.css" rel="stylesheet" />
+
 <div class="row">
     <div class="x_panel">
         <div class="x_title">
             <h2>@ViewBag.Title</h2>
+            
             <ul class="nav navbar-right panel_toolbox">
                 <li>
                     <a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
@@ -20,7 +23,7 @@
                     <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false"><i class="fa fa-wrench"></i></a>
                     <ul class="dropdown-menu" role="menu">
                         <li>
-                           @Html.ActionLink("Thêm nhân viên", "CreateEmployee", null, new { @id = "createNew"})
+                            @Html.ActionLink("Thêm nhân viên", "CreateEmployee", null, new { @id = "createNew" })
                         </li>
                         <li>
                             <a href="#">Export excel</a>
@@ -36,20 +39,21 @@
                     <label class="control-label" for="SearchString">Tìm theo tên nhân viên:</label>
                     <input id="searchString" name="searchString" type="text" value="@ViewBag.Keyword" style="width: 300px" class="form-control" />
                 </div>
+
                 @*<div class="form-group">
-                    <label class="control-label" for="SearchString">product name:</label>
-                    <input id="searchName" name="searchName" type="text" value="@ViewBag.Keyword" style="width: 300px" class="form-control" />
-                </div>*@
+                        <label class="control-label" for="SearchString">product name:</label>
+                        <input id="searchName" name="searchName" type="text" value="@ViewBag.Keyword" style="width: 300px" class="form-control" />
+                    </div>*@
                 @*<div class="form-group">
-                    <label class="control-label" for="SearchString">maker name:</label>
-                    <select id="ddlRole" name="ddlRole" class="form-control">
-                        <option value="0">=== Select Role ===</option>
-                        @foreach (var item in (List<marketplace.Role_GroupEntity>)ViewData["role"])
-                        {
-                            <option value="@item.ID">@item.Name</option>
-                        }
-                    </select>
-                </div>*@
+                        <label class="control-label" for="SearchString">maker name:</label>
+                        <select id="ddlRole" name="ddlRole" class="form-control">
+                            <option value="0">=== Select Role ===</option>
+                            @foreach (var item in (List<marketplace.Role_GroupEntity>)ViewData["role"])
+                            {
+                                <option value="@item.ID">@item.Name</option>
+                            }
+                        </select>
+                    </div>*@
                 <div class="form-group">
                     <input type="button" value="Search" id="btnSearch" class="btn btn-default" style="margin-bottom: 0" />
                 </div>
@@ -63,3 +67,4 @@
 </div>
 <script src="~/Assets/plugins/select/select2.full.js"></script>
 <script src="~/Assets/plugins/ckeditor/ckeditor.js"></script>
+<script src="~/Assets/plugins/toastrjs/toastr.min.js"></script>

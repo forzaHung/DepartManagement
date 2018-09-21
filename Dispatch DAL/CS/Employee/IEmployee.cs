@@ -1,8 +1,9 @@
+using System;
 using System.Collections.Generic;
 
 namespace Dispatch
 {
-    public interface IEmployee
+	public interface IEmployee
 	{
 		int Insert(EmployeeEntity employee);		bool Update(EmployeeEntity employee);
 		bool Delete(int id);
@@ -17,5 +18,6 @@ namespace Dispatch
         List<Employee_Department> ListDetail(int Id);
         List<EmployeeEntity> ListAllByPostion(int Position, int IdDepartment);
         List<EmployeeEntity> ListByName(string name);
+        List<EmployeeEntity> ListByIdDepart(int Id);
     }
 }

@@ -1,0 +1,73 @@
+﻿
+@using MvcPaging
+@using Prototype.Code
+
+@model IPagedList<Dispatch.ProjectEntity>
+
+<table class="table table-hover table-bordered">
+    <thead>
+        <tr>
+            <th>
+                Tên dự án
+            </th>
+            <th>
+                Khách hàng
+            </th>
+            @if ((bool?)ViewData["AuthorizePriceView"] != false)
+            {
+                <th>
+                    Giá trị(tỉ)
+                </th>
+            }
+
+            <th>Trạng thái</th>
+            <th>Chi tiết</th>
+            <th>Cập nhập mới</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            if (item.Id > 0)
+            {
+                <tr class="viewProfile" data-id="@item.Id">
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Name)
+
+                        @Html.ActionLink("Sửa", "CreateOrEdit", new { id = item.Id }) |
+                        @Html.ActionLink("Phân quyền", "Index", "Project_Roles", new { id = item.Id }, null)
+                    </td>
+                    <td>@Html.DisplayFor(modelItem => item.CustomerName)</td>
+                    @if ((bool?)ViewData["AuthorizePriceView"] != false)
+                    {
+                        <td>@Html.DisplayFor(modelItem => item.Price)</td>
+                    }
+                    <td>@Html.DisplayFor(modelItem => item.StatusName)</td>
+                    <td>@Html.Raw(item.Description)</td>
+                    <td>
+                        <p>    
+                            @Html.Action("_ProjectComment",new { Id= @item.Id})                       
+                            <a module="@item.Id" href="@Url.Action("Index","ProjectComment",new { id = item.Id })">
+                                Xem thêm
+                            </a>
+                        </p>
+                    </td>
+
+                </tr>
+            }
+        }
+    </tbody>
+</table>
+@Html.Pager(Model.PageSize, Model.PageNumber - 1, Model.TotalItemCount, new AjaxOptions { UpdateTargetId = "projectList", OnSuccess = "backend.onSuccessAjax" }).Options(o => o
+            .Action("Index")
+            .DisplayTemplate("Bootstrap3Pagination")
+            .MaxNrOfPages(5)
+            .AlwaysAddFirstPageNumber()
+            .DisplayFirstAndLastPage()
+            .SetFirstPageText("First")
+            .SetLastPageText("Last")
+            .HidePreviousAndNextPage()
+            .AddRouteValue("searchString", Request.QueryString["searchString"])
+        )
+
+

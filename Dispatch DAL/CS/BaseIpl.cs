@@ -4,7 +4,7 @@ using Framework.Helper.Cache;
 
 namespace Dispatch
 {
-    public class BaseIpl<T>
+	public class BaseIpl<T>
 	{
 		public T unitOfWork;
 		protected ICacheProvider cache;

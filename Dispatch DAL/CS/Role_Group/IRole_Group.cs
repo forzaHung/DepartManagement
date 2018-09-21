@@ -1,8 +1,9 @@
+using System;
 using System.Collections.Generic;
 
 namespace Dispatch
 {
-    public interface IRole_Group
+	public interface IRole_Group
 	{
 		int Insert(Role_GroupEntity role_Group);		bool Update(Role_GroupEntity role_Group);
 		bool Delete(int iD);

@@ -1,8 +1,9 @@
+using System;
 using System.Collections.Generic;
 
 namespace Dispatch
 {
-    public interface IPosition
+	public interface IPosition
     {
 		int Insert(PositionEntity employee_history);
         bool Update(PositionEntity employee_history);

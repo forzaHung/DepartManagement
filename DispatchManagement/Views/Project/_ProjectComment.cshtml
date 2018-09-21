@@ -1,0 +1,20 @@
+﻿@model List<Dispatch.Project_CommentEntity>
+@{
+    Layout = null;
+}
+
+@if (Model.Count>0)
+{
+    foreach(var item in Model)
+    {
+        
+        <span>@DispatchManagement.Models.Utils.GetShortReview(@item.Description,5)</span><br />
+        <b><span>@item.FullName</span></b><br />
+    }
+}
+else
+{
+    <span>
+        Chưa có bình luận
+    </span><br/>
+}

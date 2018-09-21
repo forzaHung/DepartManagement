@@ -1,0 +1,70 @@
+﻿@using MvcPaging
+@model List<Dispatch.Project_CommentEntity>
+<div class="container">
+    <div class="col-sm-8" style="width:99%">
+        <div class="panel panel-white post panel-shadow">
+            <h3 style="padding-left:10px">@ViewBag.ProjectName</h3>
+            <div class="post-description">
+                <p> <b>Trạng thái:</b> @ViewBag.Status</p>
+                <p><b>Khách hàng:</b> @ViewBag.Customer</p>
+                @if ((bool?)ViewData["AuthorizeProjectPriceView"] != false)
+                {
+                    <p><b>Giá trị:</b> @ViewBag.ProjectPrice</p>
+                }
+                <p><b>Lãnh đạo:</b> @ViewBag.Lanhdao</p>
+                @*<p><b>Trợ lý:</b> @ViewBag.Troly</p>*@
+                <p><b>Sales:</b> @ViewBag.sales</p>
+                @*<p><b>Kỹ thuật:</b> @ViewBag.Technical</p>*@
+                @*<p><b>Mua hàng:</b> @ViewBag.Muahang</p>*@
+                @Html.Raw(@ViewBag.Description)
+            </div>
+            <div class="post-footer">
+                <div class="input-group">
+                    @*<input class="form-control" placeholder="Add a comment" type="text">*@
+                    <input class="form-control" id="txtComment" placeholder="Thêm bình luận..." type="text">
+                    <span class="input-group-addon">
+                        <a><i class="fa fa-edit cha"></i></a>
+                    </span>
+                    @Html.Hidden("projectID", (object)ViewBag.id)
+                </div>
+                <!--Bình luận cha-->
+                @foreach (var item in Model)
+                {
+                    <ul class="comments-list">
+                        <li class="comment" id="@item.Id">
+                            <a class="pull-left" href="#">
+                                <img class="avatar" src="" alt="avatar">
+                            </a>
+                            <div class="comment-body">
+                                <div class="comment-heading">
+                                    <h4 class="user">@Html.DisplayFor(modelitem => item.FullName)</h4>
+                                    <h5 class="time">@Html.DisplayFor(modelitem => item.CreateDate)</h5>
+                                </div>
+                                @Html.DisplayFor(modelitem => item.Description)
+                            </div>
+                            <div class="viewOpt" id="hiencommentcon" data-commentID="@item.Id">
+                                Hiện trả lời
+                            </div>
+                            <!--Bình luận con-->
+                            <ul id="groupCommentCon_@item.Id" class="comments-list" style="display:none"></ul>
+
+                            <!--End bình luận con-->
+                        </li>
+                    </ul>
+                }
+                <!--End bình luận cha-->
+            </div>
+        </div>
+    </div>
+</div>
+@*@Html.Pager(Model.PageSize, Model.PageNumber - 1, Model.TotalItemCount, new AjaxOptions { UpdateTargetId = "commentlist", OnSuccess = "backend.onSuccessAjax" }).Options(o => o
+        .Action("Index")
+        .DisplayTemplate("Bootstrap3Pagination")
+        .MaxNrOfPages(5)
+        .AlwaysAddFirstPageNumber()
+        .DisplayFirstAndLastPage()
+        .SetFirstPageText("First")
+        .SetLastPageText("Last")
+        .HidePreviousAndNextPage()
+        .AddRouteValue("searchString", Request.QueryString["searchString"])
+    )*@

@@ -1,0 +1,54 @@
+﻿@{
+    ViewBag.Title = "Bảng lương nhân viên";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<link href="~/Assets/plugins/toastrjs/toastr.css" rel="stylesheet" />
+<h2>@ViewBag.Title</h2>
+<div class="row">
+    <div class="col-lg-3">
+        <p>Từ tháng</p>
+        <input type="text" readonly="readonly" id="fromMonth" value="@ViewBag.FromMonth" class="form-control boxsearch" style="width: 100%;" />
+    </div>
+    <div class="col-lg-3">
+        <p>Đến tháng</p>
+        <input type="text" readonly="readonly" id="toMonth" value="@ViewBag.ToMonth" class="form-control boxsearch" style="width: 100%;" />
+    </div>
+    <div class="col-lg-3">
+        <p>Tìm theo tên nhân viên</p>
+        <select class="form-control" id="employeeSearch" />
+        <input type="hidden" id="employeeIdSearch" />
+    </div>
+    <div class="col-lg-1" style="padding-top:29px">
+        <button class="btn btn-danger" type="button" id="btnSearch"><i class="fa fa-search-plus"></i> Lọc</button>
+    </div>
+</div>
+<br />
+
+<div class="row">
+    <div class="col-lg-2">
+        <p>Từ ngày</p>
+        <input id="fromDate" type="date" min="2017-01-01" value="@ViewBag.FromDate" class="form-control boxsearch" style="width: 100%;" />
+    </div>
+    <div class="col-lg-2">
+        <p>Đến ngày</p>
+        <input id="toDate" type="date" min="2017-01-01" value="@ViewBag.ToDate" class="form-control boxsearch" style="width: 100%;" />
+    </div>
+    <div class="col-lg-2">
+        <p>Tìm theo tên nhân viên</p>
+        <select class="form-control" id="employee" />
+        <input type="hidden" id="employeeId" />
+    </div>
+    <div class="col-lg-2" style="padding-top:29px">
+        <a class="btn btn-default" href="/Employee_Payroll/ConfigPayroll"><i class="fa fa-folder-open"></i> Cấu hình nhân viên</a>
+    </div>
+    <div class="col-lg-1" style="padding-top:29px">
+        <button class="btn btn-default" type="button" id="btnCreate"><i class="fa fa-plus-square"></i> Tạo Bảng Lương</button>
+    </div>
+</div>
+
+<div id="DepartmentList" style=" margin-top:10px;">
+    <div id="displayReason" style="color:red;max-height:100px;overflow-y:auto;"></div>
+    <table id="tbl-EmployeePayroll" class="table table-bordered table-hover fixed-table-header" data-height="600"></table>
+
+</div>
+<script src="~/Assets/plugins/toastrjs/toastr.min.js"></script>

@@ -1,0 +1,48 @@
+﻿@model Dispatch.Project_StatusEntity
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<div class="row">
+
+    <div class="x_panel">
+        <div class="x_title">
+            <h2>@ViewBag.Title</h2>
+            <ul class="nav navbar-right panel_toolbox">
+                <li>
+                    <button type="button" class="btn btn-primary" onclick="$('#frmaddStauts').submit();"><i class="fa fa-save"></i>Lưu</button>
+                </li>
+                <li>
+                    @Html.ActionLink("Danh trạng thái", "Index", null, new { @id = "createNew", @class = "btn btn-default" })
+                </li>
+
+                <li>
+                    <a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
+                </li>
+            </ul>
+            <div class="clearfix"></div>
+        </div>
+        <div class="x_content">
+            <div>
+                @using (Html.BeginForm("AddStatus", "ProjectStatus", FormMethod.Post, new { enctype = "multipart/form-data", @class = "form-horizontal", role = "form", id = "frmaddStauts" }))
+                {
+                    <p class="red">Vui lòng nhập dữ liệu cho những trường bắt buộc *</p>
+                    <div class="form-group">
+                        <label class="col-md-2 control-label">Tên trạng thái <i class="fa fa-asterisk red" style="font-size:10px"></i> </label>
+
+                        <div class="col-md-10">
+                            @Html.TextBoxFor(model => model.Name, new { @class = "form-control", @maxlength = "50" })
+                            @Html.ValidationMessageFor(model => model.Name, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-md-2 control-label">Kích hoạt@*<i class="fa fa-asterisk red" style="font-size:10px"></i>*@ </label>
+
+                        <div class="col-md-10" style="padding-top:8px">
+                            @Html.CheckBoxFor(model => model.IsActive,new { @class= "flat" })
+                        </div>
+                    </div>
+                }
+            </div>
+        </div>
+    </div>
+</div>

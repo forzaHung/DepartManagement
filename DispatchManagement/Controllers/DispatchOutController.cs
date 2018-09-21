@@ -77,9 +77,9 @@ namespace DispatchManagement.Controllers
             return PartialView("_DispatchOutList", dispatchOut);
         }
 
-        public ActionResult CreateDispatchOut(DispatchOutEntity entity)
+        public ActionResult CreateDispatchOut()
         {
-
+            var entity = new DispatchOutEntity();
             ListDropdown();
             return View(entity);
         }

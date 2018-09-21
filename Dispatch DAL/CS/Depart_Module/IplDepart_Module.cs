@@ -1,14 +1,15 @@
-using Framework;
-using Framework.Data;
-using Framework.Helper.Logging;
 using System;
 using System.Collections.Generic;
 using System.Data;
+using System.Data.SqlClient;
 using System.Linq;
+using Framework;
+using Framework.Data;
+using Framework.Helper.Logging;
 
 namespace Dispatch
 {
-    public class IplDepart_Module : BaseIpl<ADOProvider>, IDepart_Module
+	public class IplDepart_Module : BaseIpl<ADOProvider>, IDepart_Module
 	{
 
 

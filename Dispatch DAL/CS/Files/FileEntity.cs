@@ -2,7 +2,7 @@ using System;
 
 namespace Dispatch
 {
-    public partial class FileEntity
+	public partial class FileEntity
 	{
 		#region Properties
 		/// <summary>

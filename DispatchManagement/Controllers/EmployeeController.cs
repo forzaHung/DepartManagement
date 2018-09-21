@@ -37,21 +37,21 @@ namespace DispatchManagement.Controllers
         public ActionResult Index(string searchString = "", int page = 1, int pageSize = 10)
         {
             int totalRow = 0;
-            var employee = _iplEmployee.ListAllPaging(searchString, page, pageSize, ref totalRow);
-            return View(employee.ToPagedList(page, pageSize, totalRow));
+            var employee = _iplEmployee.ListAllPaging(searchString, page, pageSize, ref totalRow).ToPagedList(page, pageSize, totalRow);
+            //var xxx = employee.ToPagedList(page, pageSize, 10);
+            return View(employee);
         }
-        [AuthorizeUser(ModuleName = "Employee", AccessLevel = Constants.View)]
+        //[AuthorizeUser(ModuleName = "Employee", AccessLevel = Constants.View)]
         public PartialViewResult GetEmployee(string searchString = "", int page = 1, int pageSize = 10)
         {
             int totalRow = 0;
-
             var employee = this._iplEmployee.ListAllPaging(searchString, page, pageSize, ref totalRow).ToPagedList(page, pageSize, totalRow);
-
             return PartialView("_UserList", employee);
         }
         //[AuthorizeUser(ModuleName = "Employee", AccessLevel = Constants.Add)]
-        public ActionResult CreateEmployee(EmployeeEntity entity)
+        public ActionResult CreateEmployee()
         {
+            var entity = new EmployeeEntity();
             ViewData["Department"] = _iplDepartment.ListAllByTreeView();
             ViewData["DispatchWork"] = _iplDispatchWork.ListAllByTreeView();
             ViewData["Position"] = _iplPosition.ListAll();
@@ -189,6 +189,12 @@ namespace DispatchManagement.Controllers
                         entity.IsActive = model.IsActive;
                         entity.Position = model.Position;
                         entity.DepartmentId = model.DepartmentId;
+                        entity.WageAgreement = model.WageAgreement;
+                        entity.ProbationaryFromDate = model.ProbationaryFromDate;
+                        entity.ProbationaryToDate = model.ProbationaryToDate;
+                        entity.WorkFromDate = model.WorkFromDate;
+                        entity.WorkToDate = model.WorkToDate;
+
                         if (model.file != null && model.file.ContentLength > 0)
                         {
                             if (!Utility.CheckImageFormat(model.file.FileName))
@@ -256,7 +262,6 @@ namespace DispatchManagement.Controllers
                 }
                 #endregion
             }
-            ViewBag.Msg = ConstantMsg.ErrorProgress;
             ReturnFalse(model.Id);
             return View("CreateEmployee", model);
         }
@@ -450,6 +455,23 @@ namespace DispatchManagement.Controllers
         {
             var ret = _iplUser.UpdateActive(userId, access);
             return Json(new { status = ret });
+        }
+        public JsonResult ValidateCreateEdit(double WageAgreement, DateTime ProbationaryFromDate, DateTime ProbationaryToDate, DateTime WorkFromDate, DateTime WorkToDate)
+        {
+            if (WageAgreement < 0)
+            {
+                return Json(new { status = false, mess = "Lương không thể âm!" });
+            }
+            if (DateTime.Compare(ProbationaryFromDate, ProbationaryToDate) > 0)
+            {
+                return Json(new { status = false, mess = "Ngày bắt đầu thử việc không thể lớn hơn ngày kết thúc thử việc!" });
+            }
+            if (DateTime.Compare(ProbationaryToDate, WorkFromDate) > 0)
+            {
+                return Json(new { status = false, mess = "Ngày kết thúc thử việc không thể lớn hơn ngày bắt đầu làm việc!" });
+            }
+
+            return Json(new { status = true });
         }
     }
 }

@@ -54,14 +54,14 @@
                         </div>
                     </div>
                     <div class="form-group">
-                        <label class="col-md-2 control-label" for="Name">Tên công việc</label>
+                        <label class="col-md-2 control-label" for="Name">Tên công việc<i class="fa fa-asterisk red" style="font-size:10px"></i></label>
                         <div class="col-md-10">
                             @Html.TextBoxFor(m => m.WorkName, new { @class = "form-control", @maxlength = "50" })
                             @Html.ValidationMessageFor(model => model.WorkName, "", new { @class = "text-danger" })
                         </div>
                     </div>
                     <div class="form-group">
-                        <label class="col-md-2 control-label" for="Name">Loại công việc</label>
+                        <label class="col-md-2 control-label" for="Name">Loại công việc<i class="fa fa-asterisk red" style="font-size:10px"></i></label>
                         <div class="col-md-10">
                             @Html.TextBoxFor(m => m.WorkType, new { @class = "form-control", @maxlength = "50" })
                             @Html.ValidationMessageFor(model => model.WorkType, "", new { @class = "text-danger" })
@@ -75,7 +75,7 @@
                         </div>
                     </div>
                     <div class="form-group">
-                        <label class="col-md-2 control-label" for="Name">Hệ số lương</label>
+                        <label class="col-md-2 control-label" for="Name">Hệ số lương<i class="fa fa-asterisk red" style="font-size:10px"></i></label>
                         <div class="col-md-10">
                             @Html.TextBoxFor(m => m.CoefficientsSalary, new { @class = "form-control", @maxlength = "50" })
                             @Html.ValidationMessageFor(model => model.CoefficientsSalary, "", new { @class = "text-danger" })

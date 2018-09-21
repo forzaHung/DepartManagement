@@ -39,7 +39,7 @@ namespace MvcPaging
             if (TotalItemCount <= 0)
                 return;
 
-            if (TotalItemCount < PageSize)
+            if (TotalItemCount <= PageSize)
             {
                 AddRange(source.Take(TotalItemCount));
             }

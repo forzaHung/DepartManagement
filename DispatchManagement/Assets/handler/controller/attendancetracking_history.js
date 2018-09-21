@@ -105,6 +105,19 @@
             }).on('select2:select', function (evt) {
                 var data = evt.params.data;
                 $('#employeeId').val(data.id);
+                });
+            $("#fromDate").datepicker({
+                format: "mm/yyyy",
+                viewMode: "months",
+                minViewMode: "months",
+                autoclose: true,
+                
+            });
+            $("#toDate").datepicker({
+                format: "mm/yyyy",
+                viewMode: "months",
+                minViewMode: "months",
+                autoclose: true,
             });
         },
         saveFileAs: function (uri, filename) {
@@ -135,8 +148,8 @@
                     var param = $.extend(true, {
                         limit: p.limit,
                         offset: p.offset,
-                        fromDate: $("#fromDate").val(),
-                        toDate: $("#toDate").val(),
+                        fromDate: "01/"+$("#fromDate").val(),
+                        toDate: "01/" + $("#fromDate").val(),
                         employee: $("#employeeId").val()
                     }, p);
                     return param;

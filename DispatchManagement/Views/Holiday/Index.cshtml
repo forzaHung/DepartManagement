@@ -1,0 +1,27 @@
+﻿@{
+    ViewBag.Title = "Chọn ngày nghỉ lễ, tết";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<link href="~/Assets/plugins/toastrjs/toastr.css" rel="stylesheet" />
+<h2>@ViewBag.Title</h2>
+<div class="row">
+    <div class="col-lg-3">
+        <p>Từ ngày</p>
+        <input id="fromDate" type="date" min="2017-01-01" value="@ViewBag.FromDate" class="form-control boxsearch" style="width: 100%;" />
+    </div>
+    <div class="col-lg-3">
+        <p>Đến ngày</p>
+        <input id="toDate" type="date" min="2017-01-01" value="@ViewBag.ToDate" class="form-control boxsearch" style="width: 100%;" />
+    </div>
+    <div class="col-lg-1" style="padding-top:29px">
+        <button class="btn btn-danger" type="button" id="btnSearch"><i class="fa fa-search-plus"></i> Lọc</button>
+    </div>
+    <div class="col-lg-1" style="padding-top:29px">
+        <a class="btn btn-default" type="button" href="/Holiday/CreateAndEdit" id="btnCreate"><i class="fa fa-search-plus"></i> Thêm mới</a>
+    </div>
+</div>
+
+<div id="HolidayList">
+    <table id="tbl-Holiday" class="table table-bordered table-hover fixed-table-header" data-height="600"></table>
+</div>
+<script src="~/Assets/plugins/toastrjs/toastr.min.js"></script>

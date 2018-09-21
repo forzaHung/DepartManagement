@@ -1,6 +1,9 @@
-﻿namespace Dispatch
-{
+﻿using System;
+using System.ComponentModel.DataAnnotations;
 
+namespace Dispatch
+{
+    
     public partial class TransactionLogsEntity
     {
         #region Properties

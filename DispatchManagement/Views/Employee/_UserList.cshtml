@@ -18,7 +18,6 @@
             <th>Điện thoại</th>
             <th>User Name</th>
             <th>Kích hoạt</th>
-            <th>Phòng ban</th>
             <th>Actions</th>
         </tr>
     </thead>
@@ -46,9 +45,6 @@
 
             <td>@Html.CheckBoxFor(modelItem => item.IsActive, new { @class = "flat activeUser", module = item.Id })</td>
             <td>
-                @Html.DisplayFor(modelItem => item.DepartmentName)
-            </td>
-            <td>
                 <a href="" class="reset_pass" data-id="@item.UserId" onclick="return confirm('Bạn có chắc sẽ reset mật khẩu cho nhân viên này?')">Reset password</a> |
                 @Html.ActionLink("Sửa", "EditEmployee", new { id = item.Id }) |
                 <a href="/Roles/Index/@item.UserId">Phân quyền</a> |
@@ -64,7 +60,7 @@
         }
     </tbody>
 </table>
-@Html.Pager(Model.PageSize, Model.PageNumber - 1, Model.TotalItemCount, new AjaxOptions { UpdateTargetId = "employeeList", OnSuccess = "backend.onSuccessAjax" }).Options(o => o
+@Html.Pager(Model.PageSize, Model.PageNumber-1, Model.TotalItemCount, new AjaxOptions { UpdateTargetId = "employeeList", OnSuccess = "backend.onSuccessAjax" }).Options(o => o
             .Action("Index")
             .DisplayTemplate("Bootstrap3Pagination")
             .MaxNrOfPages(5)

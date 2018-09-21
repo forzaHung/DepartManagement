@@ -1,6 +1,8 @@
+using System;
+
 namespace Dispatch
 {
-    public class Role_GroupEntity
+	public class Role_GroupEntity
 	{
 		#region Properties
 		/// <summary>

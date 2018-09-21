@@ -11,6 +11,23 @@
             viewProfile: ".viewProfile"
         },
         init: function () {
+            toastr.options = {
+                "closeButton": false,
+                "debug": false,
+                "newestOnTop": false,
+                "progressBar": false,
+                "positionClass": "toast-top-right",
+                "preventDuplicates": false,
+                "onclick": null,
+                "showDuration": "300",
+                "hideDuration": "1000",
+                "timeOut": "5000",
+                "extendedTimeOut": "1000",
+                "showEasing": "swing",
+                "hideEasing": "linear",
+                "showMethod": "fadeIn",
+                "hideMethod": "fadeOut"
+            }
             $(".activeUser").on('ifChanged', function () {
                 //var access = $(this).iCheck('update')[0].checked;
                 var access = $(this).prop("checked");
@@ -42,7 +59,7 @@
                     error: function () {
                     }
                 })
-            })
+            });
             $(employee.ui.file).on('change', function () {
                 employee.readUrl(this);
             });
@@ -81,7 +98,32 @@
             $(employee.ui.viewProfile).on('click', function (e) {
                 var id = $(this).attr("data-id");
                 window.location.href = "/Profile?id=" + id;
-            })
+            });
+            $('#frmEmp').submit(function (e) {
+                e.preventDefault(e);
+                var submit = $(this);
+                $.ajax({
+                    url: '/Employee/ValidateCreateEdit',
+                    data: {
+                        WageAgreement: $("#WageAgreement").val(),
+                        ProbationaryFromDate: $("#ProbationaryFromDate").val(),
+                        ProbationaryToDate: $("#ProbationaryToDate").val(),
+                        WorkFromDate: $("#WorkFromDate").val(),
+                        WorkToDate: $("#WorkToDate").val(),
+                    },
+                    type: 'POST',
+                    success: function (rs) {
+                        console.log(rs);
+                        if (rs.status) {
+                            submit.unbind('submit').submit();
+                        } else {
+                            toastr["error"](rs.mess);
+                            return false;                           
+                        }
+                    }
+                });
+
+            });
         },
         readUrl: function (input) {
             if (input.files && input.files[0]) {

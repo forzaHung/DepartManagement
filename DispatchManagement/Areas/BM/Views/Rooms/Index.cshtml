@@ -1,0 +1,73 @@
+﻿@model IEnumerable<Dispatch.RoomEntity>
+
+@{
+    ViewBag.Title = "Danh sách phòng họp";
+    Layout = "~/Areas/BM/Views/Shared/_Layout.cshtml";
+}
+
+<h3>@ViewBag.Title</h3>
+<button type="button" class="btn btn-default createRoom" data-toggle="modal" data-target="#BookModal">
+    Thêm Phòng họp
+</button>
+<div class="modal fade" id="BookModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Cập nhật Phòng Họp</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                @using (Html.BeginForm("Save", "Rooms", FormMethod.Post, new { enctype = "multipart/form-data", id = "saveFormRoom" }))
+                {
+                    @Html.AntiForgeryToken()
+                    <div class="form-horizontal">
+                        <div class="form-group">
+                            <input class="form-control" style="margin-left:10%; width: 80%;" type="text" id="NameRoom" name="NameRoom" placeholder="Điền tên phòng" required />
+                        </div>
+                    </div>
+                    <input hidden type="text" id="IdRoom" name="IdRoom" />
+                }
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Hủy</button>
+                <input type="submit" onclick="$('#saveFormRoom').submit();" value="Lưu" class="btn btn-primary" />
+            </div>
+        </div>
+    </div>
+</div>
+<table class="table">
+    <tr>
+        <th>Tên phòng</th>
+        <th>Thao tác</th>
+    </tr>
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Name)
+            </td>
+            <td>
+                <button type="button" data-name="@item.Name" data-id="@item.Id" class="btn btn-primary btn-xs editRoom" data-toggle="modal" data-target="#BookModal">
+                    Sửa
+                </button> ||
+                <a href="/Rooms/Delete/@item.Id" onclick="return confirm('Bạn có muốn xóa không ?')">Xóa</a>
+            </td>
+        </tr>
+    }
+</table>
+@section scripts{
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $(".editRoom").on('click', function () {
+                $("#NameRoom").val($(this).data("name"));
+                $("#IdRoom").val($(this).data("id"));
+            });
+            $(".createRoom").on('click', function () {
+                $("#NameRoom").val("");
+                $("#IdRoom").val("");
+            })
+        });
+    </script>
+}

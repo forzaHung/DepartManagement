@@ -12,10 +12,14 @@
     <AssemblyName>Dispatch</AssemblyName>
     <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
-    <SccProjectName>SAK</SccProjectName>
-    <SccLocalPath>SAK</SccLocalPath>
-    <SccAuxPath>SAK</SccAuxPath>
-    <SccProvider>SAK</SccProvider>
+    <SccProjectName>
+    </SccProjectName>
+    <SccLocalPath>
+    </SccLocalPath>
+    <SccAuxPath>
+    </SccAuxPath>
+    <SccProvider>
+    </SccProvider>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -56,6 +60,16 @@
     <Compile Include="AttendanceTracking\AttendanceTrackingEntity.cs" />
     <Compile Include="AttendanceTracking\IAttendanceTracking.cs" />
     <Compile Include="AttendanceTracking\IplAttendanceTracking.cs" />
+    <Compile Include="BookMeeting\BookMeetingEntity.cs" />
+    <Compile Include="BookMeeting\BookMeetingMetadata.cs" />
+    <Compile Include="BookMeeting\IBookMeeting.cs" />
+    <Compile Include="BookMeeting\IplBookMeeting.cs" />
+    <Compile Include="Customer\CustomerEntity.cs" />
+    <Compile Include="Customer\ICustomer.cs" />
+    <Compile Include="Customer\IplCustomer.cs" />
+    <Compile Include="Customer_Type\Customer_TypeEntity.cs" />
+    <Compile Include="Customer_Type\ICustomer_Type.cs" />
+    <Compile Include="Customer_Type\IplCustomer_Type.cs" />
     <Compile Include="DispatchOut\DispatchOutEntity.cs" />
     <Compile Include="DispatchOut\DispatchOutEntity_Ext.cs" />
     <Compile Include="DispatchOut\DispatchOutMetadata.cs" />
@@ -92,12 +106,33 @@
     <Compile Include="Employee_History\Employee_HistoryMetadata.cs" />
     <Compile Include="Employee_History\IEmployee_History.cs" />
     <Compile Include="Employee_History\IplEmployee_History.cs" />
+    <Compile Include="Employee_Payroll\Employee_PayrollEntity.cs" />
+    <Compile Include="Employee_Payroll\Employee_Payroll_ConfigEntity.cs" />
+    <Compile Include="Employee_Payroll\IEmployee_Payroll.cs" />
+    <Compile Include="Employee_Payroll\IplEmployee_Payroll.cs" />
     <Compile Include="Files\FileEntity_Ext.cs" />
+    <Compile Include="Holiday\HolidayEntity.cs" />
+    <Compile Include="Holiday\IHoliday.cs" />
+    <Compile Include="Holiday\IplHoliday.cs" />
     <Compile Include="Position\PositionEntity.cs" />
     <Compile Include="Position\Position_Ext.cs" />
     <Compile Include="Position\PositionMetadata.cs" />
     <Compile Include="Position\IPosition.cs" />
     <Compile Include="Position\IplPosition.cs" />
+    <Compile Include="Project\IplProject.cs" />
+    <Compile Include="Project\IProject.cs" />
+    <Compile Include="Project\ProjectEntity.cs" />
+    <Compile Include="Project\ProjectEntity_Ex.cs" />
+    <Compile Include="Project_Comment\IplProject_Comment.cs" />
+    <Compile Include="Project_Comment\IProject_Comment.cs" />
+    <Compile Include="Project_Comment\Project_CommentEntity.cs" />
+    <Compile Include="Project_Role\IplProject_Role.cs" />
+    <Compile Include="Project_Role\IProject_Role.cs" />
+    <Compile Include="Project_Role\Project_RoleEntity.cs" />
+    <Compile Include="Project_Role\Project_RoleEntity_Ex.cs" />
+    <Compile Include="Project_Status\IplProject_Status.cs" />
+    <Compile Include="Project_Status\IProject_Status.cs" />
+    <Compile Include="Project_Status\Project_StatusEntity.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Depart_Module\Depart_ModuleEntity.cs" />
     <Compile Include="Depart_Module\IDepart_Module.cs" />
@@ -127,6 +162,10 @@
     <Compile Include="Role_Group\Role_GroupEntity.cs" />
     <Compile Include="Role_Group\IRole_Group.cs" />
     <Compile Include="Role_Group\IplRole_Group.cs" />
+    <Compile Include="Room\IplRoom.cs" />
+    <Compile Include="Room\IRoom.cs" />
+    <Compile Include="Room\RoomEntity.cs" />
+    <Compile Include="Room\RoomMetadata.cs" />
     <Compile Include="TransactionLogs\ITransactionLogs.cs" />
     <Compile Include="TransactionLogs\IplTransactionLogs.cs" />
     <Compile Include="TransactionLogs\TransactionLogsEntity.cs" />

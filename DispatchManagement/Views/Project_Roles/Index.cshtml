@@ -1,0 +1,101 @@
+﻿@model Dispatch.ProjectEntity
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    //var employeeInfo = (marketplace.EmployeeEntity)ViewData["EmpInfo"];
+    
+}
+
+@section scripts{
+    <!-- image cropping -->
+    <script src="~/Assets/backend/js/cropping/cropper.min.js"></script>
+    <script src="~/Assets/backend/js/cropping/main.js"></script>
+}
+@Html.Action("InsertUser")
+<div class="row">
+    <div class="col-md-12 col-sm-12 col-xs-12">
+
+        <div class="x_panel">
+            <div class="x_title">
+                <h2>Thông tin dự án <small>phân quyền nhân sự</small></h2>
+                <ul class="nav navbar-right panel_toolbox">
+                    <li>
+                        <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#AddEmployee"><i class="fa fa-save"></i> Thêm nhân sự</button>
+                    </li>
+                   
+                </ul>
+                <div class="clearfix"></div>
+               
+            </div>
+            <div class="x_content">
+                <div class="col-md-3 col-sm-3 col-xs-12 profile_left">
+                    
+                    <h3>@Model.Name</h3>
+                    <ul class="list-unstyled user_data">
+                        <li>
+                            <i class="fa fa-briefcase user-profile-icon"></i> @Model.CustomerName
+                        </li>
+                        <li>
+                            <i class="fa fa-map-marker user-profile-icon"></i> @Model.Address
+                        </li>
+                  
+                    </ul>
+                </div>
+                <div class="col-md-9 col-sm-9 col-xs-12">
+                    <div class="profile_title">
+                        <div class="col-md-6">
+                            <h2>Phân quyền dự án</h2>
+                        </div>
+                    </div>
+                    @*<input type="hidden" id="userId" value="@ViewBag.UserId" />*@
+                    <table class="table table-hover table-bordered">
+                        <thead>
+                            <tr>
+                                <td width="10%">Nhân sự</td>
+                                @*<td width="5%">Tạo mới</td>*@
+                                <td width="5%">Sửa</td>
+                                <td width="5%">Xóa</td>
+                                <td width="5%">Xem</td>
+                                <td width="5%">Xem giá</td>
+                                <td width="10%">Vị trí</td>
+                                <td width="10%">Hành động</td>
+                                @*<td width="10%">Upload</td>
+                                    <td width="10%">Lưu Dữ liệu</td>
+                                    <td width="10%">Import</td>
+                                    <td width="10%">Export</td>
+                                    <td width="10%">Report</td>
+                                    <td width="10%">Print</td>*@
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var item in (List<Dispatch.Project_RoleEntity>)ViewData["ListRole"])
+                            {
+                                <tr>
+                                    <td class="moduleName"><a href="javascript:void(0)" class="edit" data-module="@item.UserId">@item.FullName</a></td>
+                                    @*<td>
+                                        @Html.CheckBoxFor(m => item.Add, new { @class = "flat roles", ProjectId = item.mId, action = "Add",UserId=item.UserId })
+                                    </td>*@
+                                    <td>@Html.CheckBoxFor(m => item.Edit, new { @class = "flat roles", ProjectId = item.mId, action = "Edit", UserId = item.UserId })</td>
+                                    <td>@Html.CheckBoxFor(m => item.Delete, new { @class = "flat roles", ProjectId = item.mId, action = "Delete", UserId = item.UserId })</td>
+                                    <td>@Html.CheckBoxFor(m => item.View, new { @class = "flat roles", ProjectId = item.mId, action = "View", UserId = item.UserId })</td>
+                                    <td>@Html.CheckBoxFor(m => item.ViewPrice, new { @class = "flat roles", ProjectId = item.mId, action = "ViewPrice", UserId = item.UserId })</td>
+                                    <td class="moduleName"><p>@item.PositionName</p></td>
+                                    <td><a href="/Project_Roles/Delete?UserId=@item.UserId&ProjectId=@item.ProjectId" onclick="return confirm('Bạn có muốn xóa nhân viên này không?')">Xóa</a></td>
+                                    @*<td>@Html.CheckBoxFor(m => item.Upload, new { @class = "flat roles", module = item.mId, action = "Upload" })</td>
+                                        <td>@Html.CheckBoxFor(m => item.Publish, new { @class = "flat roles", module = item.mId, action = "Publish" })</td>
+                                        <td>@Html.CheckBoxFor(m => item.Import, new { @class = "flat roles", module = item.mId, action = "Import" })</td>
+                                        <td>@Html.CheckBoxFor(m => item.Export, new { @class = "flat roles", module = item.mId, action = "Export" })</td>
+                                        <td>@Html.CheckBoxFor(m => item.Report, new { @class = "flat roles", module = item.mId, action = "Report" })</td>
+                                        <td>@Html.CheckBoxFor(m => item.Print, new { @class = "flat roles", module = item.mId, action = "Print" })</td>*@
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                    <script id="result-Permission" type="x-tmpl-mustache">
+
+                    </script>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,8 +1,9 @@
+using System;
 using System.Collections.Generic;
 
 namespace Dispatch
 {
-    public interface IUser
+	public interface IUser
 	{
 		int Insert(UserEntity users);
         bool Update(UserEntity users);

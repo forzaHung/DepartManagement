@@ -41,7 +41,7 @@
             <div class="form-inline">
                 <div class="form-group col-lg-4">
                     <label class="control-label" for="SearchString">Số công văn:</label>
-                    <input id="searchCode" name="searchCode" type="text" value="@ViewBag.Keyword" class="form-control boxsearch" style="width: 233px;" />
+                    <input id="searchCode" name="searchCode" type="text" value="@ViewBag.Keyword" class="form-control boxsearch" style="width: 203px;" />
                 </div>
                 <div class="form-group col-lg-4">
                     <label class="control-label" for="SearchString">Tên CV:</label>
@@ -59,7 +59,7 @@
                 </div>
                 <div class="form-group col-lg-4">
                     <label class="control-label" for="SearchString">Phòng ban:</label>
-                    <select id="ddlDepartment" name="ddlDepartment" class="form-control boxsearch">
+                    <select id="ddlDepartment" name="ddlDepartment" class="form-control boxsearch" style="width: 203px;">
                         <option value="0">=== Chọn phòng ban gửi ===</option>
                         @foreach (var item in (List<Dispatch.DepartmentEntity>)ViewData["departmentAll"])
                         {

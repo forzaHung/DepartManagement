@@ -1,0 +1,31 @@
+﻿@{
+    ViewBag.Title = "Cấu hình bảng lương thỏa thuận từng nhân viên";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<link href="~/Assets/plugins/toastrjs/toastr.css" rel="stylesheet" />
+<h2>@ViewBag.Title</h2>
+<style>
+    a.editable-click, a.editable-click:hover {
+        text-decoration: none;
+        border-bottom: dashed 0px #0088cc;
+    }
+</style>
+<div class="row">
+    <div class="col-lg-3">
+        <p>Tìm theo tên nhân viên</p>
+        <select class="form-control" id="employeeConfig" />
+        <input type="hidden" id="employeeIdConfig" />
+    </div>
+    <div class="col-lg-1" style="padding-top:29px">
+        <button class="btn btn-danger" type="button" id="btnSearchConfig"><i class="fa fa-search-plus"></i> Lọc</button>
+    </div>
+    @*<div class="col-lg-2" style="padding-top:29px">
+        <button class="btn btn-default" type="button" id="btnCreateConfigPayroll"><i class="fa fa-plus-square"></i> Thêm mới cấu hình</button>
+    </div>*@
+</div>
+
+<div id="DepartmentList">
+    <table id="tbl-EmployeePayrollConfig" class="table table-bordered table-hover fixed-table-header" data-height="600"></table>
+</div>
+
+<script src="~/Assets/plugins/toastrjs/toastr.min.js"></script> 

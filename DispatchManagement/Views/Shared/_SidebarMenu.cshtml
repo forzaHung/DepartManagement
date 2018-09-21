@@ -86,15 +86,25 @@
                         @Html.ActionLink("Nhập dữ liệu chấm công bằng file", "Import", "AttendanceTracking")
                     </li>
                     <li>
-                        @Html.ActionLink("Quy định ra vào công ty", "Index", "RegulationTime")
+                        @Html.ActionLink("Quy định ra vào công ty theo chức vụ", "Index", "RegulationTime")
                     </li>
                     <li>
-                        @Html.ActionLink("Bảng lương", "Index", "Employee_History")
+                        @Html.ActionLink("Bảng lương", "Index", "Employee_Payroll")
                     </li>
                     
                 </ul>
             </li>
-
+            <li>
+                <a><i class="fa fa-picture-o"></i> Quản lý Dự án <span class="fa fa-chevron-down"></span></a>
+                <ul class="nav child_menu" style="display: none;">
+                    <li>
+                        @Html.ActionLink("Danh sách", "Index", "Project")
+                    </li>
+                    <li>
+                        @Html.ActionLink("Thêm mới", "CreateOrEdit", "Project")
+                    </li>
+                </ul>
+            </li>
             <li>
                 <a><i class="fa fa-picture-o"></i> Quản lý files <span class="fa fa-chevron-down"></span></a>
                 <ul class="nav child_menu" style="display: none;">
@@ -117,6 +127,15 @@
                     </li>
                     <li>
                         @Html.ActionLink("Công Việc", "Index", "DispatchWork")
+                    </li>
+                    <li>
+                        @Html.ActionLink("Chọn ngày nghỉ lễ tết", "Index", "Holiday")
+                    </li>
+                    <li>
+                        @Html.ActionLink("Khách hàng", "Index", "Customer")
+                    </li>
+                    <li>
+                        @Html.ActionLink("Loại khách hàng", "Index", "CustomerType")
                     </li>
                 </ul>
             </li>
